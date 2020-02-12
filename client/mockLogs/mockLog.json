@@ -1,0 +1,19 @@
+{
+  "id": "1335",
+  "genderIcon": "female",
+  "weatherType": "Clear",
+  "weatherIcon": "01n",
+  "hideCreator": false,
+  "state": "Washington",
+  "county": "King",
+  "mood": "4",
+  "productivity": "3",
+  "journal": "Overall, today felt like a good day. I was able to get most of what I wanted done. Enjoyed the bright skies!",
+  "privateJournal": false,
+  "creatorId": {
+    "username": "Jane Doe",
+    "gender": "female",
+    "_id": null
+  },
+  "demo": true
+}

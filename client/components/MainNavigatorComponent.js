@@ -22,7 +22,7 @@ class MainNavigator extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName='Home'>
+        <Drawer.Navigator initialRouteName='See All Logs'>
           <Drawer.Screen name='Create Log' component={CreateLog} />
           <Drawer.Screen name='Home' component={Test} />
           <Drawer.Screen name='See All Logs' component={ViewAllLogs} />
