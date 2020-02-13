@@ -1,0 +1,59 @@
+[
+  {
+    "id": "1335",
+    "genderIcon": "female",
+    "weatherType": "Clear",
+    "weatherIcon": "01n",
+    "hideCreator": false,
+    "state": "Washington",
+    "county": "King",
+    "mood": "4",
+    "productivity": "3",
+    "journal": "Overall, today felt like a good day. I was able to get most of what I wanted done. Enjoyed the bright skies!",
+    "privateJournal": false,
+    "creatorId": {
+      "username": "Jane Doe",
+      "gender": "female",
+      "_id": null
+    },
+    "demo": true
+  },
+  {
+    "id": "1337",
+    "genderIcon": "male",
+    "weatherType": "Clear",
+    "weatherIcon": "01n",
+    "hideCreator": false,
+    "state": "Washington",
+    "county": "Yakima",
+    "mood": "2",
+    "productivity": "2",
+    "journal": "Not a Great day",
+    "privateJournal": true,
+    "creatorId": {
+      "username": "John Doe",
+      "gender": "male",
+      "_id": null
+    },
+    "demo": true
+  },
+  {
+    "id": "1337",
+    "genderIcon": "nonBinary",
+    "weatherType": "Mist",
+    "weatherIcon": "01n",
+    "hideCreator": false,
+    "state": "Washington",
+    "county": "Yakima",
+    "mood": "5",
+    "productivity": "1",
+    "journal": "Did not accomplish anything, but had a great time!",
+    "privateJournal": false,
+    "creatorId": {
+      "username": "Test",
+      "gender": "nonBinary",
+      "_id": null
+    },
+    "demo": true
+  }
+]

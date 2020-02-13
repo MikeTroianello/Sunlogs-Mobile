@@ -30,7 +30,7 @@ class MainNavigator extends Component {
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='Settings'>
+          <Drawer.Navigator initialRouteName='See All Logs'>
             <Drawer.Screen name='Create Log' component={CreateLog} />
             <Drawer.Screen name='Home' component={Test} />
             <Drawer.Screen name='See All Logs' component={ViewAllLogs} />
