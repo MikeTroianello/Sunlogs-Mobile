@@ -6,5 +6,12 @@ export const Styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  log: {
+    margin: 10,
+    padding: 5,
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#000'
   }
 });
