@@ -5,6 +5,8 @@ import DatePicker from 'react-native-datepicker';
 import Log from './LogComponent';
 
 import WeatherAudit from '../weather/WeatherAudit';
+import StateFilter from '../filterByLocation/StateFilter';
+import CountyFilter from '../filterByLocation/CountyFilter';
 
 import { Styles } from '../../styles/MainStyles';
 
@@ -43,7 +45,79 @@ class ViewAllLogs extends Component {
     });
   };
 
+  filterState = value => {
+    if (value !== 'Filter by State:') {
+      this.setState(
+        {
+          state: value
+        },
+        () => {
+          this.filterByState();
+        }
+      );
+    }
+  };
+
+  filterByState = () => {
+    let stateLogs = this.state.logs.filter(log => {
+      return log.state === this.state.state;
+    });
+
+    let counties = new Set();
+
+    stateLogs.map(log => {
+      return counties.add(log.county);
+    });
+
+    this.setState({
+      filteredLogs: stateLogs,
+      counties: [...counties],
+      genderSearchMessage: null
+    });
+  };
+
+  filterCounty = e => {
+    if (e.target.value !== 'Filter by County:') {
+      this.setState(
+        {
+          [e.target.name]: e.target.value
+        },
+        () => {
+          this.filterByCounty();
+        }
+      );
+    }
+  };
+
+  filterByCounty = () => {
+    let countyLogs = this.state.logs.filter(log => {
+      return log.county === this.state.county;
+    });
+
+    this.setState({
+      filteredLogs: countyLogs,
+      genderSearchMessage: null
+    });
+  };
+
+  defaultLogs = () => {
+    this.setState({
+      states: [],
+      counties: [],
+      state: undefined,
+      stateFiltered: false,
+      county: undefined
+    });
+    this.sanitizeDate(this.state.today);
+  };
+
   render() {
+    let allStates = mockLogs.map(log => {
+      return log.state;
+    });
+
+    let states = [...new Set(allStates)];
+
     const renderLogs = ({ item }) => {
       return (
         <View style={Styles.logs}>
@@ -93,11 +167,23 @@ class ViewAllLogs extends Component {
           <Picker.Item label='female' value='female' />
           <Picker.Item label='nonbinary' value='nonbinary' />
         </Picker>
+
+        <Text>Filter By State:</Text>
+
+        <StateFilter states={states} filter={this.filterState} />
+
+        <Text>Filter By County:</Text>
+        <CountyFilter
+          counties={this.state.counties}
+          filter={this.filterCounty}
+        />
+
         <FlatList
           data={mockLogs}
           renderItem={renderLogs}
           keyExtractor={item => item.id.toString()}
         />
+        <Button title='Back to default' onPress={this.defaultLogs} />
       </View>
     );
   }

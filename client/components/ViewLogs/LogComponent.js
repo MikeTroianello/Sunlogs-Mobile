@@ -44,7 +44,6 @@ const Log = props => {
   ) {
     theTag = props.log.creatorId.username;
   }
-  console.log(props.log);
 
   return (
     <View className={props.test ? 'mock-log' : 'log'}>
