@@ -1,35 +1,38 @@
 import React, { Component } from 'react';
 import { View, Text, Image, Button, ScrollView } from 'react-native';
-// import {  } from 'react-native-elements';
+import { Linking, WebBrowser } from 'expo';
+import * as MailComposer from 'expo-mail-composer';
 
 import Log from './ViewLogs/LogComponent';
+
+import mockLog from '../mockLogs/mockLog.json';
 
 class LandingPage extends Component {
   state = {
     date: new Date(),
     message: 'This is the Home Page',
     err: false,
-    signup: false,
-    testLog: {
-      id: '1335',
-      genderIcon: 'female',
-      weatherType: 'Clear',
-      weatherIcon: '01n',
-      hideCreator: false,
-      state: 'Washington',
-      county: 'King',
-      mood: '4',
-      productivity: '3',
-      journal:
-        'Overall, today felt like a good day. I was able to get most of what I wanted done. Enjoyed the bright skies!',
-      privateJournal: false,
-      creatorId: {
-        username: 'Jane Doe',
-        gender: 'female',
-        _id: null
-      },
-      demo: true
-    }
+    signup: false
+    // testLog: {
+    //   id: '1335',
+    //   genderIcon: 'female',
+    //   weatherType: 'Clear',
+    //   weatherIcon: '01n',
+    //   hideCreator: false,
+    //   state: 'Washington',
+    //   county: 'King',
+    //   mood: '4',
+    //   productivity: '3',
+    //   journal:
+    //     'Overall, today felt like a good day. I was able to get most of what I wanted done. Enjoyed the bright skies!',
+    //   privateJournal: false,
+    //   creatorId: {
+    //     username: 'Jane Doe',
+    //     gender: 'female',
+    //     _id: null
+    //   },
+    //   demo: true
+    // }
   };
 
   componentDidMount() {
@@ -64,6 +67,19 @@ class LandingPage extends Component {
 
   backToTop = () => {
     window.scrollTo(0, 0);
+  };
+
+  sendMail = () => {
+    MailComposer.composeAsync({
+      recipients: ['mike@troianello.co'],
+      subject: 'SunLogs App FeedBack',
+      body: ''
+    });
+  };
+
+  visitWebsite = () => {
+    Linking.openURL('https://troianello.co');
+    // WebBrowser.openBrowserAsync('https://troianello.co');
   };
 
   render() {
@@ -127,7 +143,7 @@ class LandingPage extends Component {
             </Text>
           </View>
           <View>
-            <Log log={this.state.testLog} test={true} />
+            <Log log={mockLog} test={true} />
             <Text>(Your logs can be as private as you want them to be)</Text>
           </View>
         </View>
@@ -137,10 +153,17 @@ class LandingPage extends Component {
             <View className='footer-contact'>
               <Text>Created by Mike Troianello</Text>
               <Text>
-                Contact me at mike@troianello.co
-                {/* <a href='mailto:mike@troianello.co'> mike@troianello.co</a> */}
+                Contact me at{' '}
+                <Text style={{ color: 'blue' }} onPress={this.sendMail}>
+                  mike@troianello.co
+                </Text>
               </Text>
-              <Text>Visit my personal website troianello.co</Text>
+              <Text>
+                Visit my personal website{' '}
+                <Text style={{ color: 'blue' }} onPress={this.visitWebsite}>
+                  troianello.co
+                </Text>
+              </Text>
             </View>
             <View className='footer-logo'>
               <Text className='mt-logo'>Mt</Text>
