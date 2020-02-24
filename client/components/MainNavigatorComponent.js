@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Icon } from 'react-native-elements';
-import {
-  createStackNavigator,
-  // createDrawerNavigator,
-  DrawerItems
-} from 'react-navigation';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Test from './Test';
+import LandingPage from './LandingPageComponent';
 import Profile from './profiles/ProfileComponent';
 import CreateLog from './logs/CreateLogComponent';
 import ViewAllLogs from './ViewLogs/ViewAllLogsComponent';
@@ -19,6 +16,7 @@ import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 class MainNavigator extends Component {
   render() {
@@ -32,7 +30,7 @@ class MainNavigator extends Component {
         <NavigationContainer>
           <Drawer.Navigator initialRouteName='Home'>
             <Drawer.Screen name='Create Log' component={CreateLog} />
-            <Drawer.Screen name='Home' component={Test} />
+            <Drawer.Screen name='Home' component={LandingPage} />
             <Drawer.Screen name='See All Logs' component={ViewAllLogs} />
             <Drawer.Screen name='Profile' component={Profile} />
             <Drawer.Screen name='Settings' component={Settings} />
