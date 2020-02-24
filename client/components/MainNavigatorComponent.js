@@ -9,14 +9,27 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Test from './Test';
 import LandingPage from './LandingPageComponent';
 import Profile from './profiles/ProfileComponent';
+import ViewOtherProfiles from './profiles/ViewOtherProfilesComponent';
 import CreateLog from './logs/CreateLogComponent';
 import ViewAllLogs from './ViewLogs/ViewAllLogsComponent';
 import Settings from './account/SettingsComponent';
 import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 
+import OtherProfiles from './profiles/OtherProfiles';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+const LogStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name='See All Logs' component={ViewAllLogs} />
+      <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} />
+      {/* <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} /> */}
+    </Stack.Navigator>
+  );
+};
 
 class MainNavigator extends Component {
   render() {
@@ -28,10 +41,11 @@ class MainNavigator extends Component {
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='Home'>
+          <Drawer.Navigator initialRouteName='See Logs'>
             <Drawer.Screen name='Create Log' component={CreateLog} />
             <Drawer.Screen name='Home' component={LandingPage} />
-            <Drawer.Screen name='See All Logs' component={ViewAllLogs} />
+            <Drawer.Screen name='See Logs' component={LogStack} />
+            {/* <Drawer.Screen name='See All Logs' component={ViewAllLogs} /> */}
             <Drawer.Screen name='Profile' component={Profile} />
             <Drawer.Screen name='Settings' component={Settings} />
             <Drawer.Screen name='Logout' component={Test} />

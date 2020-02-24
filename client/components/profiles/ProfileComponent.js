@@ -174,6 +174,7 @@ class Profile extends Component {
     }
   };
   render() {
+    const { navigate } = this.props.navigation;
     let profileSelf = true;
     console.log(this.state);
     return (

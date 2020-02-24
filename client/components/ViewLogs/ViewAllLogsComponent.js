@@ -111,6 +111,12 @@ class ViewAllLogs extends Component {
     this.sanitizeDate(this.state.today);
   };
 
+  seeProfile = name => {
+    const { navigate } = this.props.navigation;
+    // navigate('Test');
+    navigate('View Other Profiles', { profileName: name });
+  };
+
   render() {
     let allStates = mockLogs.map(log => {
       return log.state;
@@ -121,13 +127,12 @@ class ViewAllLogs extends Component {
     const renderLogs = ({ item }) => {
       return (
         <View style={Styles.logs}>
-          <Log log={item} />
+          <Log log={item} passUpName={this.seeProfile} />
         </View>
       );
     };
     return (
       <View>
-        <Text>SEE ALL SUNLOGS HERE</Text>
         <WeatherAudit logs={mockLogs} />
         <Text htmlFor='gender'>Filter by gender</Text>
 

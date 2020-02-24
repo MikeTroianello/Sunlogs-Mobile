@@ -29,12 +29,21 @@ const Log = props => {
 
   let theTag = props.log.creatorId.username;
 
+  // if (!props.log.demo) {
+  //   theTag = (
+  //     <Link to={`/view-profile/${props.log.creatorId._id}`}>
+  //       {props.log.creatorId.username}
+  //     </Link>
+  //   );
+  // }
+
+  let logStyle;
+
   if (!props.log.demo) {
-    theTag = (
-      <Link to={`/view-profile/${props.log.creatorId._id}`}>
-        {props.log.creatorId.username}
-      </Link>
-    );
+    logStyle = 'blue';
+    theTag = <Text>{props.log.creatorId.username}</Text>;
+  } else {
+    theTag = <Text>{props.log.creatorId.username}</Text>;
   }
 
   if (
@@ -51,7 +60,16 @@ const Log = props => {
         {props.id === props.log.creatorId._id ? (
           <Text>~(You!)~</Text>
         ) : (
-          <Text>{theTag}</Text>
+          <Text
+            style={{ color: logStyle }}
+            onPress={
+              props.log.demo
+                ? null
+                : () => props.passUpName(props.log.creatorId.username)
+            }
+          >
+            {theTag}
+          </Text>
         )}
 
         <Icon name={genderIcon} type={iconSource} />

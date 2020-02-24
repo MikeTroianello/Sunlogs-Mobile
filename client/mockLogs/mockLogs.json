@@ -11,12 +11,17 @@
     "productivity": "3",
     "journal": "Overall, today felt like a good day. I was able to get most of what I wanted done. Enjoyed the bright skies!",
     "privateJournal": false,
+    "dayOfWeek": "Thu",
+    "month": "Jan",
+    "dayOfMonth": "5",
+    "dayOfYear": "5",
+    "year": "2020",
     "creatorId": {
       "username": "Jane Doe",
       "gender": "female",
       "_id": null
     },
-    "demo": true
+    "demo": false
   },
   {
     "id": "1337",
@@ -30,12 +35,17 @@
     "productivity": "2",
     "journal": "Not a Great day",
     "privateJournal": true,
+    "dayOfWeek": "Thu",
+    "month": "Jan",
+    "dayOfMonth": "5",
+    "dayOfYear": "5",
+    "year": "2020",
     "creatorId": {
       "username": "John Doe",
       "gender": "male",
       "_id": null
     },
-    "demo": true
+    "demo": false
   },
   {
     "id": "1339",
@@ -49,12 +59,17 @@
     "productivity": "1",
     "journal": "Did not accomplish anything, but had a great time!",
     "privateJournal": false,
+    "dayOfWeek": "Thu",
+    "month": "Jan",
+    "dayOfMonth": "5",
+    "dayOfYear": "5",
+    "year": "2020",
     "creatorId": {
       "username": "Test",
       "gender": "nonBinary",
       "_id": null
     },
-    "demo": true
+    "demo": false
   },
   {
     "id": "13317",
@@ -68,12 +83,17 @@
     "productivity": "2",
     "journal": "Not a Great day",
     "privateJournal": true,
+    "dayOfWeek": "Thu",
+    "month": "Jan",
+    "dayOfMonth": "5",
+    "dayOfYear": "5",
+    "year": "2020",
     "creatorId": {
       "username": "John Doe",
       "gender": "male",
       "_id": null
     },
-    "demo": true
+    "demo": false
   },
   {
     "id": "1332349",
@@ -89,14 +109,14 @@
     "privateJournal": false,
     "dayOfWeek": "Thu",
     "month": "Jan",
-    "dayOfMonth": 5,
-    "dayOfYear": 5,
-    "year": 2020,
+    "dayOfMonth": "5",
+    "dayOfYear": "5",
+    "year": "2020",
     "creatorId": {
       "username": "Test",
       "gender": "nonBinary",
       "_id": null
     },
-    "demo": true
+    "demo": false
   }
 ]
