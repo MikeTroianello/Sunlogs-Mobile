@@ -51,32 +51,27 @@ class ViewAllLogs extends Component {
     let a = dateToLookFor.toString().split(' ');
     let year = a[3];
 
-    // this.service
-    //   .getDate(year, day)
-    //   .then(results => {
-    //     const states = results.specificDay.map(log => {
-    //       return log.state;
-    //     });
-
-    //     this.setState({
-    //       logs: results.specificDay,
-    //       filteredLogs: results.specificDay,
-    //       filteredLogsCopy: results.specificDay,
-    //       genderSearchMessage: null,
-    //       yours: results.yours,
-    //       id: results.id,
-    //       states: [...new Set(states)],
-    //       counties: []
-    //     });
-    //   })
-    console.log('DATE IS GOING FOR IT');
-    fetch(`http://192.168.1.17:5000/api/log/date/${year}/${day}`)
+    fetch(`http://192.168.1.17:5000/api/logs/date/${year}/${day}`)
       .then(response => response.json())
-      .then(responseJson => {
-        console.log('SUCCESS', responseJson);
-        // this.setState({
-        //   fetchMsg: responseJson.message
-        // });
+      .then(results => {
+        console.log('SUCCESS', results.specificDay);
+        const states = results.specificDay.map(log => {
+          return log.state;
+        });
+        console.log('STATES', states);
+        this.setState(
+          {
+            logs: results.specificDay,
+            filteredLogs: results.specificDay,
+            filteredLogsCopy: results.specificDay,
+            genderSearchMessage: null,
+            yours: results.yours,
+            id: results.id,
+            states: [...new Set(states)],
+            counties: []
+          },
+          () => console.log(this.state)
+        );
       })
       .catch(error => {
         console.log(
@@ -171,6 +166,30 @@ class ViewAllLogs extends Component {
     navigate('View Other Profiles', { profileName: name });
   };
 
+  weatherAudit = () => {
+    return <WeatherAudit logs={this.state.filteredLogs} />;
+  };
+
+  buildList = () => {
+    console.log('-=-=-=-=-=-=-=--=-=-=-=-');
+    return (
+      <FlatList
+        data={this.state.logs}
+        renderItem={this.renderLogs}
+        keyExtractor={item => item._id.toString()}
+      />
+    );
+  };
+
+  renderLogs = ({ item }) => {
+    console.log('RENDERING LOGS_+_++_+_+___+__++__+_++_+__+_+');
+    return (
+      <View style={Styles.logs}>
+        <Log log={item} passUpName={this.seeProfile} />
+      </View>
+    );
+  };
+
   render() {
     let allStates = mockLogs.map(log => {
       return log.state;
@@ -178,16 +197,9 @@ class ViewAllLogs extends Component {
 
     let states = [...new Set(allStates)];
 
-    const renderLogs = ({ item }) => {
-      return (
-        <View style={Styles.logs}>
-          <Log log={item} passUpName={this.seeProfile} />
-        </View>
-      );
-    };
     return (
       <View>
-        <WeatherAudit logs={mockLogs} />
+        {this.state.filteredLogs && this.weatherAudit()}
         <Text htmlFor='gender'>Filter by gender</Text>
 
         <View>
@@ -237,11 +249,7 @@ class ViewAllLogs extends Component {
           filter={this.filterCounty}
         />
 
-        <FlatList
-          data={mockLogs}
-          renderItem={renderLogs}
-          keyExtractor={item => item.id.toString()}
-        />
+        {this.state.logs && this.buildList()}
         <Button title='Back to default' onPress={this.defaultLogs} />
       </View>
     );

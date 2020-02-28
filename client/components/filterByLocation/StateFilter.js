@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Picker, Text } from 'react-native';
 
 export default function StateFilter(props) {
-  console.log('here????????????????', props.states);
   return (
     <View>
       <Picker onValueChange={props.filter}>

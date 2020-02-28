@@ -10,29 +10,31 @@ const WeatherAudit = props => {
   let snow = [];
   let outlier = [];
 
-  props.logs.map(log => {
-    switch (log.weatherType) {
-      case 'Clear':
-        clear.push(log);
-        break;
-      case 'Clouds':
-      case 'Mist':
-        clouds.push(log);
-        break;
-      case 'Snow':
-        snow.push(log);
-        break;
-      case 'Rain':
-      case 'Drizzle':
-      case 'Thunderstorm':
-        rain.push(log);
-        break;
-      default:
-        outlier.push(log);
-        break;
-    }
-    return log;
-  });
+  if (props.logs) {
+    props.logs.map(log => {
+      switch (log.weatherType) {
+        case 'Clear':
+          clear.push(log);
+          break;
+        case 'Clouds':
+        case 'Mist':
+          clouds.push(log);
+          break;
+        case 'Snow':
+          snow.push(log);
+          break;
+        case 'Rain':
+        case 'Drizzle':
+        case 'Thunderstorm':
+          rain.push(log);
+          break;
+        default:
+          outlier.push(log);
+          break;
+      }
+      return log;
+    });
+  }
 
   return (
     <View className='weather-audit'>
