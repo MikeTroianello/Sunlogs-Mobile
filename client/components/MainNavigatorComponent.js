@@ -41,7 +41,7 @@ class MainNavigator extends Component {
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='Logout'>
+          <Drawer.Navigator initialRouteName='See Logs'>
             <Drawer.Screen name='Create Log' component={CreateLog} />
             <Drawer.Screen name='Home' component={LandingPage} />
             <Drawer.Screen name='See Logs' component={LogStack} />

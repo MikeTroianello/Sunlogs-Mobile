@@ -33,11 +33,65 @@ class ViewAllLogs extends Component {
     setGender: ''
   };
 
+  componentDidMount() {
+    let { today } = this.state;
+    this.sanitizeDate(today);
+  }
+
+  sanitizeDate = (dateToLookFor, message) => {
+    var start = new Date(dateToLookFor.getFullYear(), 0, 0);
+    var diff =
+      dateToLookFor -
+      start +
+      (start.getTimezoneOffset() - dateToLookFor.getTimezoneOffset()) *
+        60 *
+        1000;
+    var oneDay = 1000 * 60 * 60 * 24;
+    var day = Math.floor(diff / oneDay);
+    let a = dateToLookFor.toString().split(' ');
+    let year = a[3];
+
+    // this.service
+    //   .getDate(year, day)
+    //   .then(results => {
+    //     const states = results.specificDay.map(log => {
+    //       return log.state;
+    //     });
+
+    //     this.setState({
+    //       logs: results.specificDay,
+    //       filteredLogs: results.specificDay,
+    //       filteredLogsCopy: results.specificDay,
+    //       genderSearchMessage: null,
+    //       yours: results.yours,
+    //       id: results.id,
+    //       states: [...new Set(states)],
+    //       counties: []
+    //     });
+    //   })
+    console.log('DATE IS GOING FOR IT');
+    fetch(`http://192.168.1.17:5000/api/log/date/${year}/${day}`)
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('SUCCESS', responseJson);
+        // this.setState({
+        //   fetchMsg: responseJson.message
+        // });
+      })
+      .catch(error => {
+        console.log(
+          'There has been a problem with your fetch operation: ' + error.message
+        );
+        throw error;
+      });
+  };
+
   filterByGender = gender => {
     console.log(gender);
     // let genderLogs = this.state.filteredLogsCopy.filter(log => {
     //   return log.creatorId.gender === gender;
     // });
+
     this.setState({
       // filteredLogs: genderLogs,
       genderSearchMessage: `Showing all ${gender} logs`,

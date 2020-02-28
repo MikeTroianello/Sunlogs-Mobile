@@ -8,7 +8,7 @@ export default class Test extends Component {
 
   componentDidMount() {
     console.log('INSIDE TEST');
-    fetch('http://IP.ADDRESS/test')
+    fetch('http://192.168.1.17:5000/test')
       .then(response => response.json())
       .then(responseJson => {
         console.log('blsh', responseJson.message);
