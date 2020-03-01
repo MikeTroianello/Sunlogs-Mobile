@@ -12,6 +12,7 @@ import { Styles } from '../../styles/MainStyles';
 
 import mockLog from '../../mockLogs/mockLog.json';
 import mockLogs from '../../mockLogs/mockLogs.json';
+import { ThemeProvider } from 'react-native-elements';
 
 class ViewAllLogs extends Component {
   state = {
@@ -39,7 +40,10 @@ class ViewAllLogs extends Component {
   }
 
   sanitizeDate = (dateToLookFor, message) => {
+    console.log('DATE TO LOOK FOR:', dateToLookFor.getFullYear());
+    console.log('DATE TO LOOK FOR:', dateToLookFor);
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
+    console.log('START', start);
     var diff =
       dateToLookFor -
       start +
@@ -47,10 +51,23 @@ class ViewAllLogs extends Component {
         60 *
         1000;
     var oneDay = 1000 * 60 * 60 * 24;
+
     var day = Math.floor(diff / oneDay);
     let a = dateToLookFor.toString().split(' ');
     let year = a[3];
 
+    this.getLogsByDate(day, year);
+  };
+
+  changeDate = date => {
+    if (date) {
+      console.log('DATE SENDI:', date);
+      var isoDate = new Date(`${date}T12:00:00Z`);
+      this.sanitizeDate(isoDate);
+    }
+  };
+
+  getLogsByDate = (day, year) => {
     fetch(`http://192.168.1.17:5000/api/logs/date/${year}/${day}`)
       .then(response => response.json())
       .then(results => {
@@ -58,7 +75,6 @@ class ViewAllLogs extends Component {
         const states = results.specificDay.map(log => {
           return log.state;
         });
-        console.log('STATES', states);
         this.setState(
           {
             logs: results.specificDay,
@@ -171,7 +187,6 @@ class ViewAllLogs extends Component {
   };
 
   buildList = () => {
-    console.log('-=-=-=-=-=-=-=--=-=-=-=-');
     return (
       <FlatList
         data={this.state.logs}
@@ -182,7 +197,6 @@ class ViewAllLogs extends Component {
   };
 
   renderLogs = ({ item }) => {
-    console.log('RENDERING LOGS_+_++_+_+___+__++__+_++_+__+_+');
     return (
       <View style={Styles.logs}>
         <Log log={item} passUpName={this.seeProfile} />
@@ -211,6 +225,10 @@ class ViewAllLogs extends Component {
             placeholder='Select Date'
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
+            onDateChange={date => {
+              console.log('DATE', date);
+              this.changeDate(date);
+            }}
             customStyles={{
               dateIcon: {
                 position: 'absolute',
@@ -221,9 +239,6 @@ class ViewAllLogs extends Component {
               dateInput: {
                 marginLeft: 36
               }
-            }}
-            onDateChange={date => {
-              this.setState({ date: date });
             }}
           />
         </View>

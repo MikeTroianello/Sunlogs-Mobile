@@ -11,7 +11,6 @@ export default function StateFilter(props) {
           value='Filter by State:'
         />
         {props.states.map((state, key) => {
-          console.log('STATE', state);
           return <Picker.Item key={key} label={state} value={state} />;
         })}
       </Picker>
