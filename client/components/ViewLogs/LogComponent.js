@@ -3,6 +3,7 @@ import { View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const Log = props => {
+  console.log('THE PROPS-=-=-=-=-=-=-=', props.log.creatorId._id);
   let weatherString;
   let genderIcon;
   let iconSource = 'foundation';
@@ -65,7 +66,7 @@ const Log = props => {
             onPress={
               props.log.demo
                 ? null
-                : () => props.passUpName(props.log.creatorId.username)
+                : () => props.passUpName(props.log.creatorId)
             }
           >
             {theTag}

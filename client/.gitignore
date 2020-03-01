@@ -16,3 +16,7 @@ web-report/
 .history/*
 .history
 history
+
+assets
+.assets
+assets/*

@@ -9,6 +9,8 @@ import WeatherAudit from '../weather/WeatherAudit';
 
 import mockLogs from '../../mockLogs/mockLogs.json';
 
+import { localSource } from '../../assets/localSource';
+
 class ViewOtherProfiles extends Component {
   state = {
     user: null,
@@ -32,23 +34,47 @@ class ViewOtherProfiles extends Component {
   // }
 
   componentDidMount() {
-    console.log('INSIDE VIEW OTHER PROFILES, COMPONENT IS MOUNTING');
+    console.log(
+      'INSIDE VIEW OTHER PROFILES, COMPONENT IS MOUNTING',
+      this.props
+    );
     this.setItAllUp();
   }
 
   setItAllUp = async () => {
-    // let { profileSelf } = this.props;
+    const { id } = this.props.route.params;
+    fetch(`http:///api/logs/all/${id}`)
+      .then(response => response.json())
+      .then(results => {
+        console.log('SUCCESS', results);
 
-    // let results;
+        // this.setState(
+        //   {
+        //     logs: results.specificDay,
+        //     filteredLogs: results.specificDay,
+        //     filteredLogsCopy: results.specificDay,
+        //     genderSearchMessage: null,
+        //     yours: results.yours,
+        //     id: results.id,
+        //     states: [...new Set(states)],
+        //     counties: []
+        //   },
+        //   () => console.log(this.state)
+        // );
 
-    // profileSelf
-    //   ? (results = await this.service.profile())
-    //   : (results = await this.service.seeUser(this.props.match.params.id));
+        this.makeTheLogs(results, profileSelf);
+      })
+      .catch(error => {
+        console.log(
+          'There has been a problem with your fetch operation: ' + error.message
+        );
+        throw error;
+      });
 
     let profileSelf = false;
-    let results = mockLogs;
-    console.log('RESULTS', results);
-    this.makeTheLogs(results, profileSelf);
+    // let results = mockLogs;
+    // console.log('RESULTS', results);
+    // this.makeTheLogs(results, profileSelf);
   };
 
   makeTheLogs = results => {
@@ -64,7 +90,6 @@ class ViewOtherProfiles extends Component {
       let iconSource = 'foundation';
 
       let theLogs = results.map((log, key) => {
-        console.log('LOG', log.year);
         switch (log.creatorId.gender) {
           case 'male':
             genderIcon = 'male-symbol';
@@ -168,8 +193,9 @@ class ViewOtherProfiles extends Component {
   };
 
   render() {
-    console.log('rendering', this.props.route.params.profileName);
+    console.log('rendering', this.props.route.params);
     const { profileName } = this.props.route.params;
+    console.log('THIIS ', this.props.route.params);
 
     return (
       <View className='top-push'>

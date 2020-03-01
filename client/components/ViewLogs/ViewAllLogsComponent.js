@@ -14,6 +14,8 @@ import mockLog from '../../mockLogs/mockLog.json';
 import mockLogs from '../../mockLogs/mockLogs.json';
 import { ThemeProvider } from 'react-native-elements';
 
+import { localSource } from '../../assets/localSource';
+
 class ViewAllLogs extends Component {
   state = {
     today: new Date(),
@@ -61,14 +63,13 @@ class ViewAllLogs extends Component {
 
   changeDate = date => {
     if (date) {
-      console.log('DATE SENDI:', date);
       var isoDate = new Date(`${date}T12:00:00Z`);
       this.sanitizeDate(isoDate);
     }
   };
 
   getLogsByDate = (day, year) => {
-    fetch(`http://192.168.1.17:5000/api/logs/date/${year}/${day}`)
+    fetch(`http:///api/logs/date/${year}/${day}`)
       .then(response => response.json())
       .then(results => {
         console.log('SUCCESS', results.specificDay);
@@ -176,10 +177,11 @@ class ViewAllLogs extends Component {
     this.sanitizeDate(this.state.today);
   };
 
-  seeProfile = name => {
+  seeProfile = passedUpProps => {
     const { navigate } = this.props.navigation;
-    // navigate('Test');
-    navigate('View Other Profiles', { profileName: name });
+    const { username, _id } = passedUpProps;
+    console.log('PASSED UP PROPS ', passedUpProps);
+    navigate('View Other Profiles', { profileName: username, id: _id });
   };
 
   weatherAudit = () => {
