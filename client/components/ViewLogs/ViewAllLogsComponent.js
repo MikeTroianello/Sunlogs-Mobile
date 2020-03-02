@@ -69,7 +69,7 @@ class ViewAllLogs extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    fetch(`http:///api/logs/date/${year}/${day}`)
+    fetch(`${localSource}/logs/date/${year}/${day}`)
       .then(response => response.json())
       .then(results => {
         console.log('SUCCESS', results.specificDay);

@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import { Text, View, Button, Picker } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Styles } from '../../styles/MainStyles';
+import { localSource } from '../../assets/localSource';
+
 class SignUp extends Component {
   state = {
     message: null,
     user: '',
-    username: '',
-    password: '',
+    username: 'jinglejangle',
+    password: 'jinglejangle',
     email: '',
     phone: '',
-    gender: ''
+    gender: 'female'
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const { username, password, gender } = this.state;
+    console.log('READY TO SUBMIT', this.state);
     if (!username) {
       this.setState({
         message: `You must include a username`
@@ -30,10 +33,17 @@ class SignUp extends Component {
       });
     } else {
       const state = this.state;
-      this.service
-        .signup(state)
+      fetch(`${localSource}/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(state)
+      })
+        .then(response => response.json())
         .then(results => {
-          this.props.logIt(results);
+          // this.props.logIt(results);
+          console.log(results);
         })
         .catch(error => {
           this.setState({
@@ -108,7 +118,7 @@ class SignUp extends Component {
           </View>
         </View>
         <View className='signup-button'>
-          <Button title='Submit' />
+          <Button title='Submit' onPress={this.handleSubmit} />
         </View>
 
         <Text className='signup-message'>{this.state.message}</Text>

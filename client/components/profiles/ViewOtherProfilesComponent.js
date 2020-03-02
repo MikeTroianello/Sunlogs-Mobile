@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Text, View, FlatList, Button, ScrollView } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import { Text, View, FlatList, ScrollView } from 'react-native';
 import { Styles } from '../../styles/MainStyles';
-import { Icon } from 'react-native-elements';
+import { Icon, Button, Tile } from 'react-native-elements';
 
 import DatePicker from 'react-native-datepicker';
 
@@ -43,7 +43,7 @@ class ViewOtherProfiles extends Component {
 
   setItAllUp = async () => {
     const { id } = this.props.route.params;
-    fetch(`http:///api/logs/all/${id}`)
+    fetch(`${localSource}/logs/all/${id}`)
       .then(response => response.json())
       .then(results => {
         console.log('SUCCESS', results);
@@ -117,9 +117,11 @@ class ViewOtherProfiles extends Component {
           <View key={key} className='log'>
             <View className='profile-log-head'>
               <View>
-                <Text>
-                  {log.month} {log.dayOfMonth}, {log.year}
-                </Text>
+                <Fragment>
+                  <Text>
+                    {log.month} {log.dayOfMonth}, and {log.year}
+                  </Text>
+                </Fragment>
                 <Text>
                   {log.county}, {log.state}
                 </Text>
@@ -198,7 +200,7 @@ class ViewOtherProfiles extends Component {
     console.log('THIIS ', this.props.route.params);
 
     return (
-      <View className='top-push'>
+      <Tile className='top-push'>
         <Text>This is {profileName}'s page</Text>
         <View className='profile-mood-box'>
           <Text className='view-profile-overall-happiness'>
@@ -207,13 +209,34 @@ class ViewOtherProfiles extends Component {
           <Icon name={this.state.gender} type={this.state.iconSource} />
           {this.state.logs && <WeatherAudit logs={this.state.rawLogs} />}
         </View>
-        <Button
-          title={`Show ${this.state.oldestFirst ? 'oldest' : 'newest'} first`}
-          onClick={this.sortByAge}
-        />
+        <View style={{ width: '80%', margin: '10%' }}>
+          <Button
+            title={`Show ${this.state.oldestFirst ? 'oldest' : 'newest'} first`}
+            onClick={this.sortByAge}
+            buttonStyle={{
+              backgroundColor: '#86927B',
+              padding: 5,
+              borderWidth: 1,
+              borderColor: '#413F41'
+            }}
+          />
+        </View>
+        <View>
+          <Button
+            buttonStyle={{
+              backgroundColor: '#86927B',
+              padding: 5,
+              borderWidth: 1,
+              borderColor: '#413F41'
+            }}
+            title='TESTING'
+            type='solid'
+            raised='true'
+          />
+        </View>
 
         <View className='log-box'>{this.state.logs}</View>
-      </View>
+      </Tile>
     );
   }
 }
