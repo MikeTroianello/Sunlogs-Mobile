@@ -15,6 +15,7 @@ import ViewAllLogs from './ViewLogs/ViewAllLogsComponent';
 import Settings from './account/SettingsComponent';
 import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
+import LogOut from './account/LogOut';
 
 import OtherProfiles from './profiles/OtherProfiles';
 
@@ -48,7 +49,7 @@ class MainNavigator extends Component {
             {/* <Drawer.Screen name='See All Logs' component={ViewAllLogs} /> */}
             <Drawer.Screen name='Profile' component={Profile} />
             <Drawer.Screen name='Settings' component={Settings} />
-            <Drawer.Screen name='Logout' component={Test} />
+            <Drawer.Screen name='Logout' component={LogOut} />
             <Drawer.Screen name='Sign Up' component={SignUp} />
             <Drawer.Screen name='Log In' component={Login} />
           </Drawer.Navigator>

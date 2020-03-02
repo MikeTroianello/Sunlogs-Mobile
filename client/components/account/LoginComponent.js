@@ -10,8 +10,8 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: '',
-    password: ''
+    username: 'jinglejangle',
+    password: 'jinglejangle'
   };
 
   handleSubmit = e => {
