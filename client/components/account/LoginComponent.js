@@ -50,7 +50,7 @@ class Login extends Component {
         .then(results => {
           // this.props.logIt(results);
           console.log(results);
-          navigate('Create Log');
+          navigate('Profile');
         })
         .catch(error => {
           this.setState({

@@ -8,6 +8,8 @@ import WeatherAudit from '../weather/WeatherAudit';
 import mockLogs from '../../mockLogs/mockLogs.json';
 import mockProfileLoggedIn from '../../mockLogs/mockProfileLoggedIn.json';
 
+import { localSource } from '../../assets/localSource';
+
 class Profile extends Component {
   state = {
     user: null,
@@ -36,15 +38,21 @@ class Profile extends Component {
     // let { profileSelf } = this.props;
 
     // let results;
+    profileSelf = true;
+    fetch(`${localSource}/logs/all/my-posts`)
+      .then(response => response.json())
+      .then(results => {
+        // this.props.logIt(results);
+        console.log(results);
+        this.makeTheLogs(results, profileSelf);
+      })
+      .catch(error => {
+        this.setState({
+          message: `Username already exists!`
+        });
+      });
 
-    // profileSelf
-    //   ? (results = await this.service.profile())
-    //   : (results = await this.service.seeUser(this.props.match.params.id));
-
-    let profileSelf = true;
-    let results = mockLogs;
-
-    this.makeTheLogs(results, profileSelf);
+    // let results = mockLogs;
   };
 
   makeTheLogs = (results, profileSelf) => {
