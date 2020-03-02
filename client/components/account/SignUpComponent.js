@@ -8,11 +8,11 @@ class SignUp extends Component {
   state = {
     message: null,
     user: '',
-    username: 'jinglejangle',
-    password: 'jinglejangle',
+    username: '',
+    password: '',
     email: '',
     phone: '',
-    gender: 'female'
+    gender: ''
   };
 
   handleSubmit = e => {

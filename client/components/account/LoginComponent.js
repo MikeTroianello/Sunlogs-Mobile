@@ -4,6 +4,8 @@ import { Input } from 'react-native-elements';
 
 import { Styles } from '../../styles/MainStyles';
 
+import { localSource } from '../../assets/localSource';
+
 class Login extends Component {
   state = {
     message: null,
@@ -14,8 +16,8 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
+    const { navigate } = this.props.navigation;
+    const { username, password } = this.state;
     if (!username) {
       this.setState({
         message: `You must include a username`
@@ -35,24 +37,24 @@ class Login extends Component {
       let a = today.toString().split(' ');
       var day = Math.floor(diff / oneDay);
       let year = a[3];
-      this.service
-        .login(username, password, day, year)
+      const state = { username, password, day, year };
+      console.log('GOING FOR IT');
+      fetch(`${localSource}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(state)
+      })
+        .then(response => response.json())
         .then(results => {
-          this.setState({
-            username: '',
-            password: '',
-            message: results.message || null
-          });
-
-          if (!results.message) {
-            localStorage.setItem('user', JSON.stringify(results));
-            this.props.logIt(results);
-          }
+          // this.props.logIt(results);
+          console.log(results);
+          navigate('Create Log');
         })
         .catch(error => {
-          console.log(error);
           this.setState({
-            message: `Incorrect Username or Password`
+            message: `Username already exists!`
           });
         });
     }
@@ -85,7 +87,7 @@ class Login extends Component {
           </View>
         </View>
         <View className='signup-button'>
-          <Button title='Submit' />
+          <Button title='Submit' onPress={this.handleSubmit} />
         </View>
 
         <Text className='signup-message'>{this.state.message}</Text>

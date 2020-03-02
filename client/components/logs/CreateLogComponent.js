@@ -4,6 +4,8 @@ import { Card, Input, Rating } from 'react-native-elements';
 
 import { Styles } from '../../styles/MainStyles';
 
+import { localSource } from '../../assets/localSource';
+
 class CreateLog extends Component {
   state = {
     mood: null,
@@ -52,6 +54,24 @@ class CreateLog extends Component {
         productivityMsg
       });
     } else {
+      const info = this.state;
+      fetch(`${localSource}/logs/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(info)
+      })
+        .then(response => response.json())
+        .then(results => {
+          // this.props.logIt(results);
+          console.log(results);
+        })
+        .catch(error => {
+          this.setState({
+            message: `Username already exists!`
+          });
+        });
       this.setState(
         {
           mood: null,
