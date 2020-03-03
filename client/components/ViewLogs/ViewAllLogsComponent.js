@@ -63,6 +63,14 @@ class ViewAllLogs extends Component {
 
   changeDate = date => {
     if (date) {
+      date = date.split('-');
+      let b = date.pop();
+      date.unshift(b);
+      date = date.join('-');
+
+      this.setState({
+        date: date.split('T')[0]
+      });
       var isoDate = new Date(`${date}T12:00:00Z`);
       this.sanitizeDate(isoDate);
     }
@@ -142,11 +150,11 @@ class ViewAllLogs extends Component {
     });
   };
 
-  filterCounty = e => {
-    if (e.target.value !== 'Filter by County:') {
+  filterCounty = county => {
+    if (county !== 'Filter by County:') {
       this.setState(
         {
-          [e.target.name]: e.target.value
+          county: county
         },
         () => {
           this.filterByCounty();
@@ -172,7 +180,8 @@ class ViewAllLogs extends Component {
       counties: [],
       state: undefined,
       stateFiltered: false,
-      county: undefined
+      county: undefined,
+      date: new Date()
     });
     this.sanitizeDate(this.state.today);
   };
@@ -207,12 +216,6 @@ class ViewAllLogs extends Component {
   };
 
   render() {
-    let allStates = mockLogs.map(log => {
-      return log.state;
-    });
-
-    let states = [...new Set(allStates)];
-
     return (
       <View>
         {this.state.filteredLogs && this.weatherAudit()}
@@ -222,7 +225,7 @@ class ViewAllLogs extends Component {
           <Text>Sort by Date</Text>
           <DatePicker
             date={this.state.date}
-            format='YYYY-MM-DD'
+            format='MM-DD-YYYY'
             mode='date'
             placeholder='Select Date'
             confirmBtnText='Confirm'
@@ -258,12 +261,17 @@ class ViewAllLogs extends Component {
 
         <Text>Filter By State:</Text>
 
-        <StateFilter states={states} filter={this.filterState} />
+        <StateFilter
+          states={this.state.states}
+          filter={this.filterState}
+          state={this.state.state}
+        />
 
         <Text>Filter By County:</Text>
         <CountyFilter
           counties={this.state.counties}
-          filter={this.filterCounty}
+          filter={county => this.filterCounty(county)}
+          county={this.state.county}
         />
 
         {this.state.logs && this.buildList()}
