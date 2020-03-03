@@ -3,6 +3,8 @@ import { Text, View, Switch, ScrollView, Button } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Styles } from '../../styles/MainStyles';
 
+import { localSource } from '../../assets/localSource';
+
 class Settings extends Component {
   state = {
     message: null,
@@ -38,12 +40,50 @@ class Settings extends Component {
     );
   };
 
-  changeSettings = () => {
+  changeInfo = () => {
+    const info = this.state;
     console.log('SETTINGS CHANGED');
+    fetch(`${localSource}/change-info`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(info)
+    })
+      .then(response => response.json())
+      .then(results => {
+        // this.props.logIt(results);
+        console.log(results);
+      })
+      .catch(error => {
+        this.setState({
+          message: `Username already exists!`
+        });
+      });
   };
 
+  //CHANGE PASSWORD
+
   deleteUser = () => {
+    const info = this.state;
     console.log('BALEETED');
+    fetch(`${localSource}/delete-user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(info)
+    })
+      .then(response => response.json())
+      .then(results => {
+        // this.props.logIt(results);
+        console.log(results);
+      })
+      .catch(error => {
+        this.setState({
+          message: `Username already exists!`
+        });
+      });
   };
 
   render() {
@@ -165,7 +205,7 @@ class Settings extends Component {
               </View>
             </View>
 
-            <Button title='Change Settings' onPress={this.changeSettings} />
+            <Button title='Change Settings' onPress={this.changeInfo} />
           </View>
           <View className='settings-delete'>
             <Text>Delete Profile</Text>

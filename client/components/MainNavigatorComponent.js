@@ -46,7 +46,7 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Create Log' component={CreateLog} />
             <Drawer.Screen name='Home' component={LandingPage} />
             <Drawer.Screen name='See Logs' component={LogStack} />
-            {/* <Drawer.Screen name='See All Logs' component={ViewAllLogs} /> */}
+            <Drawer.Screen name='Test' component={Test} />
             <Drawer.Screen name='Profile' component={Profile} />
             <Drawer.Screen name='Settings' component={Settings} />
             <Drawer.Screen name='Logout' component={LogOut} />

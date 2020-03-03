@@ -5,9 +5,6 @@ import DatePicker from 'react-native-datepicker';
 
 import WeatherAudit from '../weather/WeatherAudit';
 
-import mockLogs from '../../mockLogs/mockLogs.json';
-import mockProfileLoggedIn from '../../mockLogs/mockProfileLoggedIn.json';
-
 import { localSource } from '../../assets/localSource';
 
 class Profile extends Component {
