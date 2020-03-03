@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import { localSource } from '../assets/localSource';
 
@@ -34,7 +35,35 @@ export default class Test extends Component {
     return (
       <View>
         <Text>TEST</Text>
+        <View style={styles.iconBox}>
+          <Icon
+            name='cart-plus'
+            type='font-awesome'
+            iconStyle={styles.stackIcon}
+            onPress={() => navigation.toggleDrawer()}
+          />
+          <Icon
+            name='user'
+            type='font-awesome'
+            iconStyle={styles.stackIcon}
+            onPress={() => navigation.toggleDrawer()}
+          />
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  iconBox: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  stackIcon: {
+    marginLeft: 10,
+    marginRight: 10,
+    flexDirection: 'column',
+    color: 'black',
+    fontSize: 24
+  }
+});

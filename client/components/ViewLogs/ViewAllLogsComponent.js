@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Button, Picker } from 'react-native';
+import { Text, View, FlatList, Button, Picker, ScrollView } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 import Log from './LogComponent';
@@ -63,14 +63,14 @@ class ViewAllLogs extends Component {
 
   changeDate = date => {
     if (date) {
+      this.setState({
+        date: date
+      });
       date = date.split('-');
       let b = date.pop();
       date.unshift(b);
       date = date.join('-');
-
-      this.setState({
-        date: date.split('T')[0]
-      });
+      console.log('THIS IS THE DATE', date);
       var isoDate = new Date(`${date}T12:00:00Z`);
       this.sanitizeDate(isoDate);
     }
@@ -108,12 +108,12 @@ class ViewAllLogs extends Component {
 
   filterByGender = gender => {
     console.log(gender);
-    // let genderLogs = this.state.filteredLogsCopy.filter(log => {
-    //   return log.creatorId.gender === gender;
-    // });
+    let genderLogs = this.state.filteredLogsCopy.filter(log => {
+      return log.creatorId.gender === gender;
+    });
 
     this.setState({
-      // filteredLogs: genderLogs,
+      filteredLogs: genderLogs,
       genderSearchMessage: `Showing all ${gender} logs`,
       setGender: gender
     });
@@ -167,11 +167,14 @@ class ViewAllLogs extends Component {
     let countyLogs = this.state.logs.filter(log => {
       return log.county === this.state.county;
     });
-
-    this.setState({
-      filteredLogs: countyLogs,
-      genderSearchMessage: null
-    });
+    console.log('THESE ARE THE COUNTy LOGS', countyLogs);
+    this.setState(
+      {
+        filteredLogs: countyLogs,
+        genderSearchMessage: null
+      },
+      () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
+    );
   };
 
   defaultLogs = () => {
@@ -189,7 +192,6 @@ class ViewAllLogs extends Component {
   seeProfile = passedUpProps => {
     const { navigate } = this.props.navigation;
     const { username, _id } = passedUpProps;
-    console.log('PASSED UP PROPS ', passedUpProps);
     navigate('View Other Profiles', { profileName: username, id: _id });
   };
 
@@ -198,9 +200,10 @@ class ViewAllLogs extends Component {
   };
 
   buildList = () => {
+    console.log('BUILD LIST HAS BEEN CALLED', this.state.filteredLogs);
     return (
       <FlatList
-        data={this.state.logs}
+        data={this.state.filteredLogs}
         renderItem={this.renderLogs}
         keyExtractor={item => item._id.toString()}
       />
@@ -217,9 +220,8 @@ class ViewAllLogs extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         {this.state.filteredLogs && this.weatherAudit()}
-        <Text htmlFor='gender'>Filter by gender</Text>
 
         <View>
           <Text>Sort by Date</Text>
@@ -231,7 +233,6 @@ class ViewAllLogs extends Component {
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
             onDateChange={date => {
-              console.log('DATE', date);
               this.changeDate(date);
             }}
             customStyles={{
@@ -248,6 +249,7 @@ class ViewAllLogs extends Component {
           />
         </View>
 
+        <Text htmlFor='gender'>Filter by gender</Text>
         <Picker
           selectedValue={this.state.setGender}
           onValueChange={gender => this.filterByGender(gender)}
@@ -274,9 +276,9 @@ class ViewAllLogs extends Component {
           county={this.state.county}
         />
 
-        {this.state.logs && this.buildList()}
+        {this.state.filteredLogs && this.buildList()}
         <Button title='Back to default' onPress={this.defaultLogs} />
-      </View>
+      </ScrollView>
     );
   }
 }

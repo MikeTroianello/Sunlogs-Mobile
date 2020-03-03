@@ -93,7 +93,7 @@ class CreateLog extends Component {
           moodMsg: null,
           productivityMsg: null
         },
-        navigate('Home')
+        navigate('See Logs')
       );
     }
   };
