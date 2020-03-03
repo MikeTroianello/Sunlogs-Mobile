@@ -117,11 +117,10 @@ class ViewOtherProfiles extends Component {
           <View key={key} className='log'>
             <View className='profile-log-head'>
               <View>
-                <Fragment>
-                  <Text>
-                    {log.month} {log.dayOfMonth}, and {log.year}
-                  </Text>
-                </Fragment>
+                <Text>
+                  {log.month} {log.dayOfMonth}, {log.year}
+                </Text>
+
                 <Text>
                   {log.county}, {log.state}
                 </Text>
@@ -164,6 +163,7 @@ class ViewOtherProfiles extends Component {
   };
 
   sortByAge = () => {
+    console.log('SORTING BY AGE');
     let sortedLogs;
     if (this.state.oldestFirst) {
       sortedLogs = this.state.rawLogs.sort((a, b) =>
@@ -188,12 +188,6 @@ class ViewOtherProfiles extends Component {
     );
   };
 
-  sortByAge = () => {
-    this.setState(prevProps => ({
-      oldestFirst: !prevProps.oldestFirst
-    }));
-  };
-
   render() {
     console.log('rendering', this.props.route.params);
     const { profileName } = this.props.route.params;
@@ -212,26 +206,13 @@ class ViewOtherProfiles extends Component {
         <View style={{ width: '80%', margin: '10%' }}>
           <Button
             title={`Show ${this.state.oldestFirst ? 'oldest' : 'newest'} first`}
-            onClick={this.sortByAge}
+            onPress={this.sortByAge}
             buttonStyle={{
               backgroundColor: '#86927B',
               padding: 5,
               borderWidth: 1,
               borderColor: '#413F41'
             }}
-          />
-        </View>
-        <View>
-          <Button
-            buttonStyle={{
-              backgroundColor: '#86927B',
-              padding: 5,
-              borderWidth: 1,
-              borderColor: '#413F41'
-            }}
-            title='TESTING'
-            type='solid'
-            raised='true'
           />
         </View>
 

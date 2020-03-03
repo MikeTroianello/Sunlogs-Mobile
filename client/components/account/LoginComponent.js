@@ -10,8 +10,8 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: 'jinglejangle',
-    password: 'jinglejangle'
+    username: 'michael',
+    password: 'michael'
   };
 
   handleSubmit = e => {
@@ -49,9 +49,12 @@ class Login extends Component {
         .then(response => response.json())
         .then(results => {
           if (results.message == 'Incorrect password.') {
-            console.log('FAILED');
             this.setState({
               message: 'Incorrect password!'
+            });
+          } else if (results.message == 'This account was deleted') {
+            this.setState({
+              message: 'This account was deleted'
             });
           }
           // this.props.logIt(results);

@@ -22,9 +22,28 @@ class Profile extends Component {
   };
 
   sortByAge = () => {
-    this.setState(prevProps => ({
-      oldestFirst: !prevProps.oldestFirst
-    }));
+    let sortedLogs;
+    if (this.state.oldestFirst) {
+      sortedLogs = this.state.rawLogs.sort((a, b) =>
+        a.year > b.year ? 1 : -1
+      );
+      sortedLogs = this.state.rawLogs.sort((a, b) =>
+        a.dayOfYear > b.dayOfYear ? 1 : -1
+      );
+    } else {
+      sortedLogs = this.state.rawLogs.sort((a, b) =>
+        a.year < b.year ? 1 : -1
+      );
+      sortedLogs = this.state.rawLogs.sort((a, b) =>
+        a.dayOfYear < b.dayOfYear ? 1 : -1
+      );
+    }
+    this.setState(
+      prevProps => ({
+        oldestFirst: !prevProps.oldestFirst
+      }),
+      this.makeTheLogs(sortedLogs, true)
+    );
   };
 
   componentDidMount = () => {
@@ -112,9 +131,9 @@ class Profile extends Component {
         return (
           <View key={key} style={Styles.log}>
             <View className='profile-log-head'>
-              <Text>{log.month}</Text>
-              <Text>{log.dayOfMonth}</Text>
-              <Text>{log.year}</Text>
+              <Text>
+                {log.month} {log.dayOfMonth}, {log.year}
+              </Text>
               <Text>
                 {log.county} County, {log.state}
               </Text>
