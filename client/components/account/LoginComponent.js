@@ -48,13 +48,21 @@ class Login extends Component {
       })
         .then(response => response.json())
         .then(results => {
+          if (results.message == 'Incorrect password.') {
+            console.log('FAILED');
+            this.setState({
+              message: 'Incorrect password!'
+            });
+          }
           // this.props.logIt(results);
-          console.log(results);
-          navigate('Test');
+          else {
+            console.log(results);
+            navigate('Test');
+          }
         })
         .catch(error => {
           this.setState({
-            message: `Username already exists!`
+            message: `Incorrect Password`
           });
         });
     }

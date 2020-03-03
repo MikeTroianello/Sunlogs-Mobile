@@ -5,6 +5,7 @@ import { localSource } from '../../assets/localSource';
 
 export default class Logout extends Component {
   componentDidMount() {
+    const { navigate } = this.props.navigation;
     console.log('ATTEMPTING TO LOG OUT');
     fetch(`${localSource}/logout`, {
       method: 'POST',
@@ -21,7 +22,7 @@ export default class Logout extends Component {
       })
       .catch(error => {
         this.setState({
-          message: `Username already exists!`
+          message: `FAILURE!`
         });
       });
   }

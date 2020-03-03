@@ -42,7 +42,7 @@ class Settings extends Component {
 
   changeInfo = () => {
     const info = this.state;
-    console.log('SETTINGS CHANGED');
+    console.log('SETTINGS CHANGing:', info);
     fetch(`${localSource}/change-info`, {
       method: 'POST',
       headers: {
@@ -57,7 +57,7 @@ class Settings extends Component {
       })
       .catch(error => {
         this.setState({
-          message: `Username already exists!`
+          message: `Something went wrong`
         });
       });
   };
@@ -66,7 +66,7 @@ class Settings extends Component {
 
   deleteUser = () => {
     const info = this.state;
-    console.log('BALEETED');
+    console.log('BALEETED', info);
     fetch(`${localSource}/delete-user`, {
       method: 'POST',
       headers: {
