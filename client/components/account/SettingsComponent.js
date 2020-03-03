@@ -17,7 +17,7 @@ class Settings extends Component {
     email: null,
     oldPass: null,
     newPass: null,
-    confirmDelete: null,
+    confirmation: null,
     deletePassword: null,
     id: null
   };
@@ -62,9 +62,8 @@ class Settings extends Component {
       });
   };
 
-  //CHANGE PASSWORD
-
   deleteUser = () => {
+    const { navigate } = this.props.navigation;
     const info = this.state;
     console.log('BALEETED', info);
     fetch(`${localSource}/delete-user`, {
@@ -78,6 +77,7 @@ class Settings extends Component {
       .then(results => {
         // this.props.logIt(results);
         console.log(results);
+        navigate('Sign Up');
       })
       .catch(error => {
         this.setState({
@@ -229,7 +229,7 @@ class Settings extends Component {
               autoComplete='off'
               placeholder='make sure this is what you want...'
               style={{ fontSize: '1em', width: '250px' }}
-              onChangeText={text => this.handleChange(text, 'confirmDelete')}
+              onChangeText={text => this.handleChange(text, 'confirmation')}
             />
 
             <Button title='DELETE' onPress={this.deleteUser} />
