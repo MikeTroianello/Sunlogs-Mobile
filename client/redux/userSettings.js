@@ -12,8 +12,10 @@ export const userSettings = (
 ) => {
   switch (action.type) {
     case ActionTypes.LOG_IN:
+      console.log('ACTIoN DOT PAYLOAD', action.payload);
       return {
         username: action.payload.username,
+        id: action.payload._id,
         createdToday: action.payload.createdToday,
         hideProfile: action.payload.hideProfile,
         privateJournalDefault: action.payload.privateJournalDefault,

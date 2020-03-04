@@ -17,7 +17,7 @@ export const loggedIn = () => dispatch => {
     .then(response => response.json())
     .then(results => {
       // this.props.logIt(results);
-      console.log('SUCCESS');
+      console.log('\x1b[93m-SUCCESS-\x1b[39m');
       console.log(results);
       dispatch(setLoggedIn(results));
     })

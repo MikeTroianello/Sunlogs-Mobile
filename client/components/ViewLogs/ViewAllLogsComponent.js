@@ -201,7 +201,6 @@ class ViewAllLogs extends Component {
   };
 
   buildList = () => {
-    console.log('BUILD LIST HAS BEEN CALLED', this.state.filteredLogs);
     return (
       <FlatList
         data={this.state.filteredLogs}
@@ -212,9 +211,14 @@ class ViewAllLogs extends Component {
   };
 
   renderLogs = ({ item }) => {
+    console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
     return (
       <View style={Styles.logs}>
-        <Log log={item} passUpName={this.seeProfile} />
+        <Log
+          log={item}
+          passUpName={this.seeProfile}
+          id={this.props.userSettings.id}
+        />
       </View>
     );
   };
@@ -284,9 +288,11 @@ class ViewAllLogs extends Component {
   }
 }
 
+//USE MAP STATE FOR CREATED TODAY ALERT
+
 const mapStateToProps = state => {
   return {
-    username: state.username
+    userSettings: state.userSettings
   };
 };
 

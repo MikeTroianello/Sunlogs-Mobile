@@ -62,7 +62,7 @@ class Login extends Component {
           else {
             console.log(results);
             this.props.loggedIn(results);
-            navigate('Test');
+            navigate('Redux Info');
           }
         })
         .catch(error => {

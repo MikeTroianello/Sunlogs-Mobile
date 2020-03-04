@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Switch } from 'react-native';
+import { Text, View, Button, Switch, Alert } from 'react-native';
 import { Card, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { setCreatedToday } from '../../redux/ActionCreators';
 
 import { Styles } from '../../styles/MainStyles';
 
@@ -13,8 +14,8 @@ class CreateLog extends Component {
     moodEmoji: null,
     productivity: null,
     journal: '',
-    privateJournal: false,
-    hideCreator: false,
+    privateJournal: this.props.userSettings.privateJournalDefault,
+    hideCreator: this.props.userSettings.hideCreatorDefault,
     err: null,
     message: null,
     messageCss: 'red',
@@ -23,6 +24,7 @@ class CreateLog extends Component {
   };
 
   componentDidMount() {
+    console.log('REDUX INFO', this.props.userSettings);
     let today = new Date();
     var start = new Date(today.getFullYear(), 0, 0);
     var diff =
@@ -54,6 +56,16 @@ class CreateLog extends Component {
         moodMsg,
         productivityMsg
       });
+    } else if (this.props.userSettings.createdToday) {
+      console.log('YOU HAVE ALREADY CREATED A LOG');
+      Alert.alert('Error', 'You have already created a log today!', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigate('See Logs');
+          }
+        }
+      ]);
     } else {
       const info = this.state;
       fetch(`${localSource}/logs/create`, {
@@ -73,6 +85,7 @@ class CreateLog extends Component {
             message: `Username already exists!`
           });
         });
+      this.props.setCreatedToday();
       this.setState(
         {
           mood: null,
@@ -147,13 +160,14 @@ class CreateLog extends Component {
 
 const mapStateToProps = state => {
   return {
-    createdToday: state.createdToday,
-    hideCreatorDefault: state.hideCreatorDefault,
-    hideProfile: state.hideProfile,
-    privateJournalDefault: state.privateJournalDefault
+    userSettings: state.userSettings
   };
 };
 
 //MAP DISPATCH NEEDED
 
-export default connect(mapStateToProps)(CreateLog);
+const mapDispatchToProps = {
+  setCreatedToday: () => setCreatedToday()
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateLog);

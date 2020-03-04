@@ -3,7 +3,6 @@ import { View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const Log = props => {
-  console.log('THE PROPS-=-=-=-=-=-=-=', props.log.creatorId._id);
   let weatherString;
   let genderIcon;
   let iconSource = 'foundation';
@@ -54,6 +53,13 @@ const Log = props => {
   ) {
     theTag = props.log.creatorId.username;
   }
+
+  console.log(
+    props.log.creatorId.username,
+    props._id,
+    props.log.creatorId._id,
+    props
+  );
 
   return (
     <View className={props.test ? 'mock-log' : 'log'}>
