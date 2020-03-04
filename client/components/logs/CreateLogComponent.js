@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Button, Switch } from 'react-native';
 import { Card, Input, Rating } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 import { Styles } from '../../styles/MainStyles';
 
@@ -144,4 +145,15 @@ class CreateLog extends Component {
   }
 }
 
-export default CreateLog;
+const mapStateToProps = state => {
+  return {
+    createdToday: state.createdToday,
+    hideCreatorDefault: state.hideCreatorDefault,
+    hideProfile: state.hideProfile,
+    privateJournalDefault: state.privateJournalDefault
+  };
+};
+
+//MAP DISPATCH NEEDED
+
+export default connect(mapStateToProps)(CreateLog);

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { logout } from '../../redux/ActionCreators';
 
 import { localSource } from '../../assets/localSource';
 
-export default class Logout extends Component {
+class Logout extends Component {
   componentDidMount() {
     const { navigate } = this.props.navigation;
     console.log('ATTEMPTING TO LOG OUT');
@@ -19,6 +21,7 @@ export default class Logout extends Component {
         // this.props.logIt(results);
 
         console.log(results);
+        this.props.logout();
       })
       .catch(error => {
         this.setState({
@@ -31,3 +34,9 @@ export default class Logout extends Component {
     return <View></View>;
   }
 }
+
+const mapDispatchToProps = {
+  logout: () => logout()
+};
+
+export default connect(null, mapDispatchToProps)(Logout);

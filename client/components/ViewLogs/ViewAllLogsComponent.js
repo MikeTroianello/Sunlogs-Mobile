@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList, Button, Picker, ScrollView } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import { connect } from 'react-redux';
 
 import Log from './LogComponent';
 
@@ -283,4 +284,10 @@ class ViewAllLogs extends Component {
   }
 }
 
-export default ViewAllLogs;
+const mapStateToProps = state => {
+  return {
+    username: state.username
+  };
+};
+
+export default connect(mapStateToProps)(ViewAllLogs);

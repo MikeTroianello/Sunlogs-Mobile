@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { Text, View, Switch, ScrollView, Button } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Styles } from '../../styles/MainStyles';
+import { connect } from 'react-redux';
+
+import { updateSettings, deleteUser } from '../../redux/ActionCreators';
 
 import { localSource } from '../../assets/localSource';
 
 class Settings extends Component {
   state = {
     message: null,
-    hideProfile: false,
-    privateJournalDefault: false,
-    hideCreatorDefault: false,
+    hideProfile: this.props.userSettings.hideProfile,
+    privateJournalDefault: this.props.userSettings.privateJournalDefault,
+    hideCreatorDefault: this.props.userSettings.hideCreatorDefault,
     oldPhone: null,
     phone: null,
     oldEmail: null,
@@ -52,8 +55,8 @@ class Settings extends Component {
     })
       .then(response => response.json())
       .then(results => {
-        // this.props.logIt(results);
         console.log(results);
+        this.props.updateSettings(info);
       })
       .catch(error => {
         this.setState({
@@ -77,6 +80,7 @@ class Settings extends Component {
       .then(results => {
         // this.props.logIt(results);
         console.log(results);
+        this.props.deleteUser();
         navigate('Sign Up');
       })
       .catch(error => {
@@ -87,6 +91,10 @@ class Settings extends Component {
   };
 
   render() {
+    console.log(
+      'WHAT COMES BACK FROM THE REDUX STORE: ',
+      this.props.userSettings
+    );
     return (
       <ScrollView alwaysBounceVertical={true}>
         <View className='settings'>
@@ -240,4 +248,15 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = state => {
+  return {
+    userSettings: state.userSettings
+  };
+};
+
+const mapDispatchToProps = {
+  updateSettings: info => updateSettings(info),
+  deleteUser: () => deleteUser()
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

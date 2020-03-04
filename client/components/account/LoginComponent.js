@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { Input } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 import { Styles } from '../../styles/MainStyles';
 
 import { localSource } from '../../assets/localSource';
+import { loggedIn } from '../../redux/ActionCreators';
 
 class Login extends Component {
   state = {
@@ -37,8 +39,7 @@ class Login extends Component {
       let a = today.toString().split(' ');
       var day = Math.floor(diff / oneDay);
       let year = a[3];
-      const state = { username, password, day, year };
-      console.log('GOING FOR IT');
+      let state = { username, password, day, year };
       fetch(`${localSource}/login`, {
         method: 'POST',
         headers: {
@@ -60,6 +61,7 @@ class Login extends Component {
           // this.props.logIt(results);
           else {
             console.log(results);
+            this.props.loggedIn(results);
             navigate('Test');
           }
         })
@@ -107,4 +109,8 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = {
+  loggedIn: results => loggedIn(results)
+};
+
+export default connect(null, mapDispatchToProps)(Login);

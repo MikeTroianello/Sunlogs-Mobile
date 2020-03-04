@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Button, Picker } from 'react-native';
 import { Input } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { loggedIn } from '../../redux/ActionCreators';
+
 import { Styles } from '../../styles/MainStyles';
 import { localSource } from '../../assets/localSource';
 
@@ -17,6 +20,7 @@ class SignUp extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const { navigate } = this.props.navigation;
     const { username, password, gender } = this.state;
     console.log('READY TO SUBMIT', this.state);
     if (!username) {
@@ -44,6 +48,8 @@ class SignUp extends Component {
         .then(results => {
           // this.props.logIt(results);
           console.log(results);
+          this.props.loggedIn(results);
+          navigate('See Logs');
         })
         .catch(error => {
           this.setState({
@@ -127,4 +133,8 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = {
+  loggedIn: results => loggedIn(results)
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);

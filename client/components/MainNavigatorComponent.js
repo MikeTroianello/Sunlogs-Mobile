@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { connect } from 'react-redux';
+
 import Test from './Test';
 import LandingPage from './LandingPageComponent';
 import Profile from './profiles/ProfileComponent';
@@ -18,6 +20,8 @@ import Login from './account/LoginComponent.js';
 import LogOut from './account/LogOut';
 
 import OtherProfiles from './profiles/OtherProfiles';
+
+import ReduxInfo from './ReduxInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -52,6 +56,7 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Logout' component={LogOut} />
             <Drawer.Screen name='Sign Up' component={SignUp} />
             <Drawer.Screen name='Log In' component={Login} />
+            <Drawer.Screen name='Redux Info' component={ReduxInfo} />
           </Drawer.Navigator>
         </NavigationContainer>
       </View>
@@ -59,7 +64,16 @@ class MainNavigator extends Component {
   }
 }
 
-export default MainNavigator;
+const mapStateToProps = state => {
+  return {
+    createdToday: state.createdToday,
+    hideCreatorDefault: state.hideCreatorDefault,
+    hideProfile: state.hideProfile,
+    privateJournalDefault: state.privateJournalDefault
+  };
+};
+
+export default connect(mapStateToProps)(MainNavigator);
 
 const styles = StyleSheet.create({
   container: {
