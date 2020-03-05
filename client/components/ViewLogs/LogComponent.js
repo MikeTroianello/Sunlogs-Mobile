@@ -66,6 +66,8 @@ const Log = props => {
       <View className='weather-box'>
         {props.id === props.log.creatorId._id ? (
           <Text>~(You!)~</Text>
+        ) : theTag == 'This user has decided to keep their name private' ? (
+          <Text>This user has decided to keep their name private</Text>
         ) : (
           <Text
             style={{ color: logStyle }}
