@@ -218,6 +218,7 @@ class ViewAllLogs extends Component {
           log={item}
           passUpName={this.seeProfile}
           id={this.props.userSettings.id}
+          privateAccount={item.creatorId.hideProfile}
         />
       </View>
     );

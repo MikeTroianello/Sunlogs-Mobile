@@ -55,8 +55,8 @@ const Log = props => {
   }
 
   console.log(
+    '=-=-=-=-0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=',
     props.log.creatorId.username,
-    props._id,
     props.log.creatorId._id,
     props
   );
@@ -66,8 +66,9 @@ const Log = props => {
       <View className='weather-box'>
         {props.id === props.log.creatorId._id ? (
           <Text>~(You!)~</Text>
-        ) : theTag == 'This user has decided to keep their name private' ? (
-          <Text>This user has decided to keep their name private</Text>
+        ) : theTag == 'This user has decided to keep their name private' ||
+          props.privateAccount ? (
+          <Text>{theTag}</Text>
         ) : (
           <Text
             style={{ color: logStyle }}
