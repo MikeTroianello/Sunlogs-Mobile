@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Modal } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 
-import { Styles } from '../../styles/MainStyles';
+import SignUp from './SignUpComponent';
+
+import { Styles, LoginCss } from '../../styles/MainStyles';
 
 import { localSource } from '../../assets/localSource';
 import { loggedIn } from '../../redux/ActionCreators';
@@ -13,7 +15,8 @@ class Login extends Component {
     message: null,
     user: '',
     username: 'michael',
-    password: 'michael'
+    password: 'michael',
+    showModal: false
   };
 
   handleSubmit = e => {
@@ -62,7 +65,7 @@ class Login extends Component {
           else {
             console.log(results);
             this.props.loggedIn(results);
-            navigate('Redux Info');
+            navigate('See Logs');
           }
         })
         .catch(error => {
@@ -73,37 +76,54 @@ class Login extends Component {
     }
   };
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal
+    }));
+  };
+
   render() {
     return (
-      <View style={Styles.container}>
-        <Text className='signup-header'>Log In</Text>
-        <View className='form-pieces'>
-          <View className='form-piece'>
-            <Text>Username:</Text>
-            <Input
-              textContentType='username'
-              placeholder='Your name...'
-              onChangeText={text => this.setState({ username: text })}
-              value={this.state.username}
-            />
+      <View>
+        <View style={LoginCss.wholePage}>
+          <Text style={LoginCss.loginHeader}>Welcome!</Text>
+          <View style={LoginCss.loginComponent}>
+            <View className='form-piece'>
+              <Text>Username:</Text>
+              <Input
+                textContentType='username'
+                placeholder='Your name...'
+                onChangeText={text => this.setState({ username: text })}
+                value={this.state.username}
+              />
+            </View>
+            <View className='form-piece'>
+              <Text>Password:</Text>
+              <Input
+                autoCompleteType='password'
+                textContentType='password'
+                secureTextEntry={true}
+                placeholder='******'
+                onChangeText={text => this.setState({ password: text })}
+                value={this.state.password}
+              />
+            </View>
           </View>
-          <View className='form-piece'>
-            <Text>Password:</Text>
-            <Input
-              autoCompleteType='password'
-              textContentType='password'
-              secureTextEntry={true}
-              placeholder='******'
-              onChangeText={text => this.setState({ password: text })}
-              value={this.state.password}
-            />
+          <View style={LoginCss.submitButton}>
+            <Button title='Submit' onPress={this.handleSubmit} />
           </View>
-        </View>
-        <View className='signup-button'>
-          <Button title='Submit' onPress={this.handleSubmit} />
-        </View>
 
-        <Text className='signup-message'>{this.state.message}</Text>
+          <Text className='signup-message'>{this.state.message}</Text>
+          <Button
+            title='New Here? Create an Account!'
+            onPress={this.toggleModal}
+            style={LoginCss.signUpButton}
+          />
+        </View>
+        <Modal animationType='slide' visible={this.state.showModal}>
+          <SignUp />
+          <Button title='Go Back To Login' onPress={this.toggleModal} />
+        </Modal>
       </View>
     );
   }

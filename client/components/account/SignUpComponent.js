@@ -4,7 +4,7 @@ import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../redux/ActionCreators';
 
-import { Styles } from '../../styles/MainStyles';
+import { Styles, SignUpCss } from '../../styles/MainStyles';
 import { localSource } from '../../assets/localSource';
 
 class SignUp extends Component {
@@ -65,7 +65,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={Styles.container}>
+      <View style={SignUpCss.wholePage}>
         <Text className='signup-header'>Create an Account!</Text>
         <View className='form-pieces'>
           <View className='form-piece'>

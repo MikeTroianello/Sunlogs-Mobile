@@ -31,7 +31,14 @@ const LogStack = () => {
     <Stack.Navigator>
       <Stack.Screen name='See All Logs' component={ViewAllLogs} />
       <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} />
-      {/* <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} /> */}
+    </Stack.Navigator>
+  );
+};
+
+const LoginStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name='Log In' component={Login} />
     </Stack.Navigator>
   );
 };
@@ -54,8 +61,10 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Profile' component={Profile} />
             <Drawer.Screen name='Settings' component={Settings} />
             <Drawer.Screen name='Logout' component={LogOut} />
+            {/* <Drawer.Screen name='Sign Up' component={SignUp} />
+            <Drawer.Screen name='Log In' component={Login} /> */}
             <Drawer.Screen name='Sign Up' component={SignUp} />
-            <Drawer.Screen name='Log In' component={Login} />
+            <Drawer.Screen name='Log In' component={LoginStack} />
             <Drawer.Screen name='Redux Info' component={ReduxInfo} />
           </Drawer.Navigator>
         </NavigationContainer>
