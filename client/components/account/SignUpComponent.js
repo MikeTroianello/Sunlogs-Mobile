@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Picker } from 'react-native';
+import { Text, TextInput, View, Button, Picker } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../redux/ActionCreators';
@@ -69,12 +69,17 @@ class SignUp extends Component {
         <Text className='signup-header'>Create an Account!</Text>
         <View className='form-pieces'>
           <View className='form-piece'>
-            <Text>Your Username:</Text>
-            <Input
+            <TextInput
               placeholder='Your name...'
               onChangeText={text => this.setState({ username: text })}
               value={this.state.username}
             />
+            {/* <Text>Your Username:</Text>
+            <Input
+              placeholder='Your name...'
+              onChangeText={text => this.setState({ username: text })}
+              value={this.state.username}
+            /> */}
           </View>
           <View className='form-piece'>
             <Text htmlFor='password'>Password:</Text>

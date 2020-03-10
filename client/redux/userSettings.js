@@ -6,7 +6,9 @@ export const userSettings = (
     createdToday: false,
     hideProfile: false,
     privateJournalDefault: false,
-    hideCreatorDefault: false
+    hideCreatorDefault: false,
+    email: null,
+    phone: null
   },
   action
 ) => {
@@ -19,7 +21,9 @@ export const userSettings = (
         createdToday: action.payload.createdToday,
         hideProfile: action.payload.hideProfile,
         privateJournalDefault: action.payload.privateJournalDefault,
-        hideCreatorDefault: action.payload.hideCreatorDefault
+        hideCreatorDefault: action.payload.hideCreatorDefault,
+        email: action.payload.email,
+        phone: action.payload.phone
       };
     case ActionTypes.CREATED_TODAY:
       return {

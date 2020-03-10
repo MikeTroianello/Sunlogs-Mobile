@@ -115,7 +115,7 @@ class CreateLog extends Component {
   render() {
     return (
       <View style={Styles.container}>
-        <Text>THIS IS THE CREATE LOG COMPONENT</Text>
+        <Text>CREATE A LOG</Text>
         <Text>What is your mood?</Text>
         <Rating
           imageSize={50}

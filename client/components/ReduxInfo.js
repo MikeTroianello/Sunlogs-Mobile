@@ -20,7 +20,9 @@ class ReduxInfo extends Component {
       createdToday,
       hideProfile,
       privateJournalDefault,
-      hideCreatorDefault
+      hideCreatorDefault,
+      email,
+      phone
     } = this.props.userSettings;
     return (
       <View>
@@ -32,6 +34,8 @@ class ReduxInfo extends Component {
           PRIVATE JOURNAL DEFAULT: {privateJournalDefault ? 'YES' : 'NO'}
         </Text>
         <Text>HIDE CREATOR DEFAULT: {hideCreatorDefault ? 'YES' : 'NO'}</Text>
+        <Text>email: {email}</Text>
+        <Text>phone: {phone}</Text>
       </View>
     );
   }

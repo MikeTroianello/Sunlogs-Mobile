@@ -15,6 +15,7 @@ import ViewOtherProfiles from './profiles/ViewOtherProfilesComponent';
 import CreateLog from './logs/CreateLogComponent';
 import ViewAllLogs from './ViewLogs/ViewAllLogsComponent';
 import Settings from './account/SettingsComponent';
+import Delete from '../components/account/DeleteComponent';
 import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 import LogOut from './account/LogOut';
@@ -35,10 +36,27 @@ const LogStack = () => {
   );
 };
 
-const LoginStack = () => {
+// const LoginStack = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name='Log In' component={Login} />
+//     </Stack.Navigator>
+//   );
+// };
+
+const ProfileStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Log In' component={Login} />
+      <Stack.Screen name='Your Profile' component={Profile} />
+    </Stack.Navigator>
+  );
+};
+
+const SettingStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name='Settings' component={Settings} />
+      <Stack.Screen name='Delete Profile' component={Delete} />
     </Stack.Navigator>
   );
 };
@@ -58,13 +76,13 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Home' component={LandingPage} />
             <Drawer.Screen name='See Logs' component={LogStack} />
             <Drawer.Screen name='Test' component={Test} />
-            <Drawer.Screen name='Profile' component={Profile} />
-            <Drawer.Screen name='Settings' component={Settings} />
+            <Drawer.Screen name='Profile' component={ProfileStack} />
+            <Drawer.Screen name='Settings' component={SettingStack} />
             <Drawer.Screen name='Logout' component={LogOut} />
             {/* <Drawer.Screen name='Sign Up' component={SignUp} />
             <Drawer.Screen name='Log In' component={Login} /> */}
             <Drawer.Screen name='Sign Up' component={SignUp} />
-            <Drawer.Screen name='Log In' component={LoginStack} />
+            <Drawer.Screen name='Log In' component={Login} />
             <Drawer.Screen name='Redux Info' component={ReduxInfo} />
           </Drawer.Navigator>
         </NavigationContainer>
@@ -87,7 +105,7 @@ export default connect(mapStateToProps)(MainNavigator);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0e7ef',
     alignItems: 'center',
     justifyContent: 'center'
   }
