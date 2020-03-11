@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
+import { weatherboxCss } from '../../styles/MainStyles';
+
 const WeatherAvg = props => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   let mood = [];
@@ -21,11 +23,11 @@ const WeatherAvg = props => {
 
   return (
     <View>
-      <Text className='weather-average-header'>
-        <Text>
-          {props.weather}: {mood} {productivity}
-        </Text>
-      </Text>
+      <View style={weatherboxCss.subHeader}>
+        <Text style={weatherboxCss.subHeaderThird}>{props.weather}:</Text>
+        <Text style={weatherboxCss.subHeaderThird}>{mood}</Text>
+        <Text style={weatherboxCss.subHeaderThird}>{productivity}</Text>
+      </View>
     </View>
   );
 };

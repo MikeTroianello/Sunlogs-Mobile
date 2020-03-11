@@ -65,7 +65,7 @@ class Login extends Component {
           else {
             console.log(results);
             this.props.loggedIn(results);
-            navigate('See Logs');
+            navigate('Profile');
           }
         })
         .catch(error => {

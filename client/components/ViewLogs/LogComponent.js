@@ -2,17 +2,14 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+import ProfileLogHead from './ProfileLogHeadComponent';
+import BasicLogHead from './BasicLogHeadComponent';
+import LogBody from './LogBodyComponent';
+
 const Log = props => {
-  let weatherString;
+  //THIS CREATED THE ICONS FOR USER GENDER
   let genderIcon;
   let iconSource = 'foundation';
-  //AS OF NOW, THE ICONS WILL ONLY SHOW THE DAYTIME IMAGES, FOR SIMPLICITY. THIS CAN BE CHANGED AT THE WEATHERSTRING VARIABLE
-  if (props.log.weatherIcon) {
-    weatherString = `http://openweathermap.org/img/wn/${props.log.weatherIcon.slice(
-      0,
-      -1
-    )}d@2x.png`;
-  } else weatherString = '';
 
   switch (props.log.creatorId.gender) {
     case 'male':
@@ -27,94 +24,133 @@ const Log = props => {
       break;
   }
 
-  let theTag = props.log.creatorId.username;
-
-  // if (!props.log.demo) {
-  //   theTag = (
-  //     <Link to={`/view-profile/${props.log.creatorId._id}`}>
-  //       {props.log.creatorId.username}
-  //     </Link>
-  //   );
-  // }
-
   let logStyle;
 
   if (!props.log.demo) {
     logStyle = 'blue';
-    theTag = <Text>{props.log.creatorId.username}</Text>;
-  } else {
-    theTag = <Text>{props.log.creatorId.username}</Text>;
   }
 
-  if (
-    props.log.creatorId.username ===
-      'This user has decided to keep their name private' ||
-    props.id === props.log.creatorId._id
-  ) {
-    theTag = props.log.creatorId.username;
+  let samePerson;
+
+  if (props.id === props.log.creatorId._id) {
+    samePerson = true;
   }
 
-  console.log(
-    '=-=-=-=-0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=0-=',
-    props.log.creatorId.username,
-    props.log.creatorId._id,
-    props
-  );
+  console.log('ERRYTHING-=-=-=-=--=09876543q2', props);
 
-  return (
-    <View className={props.test ? 'mock-log' : 'log'}>
-      <View className='weather-box'>
-        {props.id === props.log.creatorId._id ? (
-          <Text>~(You!)~</Text>
-        ) : theTag == 'This user has decided to keep their name private' ||
-          props.privateAccount ? (
-          <Text>{theTag}</Text>
-        ) : (
-          <Text
-            style={{ color: logStyle }}
-            onPress={
-              props.log.demo
-                ? null
-                : () => props.passUpName(props.log.creatorId)
-            }
-          >
-            {theTag}
-          </Text>
-        )}
-
-        <Icon name={genderIcon} type={iconSource} />
-        <Image
-          style={{ width: 50, height: 50 }}
-          source={{
-            uri: `http://openweathermap.org/img/wn/${props.log.weatherIcon.slice(
-              0,
-              -1
-            )}d@2x.png`
-          }}
+  if (props.profile) {
+    return (
+      <View>
+        <ProfileLogHead
+          theTag={props.log.creatorId.username}
+          weatherIcon={props.log.weatherIcon}
+          weatherType={props.log.weatherType}
+          day={props.log.dayOfMonth}
+          month={props.log.month}
+          year={props.log.year}
         />
-
-        <Text> {props.log.weatherType}</Text>
+        <LogBody
+          county={props.log.county}
+          state={props.log.state}
+          mood={props.log.mood}
+          productivity={props.log.productivity}
+          journal={props.log.journal}
+          privateJournal={props.log.privateJournal}
+        />
       </View>
-      {props.log.creatorId.username !==
-        'This user has decided to keep their name private' &&
-        props.log.hideCreator && (
-          <Text>You have hidden your name for this log</Text>
-        )}
-
-      <Text>
-        {props.log.county} County, {props.log.state}
-      </Text>
-      <View className='mood-and-productivity'>
-        <Text>Mood: {props.log.mood}</Text>
-        <Text>
-          Productivity: <Text>{props.log.productivity}</Text>
-        </Text>
+    );
+  } else {
+    return (
+      <View>
+        <BasicLogHead
+          privateAccount={props.privateAccount}
+          demo={false}
+          genderIcon={genderIcon}
+          iconSource={iconSource}
+          theTag={props.log.creatorId.username}
+          samePerson={samePerson}
+          weatherIcon={props.log.weatherIcon}
+          weatherType={props.log.weatherType}
+        />
+        <LogBody
+          county={props.log.county}
+          state={props.log.state}
+          mood={props.log.mood}
+          productivity={props.log.productivity}
+          journal={props.log.journal}
+          privateJournal={props.log.privateJournal}
+        />
       </View>
-      <Text>Log: {props.log.journal}</Text>
-      {props.log.journal !== 'This log is set to private' &&
-        props.log.privateJournal && <Text>You made this log private</Text>}
-    </View>
-  );
+    );
+  }
 };
 
 export default Log;
+
+// return (
+//   <View>
+//     <View className='weather-box'>
+//       {props.id === props.log.creatorId._id ? (
+//         <Text>~(You!)~</Text>
+//       ) : theTag == 'This user has decided to keep their name private' ||
+//         props.privateAccount ? (
+//         <Text>{theTag}</Text>
+//       ) : (
+//         <Text
+//           style={{ color: logStyle }}
+//           onPress={
+//             props.log.demo
+//               ? null
+//               : () => props.passUpName(props.log.creatorId)
+//           }
+//         >
+//           {theTag}
+//         </Text>
+//       )}
+
+//       <Icon name={genderIcon} type={iconSource} />
+//       <Image
+//         style={{ width: 50, height: 50 }}
+//         source={{
+//           uri: `http://openweathermap.org/img/wn/${props.log.weatherIcon.slice(
+//             0,
+//             -1
+//           )}d@2x.png`
+//         }}
+//       />
+
+//       <Text> {props.log.weatherType}</Text>
+//     </View>
+//     {props.log.creatorId.username !==
+//       'This user has decided to keep their name private' &&
+//       props.log.hideCreator && (
+//         <Text>You have hidden your name for this log</Text>
+//       )}
+
+//     <Text>
+//       {props.log.county} County, {props.log.state}
+//     </Text>
+//     <View className='mood-and-productivity'>
+//       <Text>Mood: {props.log.mood}</Text>
+//       <Text>
+//         Productivity: <Text>{props.log.productivity}</Text>
+//       </Text>
+//     </View>
+//     <Text>Log: {props.log.journal}</Text>
+//     {props.log.journal !== 'This log is set to private' &&
+//       props.log.privateJournal && <Text>You made this log private</Text>}
+//   </View>
+// );
+
+// <Text>
+//         {props.log.county} County, {props.log.state}
+//       </Text>
+//       <View className='mood-and-productivity'>
+//         <Text>Mood: {props.log.mood}</Text>
+//         <Text>
+//           Productivity: <Text>{props.log.productivity}</Text>
+//         </Text>
+//       </View>
+//       <Text>Log: {props.log.journal}</Text>
+//       {props.log.journal !== 'This log is set to private' &&
+//         props.log.privateJournal && <Text>You made this log private</Text>}

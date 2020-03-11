@@ -111,3 +111,31 @@ export const SettingsCss = StyleSheet.create({
     borderTopWidth: 1
   }
 });
+
+export const deleteCss = StyleSheet.create({});
+
+export const weatherboxCss = StyleSheet.create({
+  box: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    margin: 5,
+    padding: 3
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray'
+  },
+  subHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'center'
+  },
+  subHeaderThird: {
+    width: '44%'
+    // justifyContent: 'flex-end',
+    // textAlign: 'right'
+  }
+});

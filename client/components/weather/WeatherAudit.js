@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 
 import WeatherAvg from './WeatherAvg';
 
+import { weatherboxCss } from '../../styles/MainStyles';
+
 const WeatherAudit = props => {
   let clear = [];
   let clouds = [];
@@ -37,12 +39,12 @@ const WeatherAudit = props => {
   }
 
   return (
-    <View className='weather-audit'>
-      <Text className='header'>
+    <View style={weatherboxCss.box}>
+      <View style={weatherboxCss.header}>
         <Text>Weather</Text>
         <Text>Mood Average</Text>
         <Text className='header-productivity'>Productivity Average</Text>
-      </Text>
+      </View>
       <View className='weather-avg'>
         <WeatherAvg weather={'Clear'} logs={clear} />
         <WeatherAvg weather={'Clouds'} logs={clouds} />
