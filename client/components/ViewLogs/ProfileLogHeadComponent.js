@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 
-const ProfileLogHead = ({ day, month, year, weather, weatherIcon }) => {
+import { logCss } from '../../styles/LogStyles';
+
+const ProfileLogHead = ({ day, month, year, weatherType, weatherIcon }) => {
   console.log('WEATHER ICON', weatherIcon);
   return (
-    <View>
-      <Text>
-        {month} {day}, {year}
-      </Text>
+    <View style={logCss.profileHead}>
+      <View>
+        <Text>
+          {month} {day}, {year}
+        </Text>
+      </View>
       <View>
         <Image
           style={{ width: 50, height: 50 }}
@@ -18,7 +22,7 @@ const ProfileLogHead = ({ day, month, year, weather, weatherIcon }) => {
             )}d@2x.png`
           }}
         />
-        <Text>{weather}</Text>
+        <Text>{weatherType}</Text>
       </View>
     </View>
   );

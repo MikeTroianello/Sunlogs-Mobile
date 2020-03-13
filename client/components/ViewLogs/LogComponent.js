@@ -6,6 +6,8 @@ import ProfileLogHead from './ProfileLogHeadComponent';
 import BasicLogHead from './BasicLogHeadComponent';
 import LogBody from './LogBodyComponent';
 
+import { logCss } from '../../styles/LogStyles';
+
 const Log = props => {
   //THIS CREATED THE ICONS FOR USER GENDER
   let genderIcon;
@@ -40,7 +42,7 @@ const Log = props => {
 
   if (props.profile) {
     return (
-      <View>
+      <View style={logCss.box}>
         <ProfileLogHead
           theTag={props.log.creatorId.username}
           weatherIcon={props.log.weatherIcon}
@@ -61,7 +63,7 @@ const Log = props => {
     );
   } else {
     return (
-      <View>
+      <View View style={logCss.box}>
         <BasicLogHead
           privateAccount={props.privateAccount}
           demo={false}
