@@ -38,8 +38,6 @@ const Log = props => {
     samePerson = true;
   }
 
-  console.log('ERRYTHING-=-=-=-=--=09876543q2', props);
-
   if (props.profile) {
     return (
       <View style={logCss.box}>

@@ -7,14 +7,12 @@ const ProfileLogHead = ({ day, month, year, weatherType, weatherIcon }) => {
   console.log('WEATHER ICON', weatherIcon);
   return (
     <View style={logCss.profileHead}>
-      <View>
-        <Text>
-          {month} {day}, {year}
-        </Text>
-      </View>
-      <View>
+      <Text>
+        {month} {day}, {year}
+      </Text>
+      <View style={logCss.weatherAndType}>
         <Image
-          style={{ width: 50, height: 50 }}
+          style={{ width: 60, height: 50 }}
           source={{
             uri: `http://openweathermap.org/img/wn/${weatherIcon.slice(
               0,
@@ -22,7 +20,7 @@ const ProfileLogHead = ({ day, month, year, weatherType, weatherIcon }) => {
             )}d@2x.png`
           }}
         />
-        <Text>{weatherType}</Text>
+        <Text style={logCss.weatherType}>{weatherType}</Text>
       </View>
     </View>
   );

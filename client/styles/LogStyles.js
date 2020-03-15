@@ -9,6 +9,27 @@ export const logCss = {
   },
   profileHead: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderBottomWidth: 1
+  },
+  weatherAndType: {
+    translateY: -12
+  },
+  weatherType: {
+    translateX: 15,
+    marginBottom: -10,
+    marginTop: -6
+  },
+  moodBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  moodSubBox: {
+    borderWidth: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  moodNum: {
+    color: '#ED3833'
   }
 };
