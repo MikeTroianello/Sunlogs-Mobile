@@ -48,6 +48,8 @@ const Log = props => {
           day={props.log.dayOfMonth}
           month={props.log.month}
           year={props.log.year}
+          county={props.log.county}
+          state={props.log.state}
         />
         <LogBody
           county={props.log.county}
@@ -56,6 +58,7 @@ const Log = props => {
           productivity={props.log.productivity}
           journal={props.log.journal}
           privateJournal={props.log.privateJournal}
+          hideCounty={true}
         />
       </View>
     );

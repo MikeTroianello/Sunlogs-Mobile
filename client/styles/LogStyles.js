@@ -16,20 +16,39 @@ export const logCss = {
     translateY: -12
   },
   weatherType: {
-    translateX: 15,
+    textAlign: 'center',
     marginBottom: -10,
-    marginTop: -6
+    marginTop: -6,
+    fontSize: 16
+  },
+  dateAndPlace: {
+    flexDirection: 'column',
+    justifyContent: 'space-evenly'
   },
   moodBox: {
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
   moodSubBox: {
+    width: '27%',
+    height: 65,
     borderWidth: 1,
     flexDirection: 'column',
     alignItems: 'center'
   },
+  moodHeader: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   moodNum: {
-    color: '#ED3833'
+    color: '#ED3833',
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 5
+  },
+  log: {
+    fontSize: 15,
+    marginTop: 12,
+    marginBottom: 5
   }
 };
