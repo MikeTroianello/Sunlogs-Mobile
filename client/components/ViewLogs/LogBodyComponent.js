@@ -10,7 +10,7 @@ const LogBody = props => {
 
   return (
     <View>
-      <Text>{countyString}</Text>
+      <Text style={logCss.place}>{countyString}</Text>
       {/* <Text>
         {props.county} County, {props.state}
       </Text> */}

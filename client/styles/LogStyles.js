@@ -25,6 +25,11 @@ export const logCss = {
     flexDirection: 'column',
     justifyContent: 'space-evenly'
   },
+  name: {
+    marginTop: 6,
+    marginLeft: 4,
+    fontSize: 17
+  },
   moodBox: {
     flexDirection: 'row',
     justifyContent: 'space-evenly'
@@ -50,5 +55,11 @@ export const logCss = {
     fontSize: 15,
     marginTop: 12,
     marginBottom: 5
+  },
+  place: {
+    textAlign: 'center',
+    fontSize: 17,
+    margin: 10,
+    fontWeight: 'bold'
   }
 };
