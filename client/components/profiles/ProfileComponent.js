@@ -33,8 +33,20 @@ class Profile extends Component {
     fetch(`${localSource}/logs/all/my-posts`)
       .then(response => response.json())
       .then(results => {
+        const reducer = (accumulator, currentValue) =>
+          accumulator + currentValue;
+        let moodArr = [];
+
+        results.map(log => {
+          moodArr.push(log.mood);
+        });
+
+        let mood =
+          Math.round(100 * (moodArr.reduce(reducer) / moodArr.length)) / 100;
+
         this.setState({
-          logs: results
+          logs: results,
+          mood: mood
         });
       })
       .catch(error => {
