@@ -3,11 +3,10 @@ import { Text, View, FlatList, ScrollView } from 'react-native';
 import { Styles } from '../../styles/MainStyles';
 import { Icon, Button, Tile } from 'react-native-elements';
 
-import DatePicker from 'react-native-datepicker';
-
 import WeatherAudit from '../weather/WeatherAudit';
+import Log from '../ViewLogs/LogComponent';
 
-import mockLogs from '../../mockLogs/mockLogs.json';
+import { profileStyle } from '../../styles/ProfileStyles';
 
 import { localSource } from '../../assets/localSource';
 
@@ -22,22 +21,7 @@ class ViewOtherProfiles extends Component {
     oldestFirst: false
   };
 
-  // componentDidMount() {
-  //   this.service
-  //     .seeUser(this.props.match.params.id)
-  //     .then(results => {
-  //       this.makeTheLogs(results);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
-
   componentDidMount() {
-    console.log(
-      'INSIDE VIEW OTHER PROFILES, COMPONENT IS MOUNTING',
-      this.props
-    );
     this.setItAllUp();
   }
 
@@ -46,23 +30,21 @@ class ViewOtherProfiles extends Component {
     fetch(`${localSource}/logs/all/${id}`)
       .then(response => response.json())
       .then(results => {
-        console.log('SUCCESS', results);
+        const reducer = (accumulator, currentValue) =>
+          accumulator + currentValue;
+        let moodArr = [];
 
-        // this.setState(
-        //   {
-        //     logs: results.specificDay,
-        //     filteredLogs: results.specificDay,
-        //     filteredLogsCopy: results.specificDay,
-        //     genderSearchMessage: null,
-        //     yours: results.yours,
-        //     id: results.id,
-        //     states: [...new Set(states)],
-        //     counties: []
-        //   },
-        //   () => console.log(this.state)
-        // );
+        results.map(log => {
+          moodArr.push(log.mood);
+        });
 
-        this.makeTheLogs(results, profileSelf);
+        let mood =
+          Math.round(100 * (moodArr.reduce(reducer) / moodArr.length)) / 100;
+
+        this.setState({
+          logs: results,
+          mood: mood
+        });
       })
       .catch(error => {
         console.log(
@@ -70,154 +52,81 @@ class ViewOtherProfiles extends Component {
         );
         throw error;
       });
-
-    let profileSelf = false;
-    // let results = mockLogs;
-    // console.log('RESULTS', results);
-    // this.makeTheLogs(results, profileSelf);
-  };
-
-  makeTheLogs = results => {
-    if (!results || results.length < 1) {
-      this.setState({
-        logs: <View>They haven't created any logs...</View>
-      });
-    } else {
-      const reducer = (accumulator, currentValue) => accumulator + currentValue;
-      let moodArr = [];
-      let name;
-      let genderIcon;
-      let iconSource = 'foundation';
-
-      let theLogs = results.map((log, key) => {
-        switch (log.creatorId.gender) {
-          case 'male':
-            genderIcon = 'male-symbol';
-            break;
-          case 'female':
-            genderIcon = 'female-symbol';
-            break;
-          default:
-            genderIcon = 'genderless';
-            iconSource = 'font-awesome';
-            break;
-        }
-
-        let weatherString;
-        if (!name) name = log.creatorId.username;
-        moodArr.push(log.mood);
-        if (log.weatherIcon) {
-          weatherString = `http://openweathermap.org/img/wn/${log.weatherIcon.slice(
-            0,
-            -1
-          )}d@2x.png`;
-        } else weatherString = '';
-
-        return (
-          <View key={key} className='log'>
-            <View className='profile-log-head'>
-              <View>
-                <Text>
-                  {log.month} {log.dayOfMonth}, {log.year}
-                </Text>
-
-                <Text>
-                  {log.county}, {log.state}
-                </Text>
-              </View>
-              <View className='weather-box weather-box-profile'>
-                {/* <img
-                    className='weather-icon'
-                    src={weatherString}
-                    alt={log.weatherType}
-                  /> */}
-
-                <Text> {log.weatherType}</Text>
-              </View>
-            </View>
-
-            <View className='mood-and-productivity'>
-              <Text>
-                Mood: <Text>{log.mood}</Text>
-              </Text>
-              <Text>
-                Productivity: <Text>{log.productivity}</Text>
-              </Text>
-            </View>
-            <Text>Log: {log.journal}</Text>
-          </View>
-        );
-      });
-      let mood =
-        Math.round(100 * (moodArr.reduce(reducer) / moodArr.length)) / 100;
-
-      this.setState({
-        rawLogs: results,
-        logs: theLogs,
-        mood: mood,
-        name: name,
-        gender: genderIcon,
-        iconSource
-      });
-    }
   };
 
   sortByAge = () => {
     console.log('SORTING BY AGE');
     let sortedLogs;
     if (this.state.oldestFirst) {
-      sortedLogs = this.state.rawLogs.sort((a, b) =>
-        a.year > b.year ? 1 : -1
-      );
-      sortedLogs = this.state.rawLogs.sort((a, b) =>
+      sortedLogs = this.state.logs.sort((a, b) => (a.year > b.year ? 1 : -1));
+      sortedLogs = this.state.logs.sort((a, b) =>
         a.dayOfYear > b.dayOfYear ? 1 : -1
       );
     } else {
-      sortedLogs = this.state.rawLogs.sort((a, b) =>
-        a.year < b.year ? 1 : -1
-      );
-      sortedLogs = this.state.rawLogs.sort((a, b) =>
+      sortedLogs = this.state.logs.sort((a, b) => (a.year < b.year ? 1 : -1));
+      sortedLogs = this.state.logs.sort((a, b) =>
         a.dayOfYear < b.dayOfYear ? 1 : -1
       );
     }
-    this.setState(
-      prevState => ({
-        oldestFirst: !prevState.oldestFirst
-      }),
-      this.makeTheLogs(sortedLogs)
+    this.setState(prevState => ({
+      oldestFirst: !prevState.oldestFirst,
+      logs: sortedLogs
+    }));
+  };
+
+  renderLogs = ({ item }) => {
+    return (
+      <View style={Styles.logs}>
+        <Log
+          log={item}
+          id={null}
+          privateAccount={item.creatorId.hideProfile}
+          profile={true}
+        />
+      </View>
+    );
+  };
+
+  buildList = () => {
+    return (
+      <FlatList
+        data={this.state.logs}
+        renderItem={this.renderLogs}
+        keyExtractor={item => item._id.toString()}
+      />
     );
   };
 
   render() {
-    console.log('rendering', this.props.route.params);
     const { profileName } = this.props.route.params;
-    console.log('THIIS ', this.props.route.params);
 
     return (
-      <Tile className='top-push'>
-        <Text>This is {profileName}'s page</Text>
+      <ScrollView className='top-push' style={{ backgroundColor: '#e0e7ef' }}>
+        <Text style={{ textAlign: 'center', fontSize: 18, margin: 9 }}>
+          This is {profileName}'s page
+        </Text>
         <View className='profile-mood-box'>
-          <Text className='view-profile-overall-happiness'>
+          <Text style={{ textAlign: 'center', fontSize: 18, margin: 0 }}>
             {profileName}'s Overall Happiness: {this.state.mood}
           </Text>
-          <Icon name={this.state.gender} type={this.state.iconSource} />
-          {this.state.logs && <WeatherAudit logs={this.state.rawLogs} />}
+          {/* <Icon name={this.state.gender} type={this.state.iconSource} /> */}
+          {this.state.logs && <WeatherAudit logs={this.state.logs} />}
         </View>
-        <View style={{ width: '80%', margin: '10%' }}>
+        <View style={profileStyle.sortButton}>
           <Button
             title={`Show ${this.state.oldestFirst ? 'oldest' : 'newest'} first`}
             onPress={this.sortByAge}
             buttonStyle={{
-              backgroundColor: '#86927B',
-              padding: 5,
+              backgroundColor: '#5694DB',
+              width: '100%',
               borderWidth: 1,
               borderColor: '#413F41'
             }}
           />
         </View>
 
-        <View className='log-box'>{this.state.logs}</View>
-      </Tile>
+        {this.state.logs && this.buildList()}
+      </ScrollView>
     );
   }
 }

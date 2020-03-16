@@ -15,12 +15,17 @@ const BasicLogHead = ({
   return (
     <View style={logCss.profileHead}>
       {samePerson ? (
-        <Text style={logCss.name}>~(You!)~</Text>
+        <Text style={logCss.nameHidden}>~(You!)~</Text>
       ) : theTag == 'This user has decided to keep their name private' ||
         props.privateAccount ? (
-        <Text style={logCss.name}>{theTag}</Text>
+        <Text style={logCss.nameHidden}>{theTag}</Text>
       ) : (
-        <Text style={{ color: logStyle }}>{theTag}</Text>
+        <Text
+          style={logCss.name}
+          onPress={() => props.passUpName(theTag, props.id)}
+        >
+          {theTag}
+        </Text>
       )}
 
       <Icon name={genderIcon} type={iconSource} size={35} />

@@ -28,6 +28,12 @@ export const logCss = {
   name: {
     marginTop: 6,
     marginLeft: 4,
+    fontSize: 17,
+    color: 'blue'
+  },
+  nameHidden: {
+    marginTop: 6,
+    marginLeft: 4,
     fontSize: 17
   },
   moodBox: {

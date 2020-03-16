@@ -26,11 +26,9 @@ const Log = props => {
       break;
   }
 
-  let logStyle;
-
-  if (!props.log.demo) {
-    logStyle = 'blue';
-  }
+  const passUpName = (name, id) => {
+    props.passUpName(name, id);
+  };
 
   let samePerson;
 
@@ -71,9 +69,11 @@ const Log = props => {
           genderIcon={genderIcon}
           iconSource={iconSource}
           theTag={props.log.creatorId.username}
+          id={props.log.creatorId._id}
           samePerson={samePerson}
           weatherIcon={props.log.weatherIcon}
           weatherType={props.log.weatherType}
+          passUpName={props.passUpName}
         />
         <LogBody
           county={props.log.county}

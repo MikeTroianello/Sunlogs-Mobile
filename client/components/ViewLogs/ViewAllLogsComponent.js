@@ -71,7 +71,6 @@ class ViewAllLogs extends Component {
       let b = date.pop();
       date.unshift(b);
       date = date.join('-');
-      console.log('THIS IS THE DATE', date);
       var isoDate = new Date(`${date}T12:00:00Z`);
       this.sanitizeDate(isoDate);
     }
@@ -81,23 +80,19 @@ class ViewAllLogs extends Component {
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then(response => response.json())
       .then(results => {
-        console.log('SUCCESS', results.specificDay);
         const states = results.specificDay.map(log => {
           return log.state;
         });
-        this.setState(
-          {
-            logs: results.specificDay,
-            filteredLogs: results.specificDay,
-            filteredLogsCopy: results.specificDay,
-            genderSearchMessage: null,
-            yours: results.yours,
-            id: results.id,
-            states: [...new Set(states)],
-            counties: []
-          },
-          () => console.log(this.state)
-        );
+        this.setState({
+          logs: results.specificDay,
+          filteredLogs: results.specificDay,
+          filteredLogsCopy: results.specificDay,
+          genderSearchMessage: null,
+          yours: results.yours,
+          id: results.id,
+          states: [...new Set(states)],
+          counties: []
+        });
       })
       .catch(error => {
         console.log(
@@ -168,7 +163,6 @@ class ViewAllLogs extends Component {
     let countyLogs = this.state.logs.filter(log => {
       return log.county === this.state.county;
     });
-    console.log('THESE ARE THE COUNTy LOGS', countyLogs);
     this.setState(
       {
         filteredLogs: countyLogs,
@@ -188,12 +182,6 @@ class ViewAllLogs extends Component {
       date: new Date()
     });
     this.sanitizeDate(this.state.today);
-  };
-
-  seeProfile = passedUpProps => {
-    const { navigate } = this.props.navigation;
-    const { username, _id } = passedUpProps;
-    navigate('View Other Profiles', { profileName: username, id: _id });
   };
 
   weatherAudit = () => {
@@ -224,9 +212,15 @@ class ViewAllLogs extends Component {
     );
   };
 
+  seeProfile = (username, id) => {
+    const { navigate } = this.props.navigation;
+
+    navigate('View Other Profiles', { profileName: username, id: id });
+  };
+
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         {this.state.filteredLogs && this.weatherAudit()}
 
         <View>

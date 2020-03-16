@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Button, ScrollView } from 'react-native';
-import { Styles } from '../../styles/MainStyles';
+import { Text, View, FlatList, ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 import WeatherAudit from '../weather/WeatherAudit';
 import Log from '../ViewLogs/LogComponent';
 
-import { localSource } from '../../assets/localSource';
+import { Styles } from '../../styles/MainStyles';
+import { profileStyle } from '../../styles/ProfileStyles';
 
-import { connect } from 'react-redux';
+import { localSource } from '../../assets/localSource';
 
 class Profile extends Component {
   state = {
@@ -119,7 +121,7 @@ class Profile extends Component {
   render() {
     // console.log('\x1b[93m-Errything-\x1b[39m', this.state);
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         <View className='top-push'>
           {!this.props.userSettings.createdToday && (
             <Text>
@@ -138,12 +140,18 @@ class Profile extends Component {
             <WeatherAudit logs={this.state.logs} />
           )}
 
-          <View>
+          <View style={profileStyle.sortButton}>
             <Button
-              onPress={this.sortByAge}
               title={`Show ${
                 this.state.oldestFirst ? 'oldest' : 'newest'
               } first`}
+              onPress={this.sortByAge}
+              buttonStyle={{
+                backgroundColor: '#5694DB',
+                width: '100%',
+                borderWidth: 1,
+                borderColor: '#413F41'
+              }}
             />
           </View>
           {this.state.logs && this.buildList()}
