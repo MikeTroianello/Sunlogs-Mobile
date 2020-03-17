@@ -3,9 +3,16 @@ import { StyleSheet } from 'react-native';
 export const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0e7ef',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  createLogContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
   },
   log: {
     margin: 10,
@@ -19,7 +26,6 @@ export const Styles = StyleSheet.create({
 export const LoginCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-
     justifyContent: 'center'
   },
   loginHeader: {
@@ -46,6 +52,24 @@ export const SignUpCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
     justifyContent: 'center'
+  },
+  loginHeader: {
+    textAlign: 'center',
+    fontSize: 35
+  },
+  loginComponent: {
+    borderWidth: 1,
+    margin: 30,
+    padding: 10
+  },
+  submitButton: {
+    marginLeft: 25,
+    marginRight: 25,
+    borderRadius: 50
+  },
+  signUpButton: {
+    color: 'pink',
+    backgroundColor: 'black'
   }
 });
 

@@ -84,17 +84,22 @@ class Login extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ color: '#e0e7ef' }}>
         <View style={LoginCss.wholePage}>
           <Text style={LoginCss.loginHeader}>Welcome!</Text>
           <View style={LoginCss.loginComponent}>
-            <View className='form-piece'>
+            <View>
               <Text>Username:</Text>
               <Input
                 textContentType='username'
                 placeholder='Your name...'
                 onChangeText={text => this.setState({ username: text })}
                 value={this.state.username}
+                leftIcon={{ type: 'font-awesome', name: 'user' }}
+                leftIconContainerStyle={{
+                  marginRight: 10,
+                  marginLeft: 3
+                }}
               />
             </View>
             <View className='form-piece'>
@@ -106,6 +111,11 @@ class Login extends Component {
                 placeholder='******'
                 onChangeText={text => this.setState({ password: text })}
                 value={this.state.password}
+                leftIcon={{ type: 'font-awesome', name: 'key' }}
+                leftIconContainerStyle={{
+                  marginRight: 10,
+                  marginLeft: 3
+                }}
               />
             </View>
           </View>
@@ -120,9 +130,15 @@ class Login extends Component {
             style={LoginCss.signUpButton}
           />
         </View>
-        <Modal animationType='slide' visible={this.state.showModal}>
-          <SignUp />
-          <Button title='Go Back To Login' onPress={this.toggleModal} />
+        <Modal
+          style={{ color: '#e0e7ef' }}
+          animationType='slide'
+          visible={this.state.showModal}
+        >
+          <View style={{ color: '#e0e7ef' }}>
+            <SignUp />
+            <Button title='Go Back To Login' onPress={this.toggleModal} />
+          </View>
         </Modal>
       </View>
     );

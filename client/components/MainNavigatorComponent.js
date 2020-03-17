@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { connect } from 'react-redux';
 
-import Test from './Test';
 import LandingPage from './LandingPageComponent';
 import Profile from './profiles/ProfileComponent';
 import ViewOtherProfiles from './profiles/ViewOtherProfilesComponent';
@@ -36,14 +35,6 @@ const LogStack = () => {
   );
 };
 
-// const LoginStack = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name='Log In' component={Login} />
-//     </Stack.Navigator>
-//   );
-// };
-
 const ProfileStack = () => {
   return (
     <Stack.Navigator>
@@ -67,7 +58,9 @@ class MainNavigator extends Component {
       <View
         style={{
           flex: 1,
-          paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight
+          paddingTop:
+            Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+          backgroundColor: '#ADD8E6'
         }}
       >
         <NavigationContainer>
@@ -75,12 +68,9 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Create Log' component={CreateLog} />
             <Drawer.Screen name='Home' component={LandingPage} />
             <Drawer.Screen name='See Logs' component={LogStack} />
-            <Drawer.Screen name='Test' component={Test} />
             <Drawer.Screen name='Profile' component={ProfileStack} />
             <Drawer.Screen name='Settings' component={SettingStack} />
             <Drawer.Screen name='Logout' component={LogOut} />
-            {/* <Drawer.Screen name='Sign Up' component={SignUp} />
-            <Drawer.Screen name='Log In' component={Login} /> */}
             <Drawer.Screen name='Sign Up' component={SignUp} />
             <Drawer.Screen name='Log In' component={Login} />
             <Drawer.Screen name='Redux Info' component={ReduxInfo} />

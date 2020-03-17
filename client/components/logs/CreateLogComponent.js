@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Switch, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  Switch,
+  Alert,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView
+} from 'react-native';
 import { Card, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { setCreatedToday } from '../../redux/ActionCreators';
@@ -47,7 +57,7 @@ class CreateLog extends Component {
 
   submit = () => {
     const { navigate } = this.props.navigation;
-    console.log('SUBMITTING', this.state);
+
     if (!this.state.mood || !this.state.productivity) {
       let moodMsg = !this.state.mood && `You didn't select your mood`;
       let productivityMsg =
@@ -114,46 +124,64 @@ class CreateLog extends Component {
 
   render() {
     return (
-      <View style={Styles.container}>
-        <Text>CREATE A LOG</Text>
-        <Text>What is your mood?</Text>
-        <Rating
-          imageSize={50}
-          onFinishRating={rating => this.setState({ mood: rating })}
-          startingValue={this.state.mood}
-          minValue={1}
-        />
-        <Text>How productive do you think you were today?</Text>
-        <Rating
-          imageSize={50}
-          onFinishRating={rating => this.setState({ productivity: rating })}
-          minValue={1}
-          startingValue={this.state.productivity}
-        />
-        <Text>What were some of your thoughts about today?</Text>
-        <Input
-          placeholder='max length 250 characters'
-          onChangeText={text => this.setState({ journal: text })}
-          value={this.state.journal}
-        />
-        <Text>Make this a private Log:</Text>
-        <Switch
-          value={this.state.privateJournal}
-          onValueChange={value =>
-            this.setState({ privateJournal: !this.state.privateJournal })
-          }
-        />
-        <Text>Hide your status as creator:</Text>
-        <Switch
-          value={this.state.hideCreator}
-          onValueChange={value =>
-            this.setState({ hideCreator: !this.state.hideCreator })
-          }
-        />
-        <Button title='Submit' onPress={this.submit} />
-        <Text>{this.state.moodMsg}</Text>
-        <Text>{this.state.productivityMsg}</Text>
-      </View>
+      <ScrollView keyboardShouldPersistTaps='handled'>
+        <View style={Styles.createLogContainer}>
+          <Text>CREATE A LOG</Text>
+          <Text>What is your mood?</Text>
+          <Rating
+            imageSize={50}
+            onFinishRating={rating => this.setState({ mood: rating })}
+            startingValue={this.state.mood}
+            minValue={1}
+          />
+          <Text>How productive do you think you were today?</Text>
+          <Rating
+            imageSize={50}
+            onFinishRating={rating => this.setState({ productivity: rating })}
+            minValue={1}
+            startingValue={this.state.productivity}
+          />
+
+          <Text style={{ textAlign: 'center' }}>
+            What were some of your thoughts about today?
+          </Text>
+          <View styles={{ width: '100%' }}>
+            <Input
+              placeholder='max length 250 characters'
+              onChangeText={text => this.setState({ journal: text })}
+              value={this.state.journal}
+              autoCapitalize='sentences'
+              maxLength={250}
+              multiline={true}
+              numberOfLines={3}
+              textAlignVertical='top'
+              containerStyle={{
+                borderWidth: 1,
+                margin: 5,
+                width: '97%'
+              }}
+            />
+          </View>
+
+          <Text>Make this a private Log:</Text>
+          <Switch
+            value={this.state.privateJournal}
+            onValueChange={value =>
+              this.setState({ privateJournal: !this.state.privateJournal })
+            }
+          />
+          <Text>Hide your status as creator:</Text>
+          <Switch
+            value={this.state.hideCreator}
+            onValueChange={value =>
+              this.setState({ hideCreator: !this.state.hideCreator })
+            }
+          />
+          <Button title='Submit' onPress={this.submit} />
+          <Text>{this.state.moodMsg}</Text>
+          <Text>{this.state.productivityMsg}</Text>
+        </View>
+      </ScrollView>
     );
   }
 }

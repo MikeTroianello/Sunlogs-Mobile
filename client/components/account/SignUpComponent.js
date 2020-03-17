@@ -4,7 +4,7 @@ import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../redux/ActionCreators';
 
-import { Styles, SignUpCss } from '../../styles/MainStyles';
+import { Styles, SignUpCss, LoginCss } from '../../styles/MainStyles';
 import { localSource } from '../../assets/localSource';
 
 class SignUp extends Component {
@@ -65,74 +65,91 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={SignUpCss.wholePage}>
-        <Text className='signup-header'>Create an Account!</Text>
-        <View className='form-pieces'>
-          <View className='form-piece'>
-            <TextInput
-              placeholder='Your name...'
-              onChangeText={text => this.setState({ username: text })}
-              value={this.state.username}
-            />
-            {/* <Text>Your Username:</Text>
-            <Input
-              placeholder='Your name...'
-              onChangeText={text => this.setState({ username: text })}
-              value={this.state.username}
-            /> */}
+      <View style={{ color: '#e0e7ef' }}>
+        <View style={LoginCss.wholePage}>
+          <Text style={LoginCss.loginHeader}>Create an Account!</Text>
+          <View style={LoginCss.loginComponent}>
+            <View className='form-piece'>
+              <Text>Username:</Text>
+              <Input
+                placeholder='Your name...'
+                onChangeText={text => this.setState({ username: text })}
+                value={this.state.username}
+                leftIcon={{ type: 'font-awesome', name: 'user' }}
+                leftIconContainerStyle={{
+                  marginRight: 10,
+                  marginLeft: 3
+                }}
+              />
+            </View>
+            <View className='form-piece'>
+              <Text>Password:</Text>
+              <Input
+                secureTextEntry={true}
+                placeholder='6+ characters'
+                onChangeText={text => this.setState({ password: text })}
+                value={this.state.password}
+                leftIcon={{ type: 'font-awesome', name: 'key' }}
+                leftIconContainerStyle={{
+                  marginRight: 9,
+                  marginLeft: 0
+                }}
+              />
+            </View>
+            <View className='form-piece'>
+              <Text>Email: (optional)</Text>
+              <Input
+                name='email'
+                type='email'
+                autoCompleteType='email'
+                keyboardType='email-address'
+                placeholder='Your email...'
+                onChangeText={text => this.setState({ email: text })}
+                value={this.state.email}
+                leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+                leftIconContainerStyle={{
+                  marginRight: 8,
+                  marginLeft: -2
+                }}
+              />
+            </View>
+            <View className='form-piece'>
+              <Text htmlFor='phone'>Phone: (optional)</Text>
+              <Input
+                name='phone'
+                autoCompleteType='tel'
+                keyboardType='phone-pad'
+                pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+                placeholder='867-5309'
+                onChangeText={text => this.setState({ phone: text })}
+                value={this.state.phone}
+                leftIcon={{ type: 'font-awesome', name: 'phone' }}
+                leftIconContainerStyle={{
+                  marginRight: 10,
+                  marginLeft: 3
+                }}
+              />
+            </View>
+            <View className='form-piece'>
+              <Text htmlFor='gender'>What is your gender?</Text>
+              <Picker
+                selectedValue={this.state.gender}
+                onValueChange={gender => this.setState({ gender })}
+                placeholder='Choose your Gender'
+              >
+                <Picker.Item label='Choose' disabled={true} enabled={false} />
+                <Picker.Item label='male' value='male' />
+                <Picker.Item label='female' value='female' />
+                <Picker.Item label='nonbinary' value='nonbinary' />
+              </Picker>
+            </View>
           </View>
-          <View className='form-piece'>
-            <Text htmlFor='password'>Password:</Text>
-            <Input
-              secureTextEntry={true}
-              placeholder='6+ characters'
-              onChangeText={text => this.setState({ password: text })}
-              value={this.state.password}
-            />
+          <View style={LoginCss.submitButton}>
+            <Button title='Submit' onPress={this.handleSubmit} />
           </View>
-          <View className='form-piece'>
-            <Text htmlFor='email'>Email: (optional)</Text>
-            <Input
-              name='email'
-              type='email'
-              autoCompleteType='email'
-              keyboardType='email-address'
-              placeholder='Your email...'
-              onChangeText={text => this.setState({ email: text })}
-              value={this.state.email}
-            />
-          </View>
-          <View className='form-piece'>
-            <Text htmlFor='phone'>Phone: (optional)</Text>
-            <Input
-              name='phone'
-              autoCompleteType='tel'
-              keyboardType='phone-pad'
-              pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
-              placeholder='867-5309'
-              onChangeText={text => this.setState({ phone: text })}
-              value={this.state.phone}
-            />
-          </View>
-          <View className='form-piece'>
-            <Text htmlFor='gender'>What is your gender?</Text>
-            <Picker
-              selectedValue={this.state.gender}
-              onValueChange={gender => this.setState({ gender })}
-              placeholder='Choose your Gender'
-            >
-              <Picker.Item label='Choose' disabled={true} enabled={false} />
-              <Picker.Item label='male' value='male' />
-              <Picker.Item label='female' value='female' />
-              <Picker.Item label='nonbinary' value='nonbinary' />
-            </Picker>
-          </View>
-        </View>
-        <View className='signup-button'>
-          <Button title='Submit' onPress={this.handleSubmit} />
-        </View>
 
-        <Text className='signup-message'>{this.state.message}</Text>
+          <Text className='signup-message'>{this.state.message}</Text>
+        </View>
       </View>
     );
   }
