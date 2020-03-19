@@ -8,6 +8,9 @@ const LogBody = props => {
     countyString = `${props.county} County, ${props.state}`;
   }
 
+  if (!props.journal) props.journal = '';
+  let journal = props.journal || '';
+  console.log('PROPS DOT JOURNAL', props.journal);
   return (
     <View>
       <Text style={logCss.place}>{countyString}</Text>
@@ -26,6 +29,7 @@ const LogBody = props => {
       </View>
       <Text style={logCss.log}>Log: {props.journal}</Text>
       {props.journal !== 'This log is set to private' &&
+        !journal.includes(' has chosen to keep this log hidden') &&
         props.privateJournal && <Text>You made this log private</Text>}
     </View>
   );

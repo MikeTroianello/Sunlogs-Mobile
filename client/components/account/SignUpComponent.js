@@ -69,7 +69,7 @@ class SignUp extends Component {
         <View style={LoginCss.wholePage}>
           <Text style={LoginCss.loginHeader}>Create an Account!</Text>
           <View style={LoginCss.loginComponent}>
-            <View className='form-piece'>
+            <View>
               <Text>Username:</Text>
               <Input
                 placeholder='Your name...'
@@ -82,7 +82,7 @@ class SignUp extends Component {
                 }}
               />
             </View>
-            <View className='form-piece'>
+            <View>
               <Text>Password:</Text>
               <Input
                 secureTextEntry={true}
@@ -96,7 +96,7 @@ class SignUp extends Component {
                 }}
               />
             </View>
-            <View className='form-piece'>
+            <View>
               <Text>Email: (optional)</Text>
               <Input
                 name='email'
@@ -113,8 +113,8 @@ class SignUp extends Component {
                 }}
               />
             </View>
-            <View className='form-piece'>
-              <Text htmlFor='phone'>Phone: (optional)</Text>
+            <View>
+              <Text>Phone: (optional)</Text>
               <Input
                 name='phone'
                 autoCompleteType='tel'
@@ -130,8 +130,8 @@ class SignUp extends Component {
                 }}
               />
             </View>
-            <View className='form-piece'>
-              <Text htmlFor='gender'>What is your gender?</Text>
+            <View>
+              <Text>What is your gender?</Text>
               <Picker
                 selectedValue={this.state.gender}
                 onValueChange={gender => this.setState({ gender })}
@@ -148,7 +148,7 @@ class SignUp extends Component {
             <Button title='Submit' onPress={this.handleSubmit} />
           </View>
 
-          <Text className='signup-message'>{this.state.message}</Text>
+          <Text>{this.state.message}</Text>
         </View>
       </View>
     );

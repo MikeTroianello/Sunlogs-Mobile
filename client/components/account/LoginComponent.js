@@ -102,7 +102,7 @@ class Login extends Component {
                 }}
               />
             </View>
-            <View className='form-piece'>
+            <View>
               <Text>Password:</Text>
               <Input
                 autoCompleteType='password'
@@ -123,7 +123,7 @@ class Login extends Component {
             <Button title='Submit' onPress={this.handleSubmit} />
           </View>
 
-          <Text className='signup-message'>{this.state.message}</Text>
+          <Text>{this.state.message}</Text>
           <Button
             title='New Here? Create an Account!'
             onPress={this.toggleModal}
