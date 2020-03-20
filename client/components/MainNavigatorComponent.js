@@ -19,6 +19,12 @@ import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 import LogOut from './account/LogOut';
 
+import ViewLogs from './ViewLogs/ViewLogs';
+import FilterLog from './ViewLogs/FilterLogComponent';
+
+import ParentView from './ViewLogs/ParentViewComponent';
+import TopTabNavigator from './ViewLogs/TopTabNavigator';
+
 import OtherProfiles from './profiles/OtherProfiles';
 
 import ReduxInfo from './ReduxInfo';
@@ -73,6 +79,10 @@ class MainNavigator extends Component {
             <Drawer.Screen name='Logout' component={LogOut} />
             <Drawer.Screen name='Sign Up' component={SignUp} />
             <Drawer.Screen name='Log In' component={Login} />
+            <Drawer.Screen name='ViewLogs' component={ViewLogs} />
+            <Drawer.Screen name='ParentView' component={ParentView} />
+            <Drawer.Screen name='TopTabNavigator' component={TopTabNavigator} />
+            <Drawer.Screen name='FilterLog' component={FilterLog} />
             <Drawer.Screen name='Redux Info' component={ReduxInfo} />
           </Drawer.Navigator>
         </NavigationContainer>

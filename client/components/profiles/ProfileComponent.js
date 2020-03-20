@@ -26,6 +26,7 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
+    console.log('COMPONENT IS NOW MOUNTING');
     this.setItAllUp();
   };
 

@@ -20,7 +20,7 @@ import { ThemeProvider } from 'react-native-elements';
 
 import { localSource } from '../../assets/localSource';
 
-class ViewAllLogs extends Component {
+class ViewLogs extends Component {
   state = {
     today: new Date(),
     date: new Date(),
@@ -228,63 +228,11 @@ class ViewAllLogs extends Component {
   render() {
     return (
       <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
+        <Text style={{ textAlign: 'center', fontSize: 25 }}>
+          Logs for today:
+        </Text>
         {this.state.filteredLogs && this.weatherAudit()}
-
-        <View>
-          <Text>Sort by Date</Text>
-          <DatePicker
-            date={this.state.date}
-            format='MM-DD-YYYY'
-            mode='date'
-            placeholder='Select Date'
-            confirmBtnText='Confirm'
-            cancelBtnText='Cancel'
-            onDateChange={date => {
-              this.changeDate(date);
-            }}
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-            }}
-          />
-        </View>
-
-        <Text htmlFor='gender'>Filter by gender</Text>
-        <Picker
-          selectedValue={this.state.setGender}
-          onValueChange={gender => this.filterByGender(gender)}
-          placeholder='Choose your Gender'
-        >
-          <Picker.Item label='Choose' disabled={true} enabled={false} />
-          <Picker.Item label='male' value='male' />
-          <Picker.Item label='female' value='female' />
-          <Picker.Item label='nonbinary' value='nonbinary' />
-        </Picker>
-
-        <Text>Filter By State:</Text>
-
-        <StateFilter
-          states={this.state.states}
-          filter={this.filterState}
-          state={this.state.state}
-        />
-
-        <Text>Filter By County:</Text>
-        <CountyFilter
-          counties={this.state.counties}
-          filter={county => this.filterCounty(county)}
-          county={this.state.county}
-        />
-
         {this.state.filteredLogs && this.buildList()}
-        <Button title='Back to default' onPress={this.defaultLogs} />
       </ScrollView>
     );
   }
@@ -298,4 +246,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ViewAllLogs);
+export default connect(mapStateToProps)(ViewLogs);

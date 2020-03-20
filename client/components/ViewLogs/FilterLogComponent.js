@@ -20,7 +20,7 @@ import { ThemeProvider } from 'react-native-elements';
 
 import { localSource } from '../../assets/localSource';
 
-class ViewAllLogs extends Component {
+class FilterLog extends Component {
   state = {
     today: new Date(),
     date: new Date(),
@@ -32,8 +32,8 @@ class ViewAllLogs extends Component {
     id: null,
     day: null,
     year: null,
-    states: [],
-    counties: [],
+    states: ['Washington'],
+    counties: ['Yakima', 'King'],
     state: undefined,
     stateFiltered: false,
     county: undefined,
@@ -43,7 +43,7 @@ class ViewAllLogs extends Component {
   componentDidMount() {
     // console.log('COMPONENT HAS NOW MOUNTED');
     let { today } = this.state;
-    this.sanitizeDate(today);
+    // this.sanitizeDate(today);
   }
 
   sanitizeDate = (dateToLookFor, message) => {
@@ -227,9 +227,8 @@ class ViewAllLogs extends Component {
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
-        {this.state.filteredLogs && this.weatherAudit()}
-
+      <View style={{ backgroundColor: '#e0e7ef' }}>
+        <Text style={{ textAlign: 'center', fontSize: 25 }}>Filter Logs</Text>
         <View>
           <Text>Sort by Date</Text>
           <DatePicker
@@ -282,10 +281,8 @@ class ViewAllLogs extends Component {
           filter={county => this.filterCounty(county)}
           county={this.state.county}
         />
-
-        {this.state.filteredLogs && this.buildList()}
         <Button title='Back to default' onPress={this.defaultLogs} />
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -298,4 +295,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ViewAllLogs);
+export default connect(mapStateToProps)(FilterLog);

@@ -12,21 +12,26 @@ const BasicLogHead = ({
   iconSource,
   ...props
 }) => {
+  console.log('PROPS', props);
+  console.log(samePerson);
   return (
     <View style={logCss.profileHead}>
-      {samePerson ? (
-        <Text style={logCss.nameHidden}>~(You!)~</Text>
-      ) : theTag == 'This user has decided to keep their name private' ||
-        props.privateAccount ? (
-        <Text style={logCss.nameHidden}>{theTag}</Text>
-      ) : (
-        <Text
-          style={logCss.name}
-          onPress={() => props.passUpName(theTag, props.id)}
-        >
-          {theTag}
-        </Text>
-      )}
+      <View>
+        {samePerson ? (
+          <Text style={logCss.nameHidden}>~(You!)~</Text>
+        ) : theTag == 'This user has decided to keep their name private' ||
+          props.privateAccount ? (
+          <Text style={logCss.nameHidden}>{theTag}</Text>
+        ) : (
+          <Text
+            style={logCss.name}
+            onPress={() => props.passUpName(theTag, props.id)}
+          >
+            {theTag}
+          </Text>
+        )}
+        {props.hideCreator && <Text>Your name is hidden</Text>}
+      </View>
 
       <Icon name={genderIcon} type={iconSource} size={35} />
       <View style={logCss.weatherAndType}>

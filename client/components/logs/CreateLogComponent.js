@@ -34,7 +34,7 @@ class CreateLog extends Component {
   };
 
   componentDidMount() {
-    console.log('REDUX INFO', this.props.userSettings);
+    // console.log('REDUX INFO', this.props.userSettings);
     let today = new Date();
     var start = new Date(today.getFullYear(), 0, 0);
     var diff =
@@ -87,38 +87,34 @@ class CreateLog extends Component {
       })
         .then(response => response.json())
         .then(results => {
-          // this.props.logIt(results);
-          console.log(results);
+          this.props.setCreatedToday();
+          this.setState({
+            mood: null,
+            moodEmoji: null,
+            productivity: null,
+            journal: '',
+            privateJournal: false,
+            hideCreator: false,
+            err: null,
+            message: null,
+            messageCss: 'red',
+            day: null,
+            year: null,
+            dayOfYear: null,
+            year: null,
+            dayOfWeek: null,
+            dayOfMonth: null,
+            month: null,
+            moodMsg: null,
+            productivityMsg: null
+          });
+          navigate('See Logs');
         })
         .catch(error => {
           this.setState({
             message: `Username already exists!`
           });
         });
-      this.props.setCreatedToday();
-      this.setState(
-        {
-          mood: null,
-          moodEmoji: null,
-          productivity: null,
-          journal: '',
-          privateJournal: false,
-          hideCreator: false,
-          err: null,
-          message: null,
-          messageCss: 'red',
-          day: null,
-          year: null,
-          dayOfYear: null,
-          year: null,
-          dayOfWeek: null,
-          dayOfMonth: null,
-          month: null,
-          moodMsg: null,
-          productivityMsg: null
-        },
-        navigate('See Logs')
-      );
     }
   };
 

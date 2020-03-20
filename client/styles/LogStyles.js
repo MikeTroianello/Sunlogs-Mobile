@@ -10,14 +10,20 @@ export const logCss = {
   profileHead: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1
+
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray'
   },
   weatherAndType: {
-    translateY: -12
+    // translateY: -1,
+    marginTop: '-1%',
+    borderColor: 'gray',
+    // borderBottomWidth: 1
+    borderLeftWidth: 1
   },
   weatherType: {
     textAlign: 'center',
-    marginBottom: -10,
+    // marginBottom: -10,
     marginTop: -6,
     fontSize: 16
   },
@@ -44,8 +50,10 @@ export const logCss = {
     width: '27%',
     height: 65,
     borderWidth: 1,
+    borderRadius: 7,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#b0c3e8'
   },
   moodHeader: {
     fontSize: 16,

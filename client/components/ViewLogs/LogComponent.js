@@ -34,6 +34,8 @@ const Log = props => {
 
   if (props.id === props.log.creatorId._id) {
     samePerson = true;
+  } else {
+    samePerson = false;
   }
 
   if (props.profile) {
@@ -61,19 +63,22 @@ const Log = props => {
       </View>
     );
   } else {
+    // console.log('SAME PERSON WILL BE PASSED IN', samePerson);
+    console.log('PROPSPSPSPSPSPSP', props);
     return (
       <View View style={logCss.box}>
         <BasicLogHead
-          privateAccount={props.privateAccount}
           demo={false}
+          samePerson={samePerson}
           genderIcon={genderIcon}
           iconSource={iconSource}
+          privateAccount={props.privateAccount}
+          passUpName={props.passUpName}
           theTag={props.log.creatorId.username}
           id={props.log.creatorId._id}
-          samePerson={samePerson}
+          hideCreator={props.log.hideCreator}
           weatherIcon={props.log.weatherIcon}
           weatherType={props.log.weatherType}
-          passUpName={props.passUpName}
         />
         <LogBody
           county={props.log.county}
