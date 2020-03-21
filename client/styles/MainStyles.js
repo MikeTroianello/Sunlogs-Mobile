@@ -173,13 +173,29 @@ export const FilterStyle = {
     marginLeft: '15%',
     marginRight: '15%',
     marginTop: '5%',
-    marginBottom: '5%',
+    marginBottom: '5%'
 
-    borderWidth: 1
+    // borderWidth: 1
   },
-  genderIcon: {
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    borderWidth: 1
+  genderIconBoxLeft: {
+    width: '33%',
+    borderWidth: 1,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15
+    // backgroundColor: '#8ec2ea'
+  },
+  genderIconBoxMiddle: {
+    width: '33%',
+    borderTopWidth: 1,
+    borderBottomWidth: 1
+  },
+  genderIconBoxRight: {
+    width: '33%',
+    borderWidth: 1,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15
+  },
+  genderIconChosen: {
+    backgroundColor: '#8ec2ea'
   }
 };

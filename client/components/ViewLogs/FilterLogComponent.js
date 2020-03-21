@@ -38,7 +38,8 @@ class FilterLog extends Component {
     state: undefined,
     stateFiltered: false,
     county: undefined,
-    setGender: ''
+    setGender: '',
+    chosenGender: null
   };
 
   componentDidMount() {
@@ -256,26 +257,53 @@ class FilterLog extends Component {
           />
         </View>
 
-        <Text style={{ textAlign: 'center' }}>Filter by gender</Text>
+        <Text style={{ textAlign: 'center', fontSize: 20 }}>
+          Filter by gender
+        </Text>
         <View style={FilterStyle.genderBox}>
-          <Icon
-            name='male-symbol'
-            type='foundation'
-            size={35}
-            iconStyle={FilterStyle.genderIcon}
-          />
-          <Icon
-            name='female-symbol'
-            type='foundation'
-            size={35}
-            iconStyle={FilterStyle.genderIcon}
-          />
-          <Icon
-            name='genderless'
-            type='font-awesome'
-            size={35}
-            iconStyle={FilterStyle.genderIcon}
-          />
+          <View
+            style={[
+              FilterStyle.genderIconBoxLeft,
+              this.state.chosenGender == 'male' && FilterStyle.genderIconChosen
+            ]}
+          >
+            <Icon
+              name='male-symbol'
+              type='foundation'
+              size={35}
+              onPress={() => this.setState({ chosenGender: 'male' })}
+            />
+          </View>
+          <View
+            style={[
+              FilterStyle.genderIconBoxMiddle,
+              this.state.chosenGender == 'female' &&
+                FilterStyle.genderIconChosen
+            ]}
+          >
+            <Icon
+              name='female-symbol'
+              type='foundation'
+              size={35}
+              iconStyle={FilterStyle.genderIcon}
+              onPress={() => this.setState({ chosenGender: 'female' })}
+            />
+          </View>
+          <View
+            style={[
+              FilterStyle.genderIconBoxRight,
+              this.state.chosenGender == 'non-binary' &&
+                FilterStyle.genderIconChosen
+            ]}
+          >
+            <Icon
+              name='genderless'
+              type='font-awesome'
+              size={35}
+              iconStyle={FilterStyle.genderIcon}
+              onPress={() => this.setState({ chosenGender: 'non-binary' })}
+            />
+          </View>
         </View>
 
         <Text>Filter By State:</Text>
