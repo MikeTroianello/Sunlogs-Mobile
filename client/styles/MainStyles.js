@@ -163,3 +163,23 @@ export const weatherboxCss = StyleSheet.create({
     // textAlign: 'right'
   }
 });
+
+export const FilterStyle = {
+  genderBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+
+    width: '70%',
+    marginLeft: '15%',
+    marginRight: '15%',
+    marginTop: '5%',
+    marginBottom: '5%',
+
+    borderWidth: 1
+  },
+  genderIcon: {
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    borderWidth: 1
+  }
+};

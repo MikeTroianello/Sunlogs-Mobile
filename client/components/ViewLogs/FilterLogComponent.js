@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList, Button, Picker, ScrollView } from 'react-native';
+import { Icon } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
@@ -12,7 +13,7 @@ import WeatherAudit from '../weather/WeatherAudit';
 import StateFilter from '../filterByLocation/StateFilter';
 import CountyFilter from '../filterByLocation/CountyFilter';
 
-import { Styles } from '../../styles/MainStyles';
+import { Styles, FilterStyle } from '../../styles/MainStyles';
 
 import mockLog from '../../mockLogs/mockLog.json';
 import mockLogs from '../../mockLogs/mockLogs.json';
@@ -255,17 +256,27 @@ class FilterLog extends Component {
           />
         </View>
 
-        <Text htmlFor='gender'>Filter by gender</Text>
-        <Picker
-          selectedValue={this.state.setGender}
-          onValueChange={gender => this.filterByGender(gender)}
-          placeholder='Choose your Gender'
-        >
-          <Picker.Item label='Choose' disabled={true} enabled={false} />
-          <Picker.Item label='male' value='male' />
-          <Picker.Item label='female' value='female' />
-          <Picker.Item label='nonbinary' value='nonbinary' />
-        </Picker>
+        <Text style={{ textAlign: 'center' }}>Filter by gender</Text>
+        <View style={FilterStyle.genderBox}>
+          <Icon
+            name='male-symbol'
+            type='foundation'
+            size={35}
+            iconStyle={FilterStyle.genderIcon}
+          />
+          <Icon
+            name='female-symbol'
+            type='foundation'
+            size={35}
+            iconStyle={FilterStyle.genderIcon}
+          />
+          <Icon
+            name='genderless'
+            type='font-awesome'
+            size={35}
+            iconStyle={FilterStyle.genderIcon}
+          />
+        </View>
 
         <Text>Filter By State:</Text>
 
@@ -296,3 +307,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(FilterLog);
+
+// selectedValue={this.state.setGender}
+// onValueChange={gender => this.filterByGender(gender)}
+// placeholder='Choose your Gender'

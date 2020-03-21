@@ -41,7 +41,7 @@ class ViewLogs extends Component {
   };
 
   componentDidMount() {
-    // console.log('COMPONENT HAS NOW MOUNTED');
+    console.log('COMPONENT HAS NOW MOUNTED');
     let { today } = this.state;
     this.sanitizeDate(today);
   }
