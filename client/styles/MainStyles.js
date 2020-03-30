@@ -26,7 +26,7 @@ export const Styles = StyleSheet.create({
 export const LoginCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
+    height: '100%'
   },
   loginHeader: {
     textAlign: 'center',
@@ -35,16 +35,25 @@ export const LoginCss = StyleSheet.create({
   loginComponent: {
     borderWidth: 1,
     margin: 30,
-    padding: 10
+    padding: 10,
+    backgroundColor: '#f4f9ff'
   },
   submitButton: {
     marginLeft: 25,
     marginRight: 25,
     borderRadius: 50
   },
+  // signUpButton: {
+  //   color: 'pink',
+  //   backgroundColor: 'black',
+  //   marginLeft: 20,
+  //   marginRight: 20,
+  //   marginTop: 50
+  // },
   signUpButton: {
-    color: 'pink',
-    backgroundColor: 'black'
+    position: 'absolute',
+    bottom: 0,
+    width: '100%'
   }
 });
 

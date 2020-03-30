@@ -230,9 +230,35 @@ class FilterLog extends Component {
   render() {
     return (
       <View style={{ backgroundColor: '#e0e7ef' }}>
-        <Text style={{ textAlign: 'center', fontSize: 25 }}>Filter Logs</Text>
-        <View>
-          <Text>Sort by Date</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 25,
+            borderBottomWidth: 1,
+            width: '33%',
+            marginLeft: '33%',
+            marginRight: '33%',
+            marginBottom: '5%'
+          }}
+        >
+          Filter Logs
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center'
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20
+            }}
+          >
+            Sort by Date:{'   '}
+          </Text>
+
           <DatePicker
             date={this.state.date}
             format='MM-DD-YYYY'
@@ -306,7 +332,9 @@ class FilterLog extends Component {
           </View>
         </View>
 
-        <Text>Filter By State:</Text>
+        <Text style={{ textAlign: 'center', fontSize: 20 }}>
+          Filter By State:
+        </Text>
 
         <StateFilter
           states={this.state.states}
@@ -314,7 +342,9 @@ class FilterLog extends Component {
           state={this.state.state}
         />
 
-        <Text>Filter By County:</Text>
+        <Text style={{ textAlign: 'center', fontSize: 20 }}>
+          Filter By County:
+        </Text>
         <CountyFilter
           counties={this.state.counties}
           filter={county => this.filterCounty(county)}

@@ -21,8 +21,10 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log('THIS IS THE STATE: ', this.state);
     const { navigate } = this.props.navigation;
     const { username, password } = this.state;
+    console.log('USERNAME', username);
     if (!username) {
       this.setState({
         message: `You must include a username`
@@ -52,9 +54,13 @@ class Login extends Component {
       })
         .then(response => response.json())
         .then(results => {
-          if (results.message == 'Incorrect password.') {
+          if (
+            results.message == 'Incorrect username.' ||
+            results.message == 'Incorrect password.' ||
+            results.message == 'Unauthorized'
+          ) {
             this.setState({
-              message: 'Incorrect password!'
+              message: 'Incorrect username or password!'
             });
           } else if (results.message == 'This account was deleted') {
             this.setState({
@@ -86,9 +92,9 @@ class Login extends Component {
     return (
       <View style={{ color: '#e0e7ef' }}>
         <View style={LoginCss.wholePage}>
-          <Text style={LoginCss.loginHeader}>Welcome!</Text>
-          <View style={LoginCss.loginComponent}>
-            <View>
+          <View style={{ translateY: 40 }}>
+            <Text style={LoginCss.loginHeader}>Welcome!</Text>
+            <View style={LoginCss.loginComponent}>
               <Text>Username:</Text>
               <Input
                 textContentType='username'
@@ -101,8 +107,7 @@ class Login extends Component {
                   marginLeft: 3
                 }}
               />
-            </View>
-            <View>
+
               <Text>Password:</Text>
               <Input
                 autoCompleteType='password'
@@ -118,17 +123,21 @@ class Login extends Component {
                 }}
               />
             </View>
-          </View>
-          <View style={LoginCss.submitButton}>
-            <Button title='Submit' onPress={this.handleSubmit} />
+            <View style={LoginCss.submitButton}>
+              <Button title='Submit' onPress={this.handleSubmit} />
+            </View>
+            <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 5 }}>
+              {this.state.message}
+            </Text>
           </View>
 
-          <Text>{this.state.message}</Text>
-          <Button
-            title='New Here? Create an Account!'
-            onPress={this.toggleModal}
-            style={LoginCss.signUpButton}
-          />
+          <View style={LoginCss.signUpButton}>
+            <Button
+              title='New Here? Create an Account!'
+              onPress={this.toggleModal}
+              color='#1d4f7c'
+            />
+          </View>
         </View>
         <Modal
           style={{ color: '#e0e7ef' }}
