@@ -129,28 +129,44 @@ export const CreateLogsCss = StyleSheet.create({
 export const SettingsCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: '100%'
   },
   preferences: {
-    marginTop: 5,
-    marginBottom: 5,
-    paddingLeft: 6,
+    // marginTop: 6,
+    // marginBottom: 6,
+    margin: 8,
+    paddingBottom: 6,
+
+    // paddingLeft: 5,
     paddingRight: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomColor: 'gray',
-    borderBottomWidth: 1
+    borderBottomWidth: 2
+  },
+  settingHeader: {
+    fontSize: 15,
+    fontWeight: 'bold'
+
+    // padding: 0
+  },
+  settingHeaderTwo: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingLeft: 6
   },
   deleteTouchableOpacity: {
     backgroundColor: 'rgba(255,0,0,0.3)',
     height: 55,
     justifyContent: 'center',
     marginTop: 20,
-    textAlign: 'center',
     borderBottomColor: 'red',
     borderBottomWidth: 1,
     borderTopColor: 'rgba(255,0,0,0.6)',
-    borderTopWidth: 1
+    borderTopWidth: 1,
+    bottom: 0
+    // position: 'absolute'
   }
 });
 

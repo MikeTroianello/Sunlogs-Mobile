@@ -101,30 +101,13 @@ class Settings extends Component {
           <View className='settings-change-preferences'>
             <View style={SettingsCss.preferences}>
               <View>
-                <Text>Hide your profile</Text>
-                {/* <Text>
-                  {this.state.hideProfile
-                    ? 'Your profile is Hidden'
-                    : 'Your profile is Viewable'}
-                </Text> */}
+                <Text style={SettingsCss.settingHeader}>Hide your profile</Text>
+
                 <Text className={this.state.hideProfile ? 'red' : 'green'}>
                   You {this.state.hideProfile === true && <Text>DO NOT </Text>}
                   allow others to view your profile
                 </Text>
               </View>
-              {/* <Text>
-                This makes sure people will not be able to view your profile.
-              </Text>
-              <Text className='settings-aside'>
-                (They still can see your name on your logs, if you choose to not
-                hide them)
-              </Text>
-              <Text className={this.state.hideProfile ? 'red' : 'green'}>
-                You currently{' '}
-                {this.state.hideProfile === true && <Text>DO NOT </Text>}
-                allow others to view your profile
-              </Text> */}
-
               <Switch
                 value={this.state.hideProfile}
                 name='hideProfile'
@@ -133,7 +116,9 @@ class Settings extends Component {
             </View>
             <View style={SettingsCss.preferences}>
               <View>
-                <Text>Make Journals Private by Default</Text>
+                <Text style={SettingsCss.settingHeader}>
+                  Make Journals Private by Default
+                </Text>
                 <Text
                   className={this.state.privateJournalDefault ? 'red' : 'green'}
                 >
@@ -150,7 +135,9 @@ class Settings extends Component {
             </View>
             <View style={SettingsCss.preferences}>
               <View>
-                <Text>Hide your name by Default</Text>
+                <Text style={SettingsCss.settingHeader}>
+                  Hide your name by Default
+                </Text>
                 <Text>
                   Your name is{' '}
                   {this.state.hideCreatorDefault ? 'HIDDEN' : 'shown'} by
@@ -164,9 +151,9 @@ class Settings extends Component {
               />
             </View>
           </View>
-          <View className='settings-change-info'>
-            <View className='change-account-sub-box'>
-              <Text>Change Phone # </Text>
+          <View>
+            <View>
+              <Text style={SettingsCss.settingHeaderTwo}>Change Phone # </Text>
               <Input
                 type='tel'
                 autoComplete='off'
@@ -177,8 +164,8 @@ class Settings extends Component {
               />
             </View>
 
-            <View className='change-account-sub-box'>
-              <Text>Change email</Text>
+            <View>
+              <Text style={SettingsCss.settingHeaderTwo}>Change email</Text>
               <Input
                 type='email'
                 name='email'
@@ -188,11 +175,13 @@ class Settings extends Component {
               />
             </View>
 
-            <View className='settings-change-password'>
-              <View className='change-password-super-box'>
-                <View className='change-password-box'>
-                  <View className='change-password-sub-box'>
-                    <Text>Change Password</Text>
+            <View>
+              <View>
+                <View>
+                  <View>
+                    <Text style={SettingsCss.settingHeaderTwo}>
+                      Change Password
+                    </Text>
                     <Input
                       type='password'
                       name='oldPass'
@@ -202,8 +191,10 @@ class Settings extends Component {
                     />
                   </View>
 
-                  <View className='change-password-sub-box'>
-                    <Text>Confirm Password</Text>
+                  <View>
+                    <Text style={SettingsCss.settingHeaderTwo}>
+                      Confirm Password
+                    </Text>
                     <Input
                       type='password'
                       name='newPass'
@@ -216,7 +207,9 @@ class Settings extends Component {
               </View>
             </View>
 
-            <Button title='Change Settings' onPress={this.changeInfo} />
+            <View style={{ marginTop: 15 }}>
+              <Button title='Change Settings' onPress={this.changeInfo} />
+            </View>
           </View>
 
           {/* <Button title='DELETE' onPress={this.deleteUser} /> */}
@@ -224,7 +217,9 @@ class Settings extends Component {
             onPress={this.deleteUser}
             style={SettingsCss.deleteTouchableOpacity}
           >
-            <Text>DELETE USER</Text>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              DELETE USER
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
