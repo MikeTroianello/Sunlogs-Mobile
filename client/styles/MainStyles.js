@@ -26,7 +26,10 @@ export const Styles = StyleSheet.create({
 export const LoginCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    height: '100%'
+    height: '100%',
+    borderWidth: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   loginHeader: {
     textAlign: 'center',
@@ -54,6 +57,12 @@ export const LoginCss = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%'
+  },
+  backToLoginButton: {
+    // justifyContent: 'flex-end',
+    // marginLeft: 20,
+    // marginRight: 20,
+    // marginTop: 30
   }
 });
 

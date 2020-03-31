@@ -31,6 +31,10 @@ class SignUp extends Component {
       this.setState({
         message: `You must include a password`
       });
+    } else if (password.length < 6) {
+      this.setState({
+        message: `Password must be at least 6 characters`
+      });
     } else if (!gender) {
       this.setState({
         message: `You must include a gender`
@@ -46,10 +50,18 @@ class SignUp extends Component {
       })
         .then(response => response.json())
         .then(results => {
+          if (results.error) {
+            console.log(results.error);
+            this.setState({
+              message: results.error
+            });
+          } else {
+            console.log('THIS IS PERCEIVED TO BE A SUCCESS', results);
+            this.props.loggedIn(results);
+            this.props.navigate('See Logs');
+            this.props.toggleModal();
+          }
           // this.props.logIt(results);
-          console.log(results);
-          this.props.loggedIn(results);
-          navigate('See Logs');
         })
         .catch(error => {
           this.setState({
@@ -65,90 +77,97 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={{ color: '#e0e7ef' }}>
-        <View style={LoginCss.wholePage}>
-          <Text style={LoginCss.loginHeader}>Create an Account!</Text>
-          <View style={LoginCss.loginComponent}>
-            <View>
-              <Text>Username:</Text>
-              <Input
-                placeholder='Your name...'
-                onChangeText={text => this.setState({ username: text })}
-                value={this.state.username}
-                leftIcon={{ type: 'font-awesome', name: 'user' }}
-                leftIconContainerStyle={{
-                  marginRight: 10,
-                  marginLeft: 3
-                }}
-              />
-            </View>
-            <View>
-              <Text>Password:</Text>
-              <Input
-                secureTextEntry={true}
-                placeholder='6+ characters'
-                onChangeText={text => this.setState({ password: text })}
-                value={this.state.password}
-                leftIcon={{ type: 'font-awesome', name: 'key' }}
-                leftIconContainerStyle={{
-                  marginRight: 9,
-                  marginLeft: 0
-                }}
-              />
-            </View>
-            <View>
-              <Text>Email: (optional)</Text>
-              <Input
-                name='email'
-                type='email'
-                autoCompleteType='email'
-                keyboardType='email-address'
-                placeholder='Your email...'
-                onChangeText={text => this.setState({ email: text })}
-                value={this.state.email}
-                leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                leftIconContainerStyle={{
-                  marginRight: 8,
-                  marginLeft: -2
-                }}
-              />
-            </View>
-            <View>
-              <Text>Phone: (optional)</Text>
-              <Input
-                name='phone'
-                autoCompleteType='tel'
-                keyboardType='phone-pad'
-                pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
-                placeholder='867-5309'
-                onChangeText={text => this.setState({ phone: text })}
-                value={this.state.phone}
-                leftIcon={{ type: 'font-awesome', name: 'phone' }}
-                leftIconContainerStyle={{
-                  marginRight: 10,
-                  marginLeft: 3
-                }}
-              />
-            </View>
-            <View>
-              <Text>What is your gender?</Text>
-              <Picker
-                selectedValue={this.state.gender}
-                onValueChange={gender => this.setState({ gender })}
-                placeholder='Choose your Gender'
-              >
-                <Picker.Item label='Choose' disabled={true} enabled={false} />
-                <Picker.Item label='male' value='male' />
-                <Picker.Item label='female' value='female' />
-                <Picker.Item label='nonbinary' value='nonbinary' />
-              </Picker>
-            </View>
+      <View style={LoginCss.wholePage}>
+        <Text style={LoginCss.loginHeader}>Create an Account!</Text>
+        <View style={LoginCss.loginComponent}>
+          <View>
+            <Text>Username:</Text>
+            <Input
+              placeholder='Your name...'
+              onChangeText={text => this.setState({ username: text })}
+              value={this.state.username}
+              leftIcon={{ type: 'font-awesome', name: 'user' }}
+              leftIconContainerStyle={{
+                marginRight: 10,
+                marginLeft: 3
+              }}
+            />
           </View>
-          <View style={LoginCss.submitButton}>
-            <Button title='Submit' onPress={this.handleSubmit} />
+          <View>
+            <Text>Password:</Text>
+            <Input
+              secureTextEntry={true}
+              placeholder='6+ characters'
+              onChangeText={text => this.setState({ password: text })}
+              value={this.state.password}
+              leftIcon={{ type: 'font-awesome', name: 'key' }}
+              leftIconContainerStyle={{
+                marginRight: 9,
+                marginLeft: 0
+              }}
+            />
           </View>
+          <View>
+            <Text>Email: (optional)</Text>
+            <Input
+              name='email'
+              type='email'
+              autoCompleteType='email'
+              keyboardType='email-address'
+              placeholder='Your email...'
+              onChangeText={text => this.setState({ email: text })}
+              value={this.state.email}
+              leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+              leftIconContainerStyle={{
+                marginRight: 8,
+                marginLeft: -2
+              }}
+            />
+          </View>
+          <View>
+            <Text>Phone: (optional)</Text>
+            <Input
+              name='phone'
+              autoCompleteType='tel'
+              keyboardType='phone-pad'
+              pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+              placeholder='867-5309'
+              onChangeText={text => this.setState({ phone: text })}
+              value={this.state.phone}
+              leftIcon={{ type: 'font-awesome', name: 'phone' }}
+              leftIconContainerStyle={{
+                marginRight: 10,
+                marginLeft: 3
+              }}
+            />
+          </View>
+          <View>
+            <Text>What is your gender?</Text>
+            <Picker
+              selectedValue={this.state.gender}
+              onValueChange={gender => this.setState({ gender })}
+              placeholder='Choose your Gender'
+            >
+              <Picker.Item label='Choose' disabled={true} enabled={false} />
+              <Picker.Item label='male' value='male' />
+              <Picker.Item label='female' value='female' />
+              <Picker.Item label='nonbinary' value='nonbinary' />
+            </Picker>
+          </View>
+        </View>
+        <View style={LoginCss.submitButton}>
+          <Button title='Create' onPress={this.handleSubmit} />
+        </View>
 
-          <Text>{this.state.message}</Text>
+        <Text style={{ textAlign: 'center', fontSize: 20, marginTop: 5 }}>
+          {this.state.message}
+        </Text>
+        <View style={LoginCss.backToLoginButton}>
+          <Button
+            title='Go Back To Login'
+            onPress={this.props.toggleModal}
+            color='#1d4f7c'
+          />
         </View>
       </View>
     );

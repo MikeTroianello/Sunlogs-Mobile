@@ -145,8 +145,10 @@ class Login extends Component {
           visible={this.state.showModal}
         >
           <View style={{ color: '#e0e7ef' }}>
-            <SignUp />
-            <Button title='Go Back To Login' onPress={this.toggleModal} />
+            <SignUp
+              toggleModal={this.toggleModal}
+              navigation={this.props.navigation}
+            />
           </View>
         </Modal>
       </View>
