@@ -21,7 +21,8 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('THIS IS THE STATE: ', this.state);
+    // console.log('THIS IS THE STATE: ', this.state);
+    // console.log('THESE ARE THE PROPSss: ', this.props);
     const { navigate } = this.props.navigation;
     const { username, password } = this.state;
     console.log('USERNAME', username);

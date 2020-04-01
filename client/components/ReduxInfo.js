@@ -6,12 +6,6 @@ import { loggedIn } from '../redux/ActionCreators';
 
 import { styles } from '../styles/MainStyles';
 
-const mapStateToProps = state => {
-  return {
-    userSettings: state.userSettings
-  };
-};
-
 class ReduxInfo extends Component {
   render() {
     console.log('WHaT WE MAPPED FROM THE STATES', this.props.userSettings);
@@ -40,5 +34,11 @@ class ReduxInfo extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userSettings: state.userSettings
+  };
+};
 
 export default connect(mapStateToProps)(ReduxInfo);

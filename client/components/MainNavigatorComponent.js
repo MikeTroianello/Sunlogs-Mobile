@@ -23,7 +23,6 @@ import ViewLogs from './ViewLogs/ViewLogs';
 import FilterLog from './ViewLogs/FilterLogComponent';
 
 import ParentView from './ViewLogs/ParentViewComponent';
-import TopTabNavigator from './ViewLogs/TopTabNavigator';
 
 import OtherProfiles from './profiles/OtherProfiles';
 
@@ -59,7 +58,14 @@ const SettingStack = () => {
 };
 
 class MainNavigator extends Component {
+  state = {
+    x: 5
+  };
+
   render() {
+    let drawerName;
+    this.state.x == 6 ? (drawerName = 'See Logs') : (drawerName = 'Log In');
+    const { username, createdToday } = this.props.userSettings;
     return (
       <View
         style={{
@@ -70,20 +76,21 @@ class MainNavigator extends Component {
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='Log In'>
-            <Drawer.Screen name='Create Log' component={CreateLog} />
-            <Drawer.Screen name='Home' component={LandingPage} />
-            <Drawer.Screen name='See Logs' component={LogStack} />
+          <Drawer.Navigator initialRouteName='See Logs'>
+            {!username && <Drawer.Screen name='Log In' component={Login} />}
+            {username && !createdToday && (
+              <Drawer.Screen name='Create Log' component={CreateLog} />
+            )}
+
+            <Drawer.Screen name='See Logs' component={ParentView} />
             <Drawer.Screen name='Profile' component={ProfileStack} />
-            <Drawer.Screen name='Settings' component={SettingStack} />
-            <Drawer.Screen name='Logout' component={LogOut} />
-            <Drawer.Screen name='Sign Up' component={SignUp} />
-            <Drawer.Screen name='Log In' component={Login} />
-            <Drawer.Screen name='ViewLogs' component={ViewLogs} />
-            <Drawer.Screen name='ParentView' component={ParentView} />
-            <Drawer.Screen name='TopTabNavigator' component={TopTabNavigator} />
-            <Drawer.Screen name='FilterLog' component={FilterLog} />
-            <Drawer.Screen name='Redux Info' component={ReduxInfo} />
+            {username && (
+              <Drawer.Screen name='Settings' component={SettingStack} />
+            )}
+            {username && <Drawer.Screen name='Logout' component={LogOut} />}
+            {username && (
+              <Drawer.Screen name='Redux Info' component={ReduxInfo} />
+            )}
           </Drawer.Navigator>
         </NavigationContainer>
       </View>
@@ -93,10 +100,7 @@ class MainNavigator extends Component {
 
 const mapStateToProps = state => {
   return {
-    createdToday: state.createdToday,
-    hideCreatorDefault: state.hideCreatorDefault,
-    hideProfile: state.hideProfile,
-    privateJournalDefault: state.privateJournalDefault
+    userSettings: state.userSettings
   };
 };
 

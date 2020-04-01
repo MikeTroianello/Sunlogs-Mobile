@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 
 import MainNavigator from './components/MainNavigatorComponent';
+import NavigationParent from './components/NavigationParentComponent';
 
 const initialState = {};
 
