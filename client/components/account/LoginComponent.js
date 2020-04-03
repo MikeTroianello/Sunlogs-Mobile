@@ -19,7 +19,7 @@ class Login extends Component {
     showModal: false
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     // console.log('THIS IS THE STATE: ', this.state);
     // console.log('THESE ARE THE PROPSss: ', this.props);
@@ -54,7 +54,7 @@ class Login extends Component {
         body: JSON.stringify(state)
       })
         .then(response => response.json())
-        .then(results => {
+        .then(async results => {
           if (
             results.message == 'Incorrect username.' ||
             results.message == 'Incorrect password.' ||
@@ -65,19 +65,19 @@ class Login extends Component {
             });
           } else if (results.message == 'This account was deleted') {
             this.setState({
-              message: 'This account was deleted'
+              message: 'This account was deleted.'
             });
           }
           // this.props.logIt(results);
           else {
             console.log(results);
-            this.props.loggedIn(results);
-            navigate('Profile');
+            let results = await this.props.loggedIn(results);
+            navigate('See Logs');
           }
         })
         .catch(error => {
           this.setState({
-            message: `Incorrect Password`
+            message: `Something went wrong`
           });
         });
     }

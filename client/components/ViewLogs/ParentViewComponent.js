@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon, {
+  MaterialCommunityIcons,
+  FontAwesomeIcons
+} from 'react-native-vector-icons';
 
 import Log from './LogComponent';
 
@@ -21,8 +25,34 @@ class ParentView extends Component {
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator>
-          <Tab.Screen name='View' component={ViewLogs} />
-          <Tab.Screen name='Filter' component={FilterLogs} />
+          <Tab.Screen
+            name='View'
+            component={ViewLogs}
+            options={{
+              tabBarLabel: 'View Logs',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                  name='weather-sunny'
+                  color={color}
+                  size={size}
+                />
+              )
+            }}
+          />
+          <Tab.Screen
+            name='Filter'
+            component={FilterLogs}
+            options={{
+              tabBarLabel: 'Filter Logs',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                  name='weather-sunset-down'
+                  color={color}
+                  size={size}
+                />
+              )
+            }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     );

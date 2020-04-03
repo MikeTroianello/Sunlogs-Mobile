@@ -83,7 +83,9 @@ class MainNavigator extends Component {
             )}
 
             <Drawer.Screen name='See Logs' component={ParentView} />
-            <Drawer.Screen name='Profile' component={ProfileStack} />
+            {username && (
+              <Drawer.Screen name='Profile' component={ProfileStack} />
+            )}
             {username && (
               <Drawer.Screen name='Settings' component={SettingStack} />
             )}
