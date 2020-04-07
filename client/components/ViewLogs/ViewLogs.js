@@ -43,7 +43,7 @@ class ViewLogs extends Component {
   };
 
   componentDidMount() {
-    console.log('COMPONENT HAS NOW MOUNTED');
+    // console.log('COMPONENT HAS NOW MOUNTED');
     const { today } = this.state;
     this.sanitizeDate(today);
   }
@@ -64,7 +64,7 @@ class ViewLogs extends Component {
       const {
         instructions,
         isoDate,
-        gender,
+        chosenGender,
         state,
         county,
       } = this.props.route.params.info;
@@ -72,7 +72,7 @@ class ViewLogs extends Component {
       //   'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
       //   instructions,
       //   // date,
-      //   gender,
+      //   chosenGender,
       //   state,
       //   county,
       //   isoDate
@@ -96,13 +96,13 @@ class ViewLogs extends Component {
             () => {
               if (state && !county) {
                 console.log('FILTERING BY STATE');
-                this.filterState(state);
+                this.filterState(state, chosenGender);
               }
               if (county) {
-                this.filterCounty(county);
+                this.filterCounty(county, chosenGender);
               }
-              // if (gender) {
-              //   this.filterByGender(gender);
+              // if (chosenGender) {
+              //   this.filterByGender(chosenGender);
               // }
             }
           );
@@ -190,32 +190,36 @@ class ViewLogs extends Component {
   };
 
   filterByGender = (gender) => {
-    // console.log(gender);
-    let genderLogs = this.state.filteredLogsCopy.filter((log) => {
-      return log.creatorId.gender === gender;
-    });
+    if (gender) {
+      console.log('\x1b[93m-GENDER HAS BEEN CALLED-\x1b[39m', gender);
+      let genderLogs = this.state.filteredLogs.filter((log) => {
+        return log.creatorId.gender === gender;
+      });
 
-    this.setState({
-      filteredLogs: genderLogs,
-      genderSearchMessage: `Showing all ${gender} logs`,
-      setGender: gender,
-    });
+      console.log('\x1b[93m-GENDERLOGS-\x1b[39m', genderLogs);
+
+      this.setState({
+        filteredLogs: genderLogs,
+        genderSearchMessage: `Showing all ${gender} logs`,
+        setGender: gender,
+      });
+    }
   };
 
-  filterState = (value) => {
+  filterState = (value, gender) => {
     if (value !== 'Filter by State:') {
       this.setState(
         {
           state: value,
         },
         () => {
-          this.filterByState();
+          this.filterByState(gender);
         }
       );
     }
   };
 
-  filterByState = () => {
+  filterByState = (gender) => {
     let stateLogs = this.state.logs.filter((log) => {
       return log.state === this.state.state;
     });
@@ -226,27 +230,30 @@ class ViewLogs extends Component {
       return counties.add(log.county);
     });
 
-    this.setState({
-      filteredLogs: stateLogs,
-      counties: [...counties],
-      genderSearchMessage: null,
-    });
+    this.setState(
+      {
+        filteredLogs: stateLogs,
+        counties: [...counties],
+        genderSearchMessage: null,
+      },
+      () => this.filterByGender(gender)
+    );
   };
 
-  filterCounty = (county) => {
+  filterCounty = (county, gender) => {
     if (county !== 'Filter by County:') {
       this.setState(
         {
           county: county,
         },
         () => {
-          this.filterByCounty();
+          this.filterByCounty(gender);
         }
       );
     }
   };
 
-  filterByCounty = () => {
+  filterByCounty = (gender) => {
     let countyLogs = this.state.logs.filter((log) => {
       return log.county === this.state.county;
     });
@@ -254,8 +261,8 @@ class ViewLogs extends Component {
       {
         filteredLogs: countyLogs,
         genderSearchMessage: null,
-      }
-      // () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
+      },
+      () => this.filterByGender(gender)
     );
   };
 
@@ -307,10 +314,10 @@ class ViewLogs extends Component {
   };
 
   render() {
-    console.log(
-      '\x1b[93m-THESE ARE THE FILTEREDLOGS-\x1b[39m',
-      this.state.filteredLogs
-    );
+    // console.log(
+    //   '\x1b[93m-THESE ARE THE FILTEREDLOGS-\x1b[39m',
+    //   this.state.filteredLogs
+    // );
     return (
       <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         <Text style={{ textAlign: 'center', fontSize: 25 }}>
