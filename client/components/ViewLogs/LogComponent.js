@@ -8,7 +8,7 @@ import LogBody from './LogBodyComponent';
 
 import { logCss } from '../../styles/LogStyles';
 
-const Log = props => {
+const Log = (props) => {
   //THIS CREATED THE ICONS FOR USER GENDER
   let genderIcon;
   let iconSource = 'foundation';
@@ -64,7 +64,7 @@ const Log = props => {
     );
   } else {
     // console.log('SAME PERSON WILL BE PASSED IN', samePerson);
-    console.log('PROPSPSPSPSPSPSP', props);
+    // console.log('PROPSPSPSPSPSPSP', props);
     return (
       <View View style={logCss.box}>
         <BasicLogHead

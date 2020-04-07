@@ -15,8 +15,6 @@ import CountyFilter from '../filterByLocation/CountyFilter';
 
 import { Styles, FilterStyle } from '../../styles/MainStyles';
 
-import mockLog from '../../mockLogs/mockLog.json';
-import mockLogs from '../../mockLogs/mockLogs.json';
 import { ThemeProvider } from 'react-native-elements';
 
 import { localSource } from '../../assets/localSource';
@@ -147,7 +145,8 @@ class FilterLog extends Component {
   };
 
   filterByState = () => {
-    let stateLogs = this.state.logs.filter((log) => {
+    console.log('\x1b[36m-FROM THE STORE-\x1b[0m', this.props.locations);
+    let stateLogs = this.props.locations.logs.filter((log) => {
       return log.state === this.state.state;
     });
 
@@ -166,29 +165,24 @@ class FilterLog extends Component {
 
   filterCounty = (county) => {
     if (county !== 'Filter by County:') {
-      this.setState(
-        {
-          county: county,
-        },
-        () => {
-          this.filterByCounty();
-        }
-      );
+      this.setState({
+        county: county,
+      });
     }
   };
 
-  filterByCounty = () => {
-    let countyLogs = this.state.logs.filter((log) => {
-      return log.county === this.state.county;
-    });
-    this.setState(
-      {
-        filteredLogs: countyLogs,
-        genderSearchMessage: null,
-      },
-      () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
-    );
-  };
+  // filterByCounty = () => {
+  //   let countyLogs = this.state.logs.filter((log) => {
+  //     return log.county === this.state.county;
+  //   });
+  //   this.setState(
+  //     {
+  //       filteredLogs: countyLogs,
+  //       genderSearchMessage: null,
+  //     },
+  //     () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
+  //   );
+  // };
 
   weatherAudit = () => {
     return <WeatherAudit logs={this.state.filteredLogs} />;
@@ -206,7 +200,7 @@ class FilterLog extends Component {
 
   renderLogs = ({ item }) => {
     // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
+    console.log('\x1b[36m%s\x1b[0m', this.props.locations);
     return (
       <View style={Styles.logs}>
         <Log
@@ -234,9 +228,17 @@ class FilterLog extends Component {
     );
   };
 
-  filter = () => {
+  filter = (instructions) => {
     const { navigate } = this.props.navigation;
-    navigate('View Logs', { info: this.state });
+    console.log('\x1b[36m-Everything we have:-\x1b[0m', this.state);
+    if (instructions) {
+      this.setState(
+        {
+          instructions: instructions,
+        },
+        () => navigate('View Logs', { info: this.state })
+      );
+    } else navigate('View Logs', { info: this.state });
   };
 
   render() {
@@ -358,7 +360,7 @@ class FilterLog extends Component {
             </Text>
 
             <StateFilter
-              states={this.state.states}
+              states={this.props.locations.states}
               filter={this.filterState}
               state={this.state.state}
             />
@@ -387,7 +389,7 @@ class FilterLog extends Component {
         >
           <Button
             title='Filter!'
-            onPress={this.defaultLogs}
+            onPress={() => this.filter('filter')}
             buttonStyle={{
               backgroundColor: '#4DA1DD',
             }}
@@ -419,6 +421,7 @@ class FilterLog extends Component {
 const mapStateToProps = (state) => {
   return {
     userSettings: state.userSettings,
+    locations: state.locations,
   };
 };
 

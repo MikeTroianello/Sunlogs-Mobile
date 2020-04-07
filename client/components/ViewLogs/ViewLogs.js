@@ -20,6 +20,8 @@ import { ThemeProvider } from 'react-native-elements';
 
 import { localSource } from '../../assets/localSource';
 
+import { setAllLocations, filterByLocation } from '../../redux/ActionCreators/';
+
 class ViewLogs extends Component {
   state = {
     today: new Date(),
@@ -47,11 +49,18 @@ class ViewLogs extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(
-      'THESE ARE THE PPROPS TO COMB THROUGH NOW ARENET THEY NOW',
-      this.props
-    );
-    if (prevProps != this.props) {
+    // console.log(
+    //   'THESE ARE THE PPROPS TO COMB THROUGH NOW ARENET THEY NOW',
+    //   this.props
+    // );
+    // console.log('PREVPROPS', prevProps);
+    if (!prevProps.route.params) {
+      prevProps.route.params = { test: 'test' };
+    }
+    if (
+      this.props.route.params &&
+      prevProps.route.params.info != this.props.route.params.info
+    ) {
       const {
         instructions,
         isoDate,
@@ -59,15 +68,16 @@ class ViewLogs extends Component {
         state,
         county,
       } = this.props.route.params.info;
-      console.log(
-        'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
-        instructions,
-        // date,
-        gender,
-        state,
-        county,
-        isoDate
-      );
+      // console.log(
+      //   'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
+      //   instructions,
+      //   // date,
+      //   gender,
+      //   state,
+      //   county,
+      //   isoDate
+      // );
+
       switch (instructions) {
         case 'default':
           this.defaultLogs();
@@ -78,13 +88,29 @@ class ViewLogs extends Component {
           // this.defaultDate();
           break;
         case 'filter':
-          this.defaultDate();
+          // console.log('AHHHHHHHHHHHHHHHH', this.props.locations);
+          this.setState(
+            {
+              logs: this.props.locations.logs,
+            },
+            () => {
+              if (state && !county) {
+                console.log('FILTERING BY STATE');
+                this.filterState(state);
+              }
+              if (county) {
+                this.filterCounty(county);
+              }
+              // if (gender) {
+              //   this.filterByGender(gender);
+              // }
+            }
+          );
           break;
         default:
           return false;
           break;
       }
-      return false;
     }
   }
 
@@ -95,7 +121,7 @@ class ViewLogs extends Component {
   // };
 
   changeDate = (date) => {
-    console.log('THIS IS THE NEW DATE: ', date);
+    // console.log('THIS IS THE NEW DATE: ', date);
     if (date) {
       this.setState({
         date: date,
@@ -106,13 +132,13 @@ class ViewLogs extends Component {
       date = date.join('-');
       var isoDate = new Date(`${date}T12:00:00Z`);
       var tempIso = `${date}T12:00:00Z`;
-      console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
+      // console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
       this.sanitizeDate(tempIso);
     }
   };
 
   sanitizeDate = (dateToLookFor, message) => {
-    console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
+    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
@@ -132,24 +158,28 @@ class ViewLogs extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    console.log('GETTING THE LOGS BY DATE', day, year);
+    // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then((response) => response.json())
       .then((results) => {
         const states = results.specificDay.map((log) => {
           return log.state;
         });
-        console.log('======WE HAVE THE RESULTS FOR getLogsByDate: ', results);
-        this.setState({
-          logs: results.specificDay,
-          filteredLogs: results.specificDay,
-          filteredLogsCopy: results.specificDay,
-          genderSearchMessage: null,
-          yours: results.yours,
-          id: results.id,
-          states: [...new Set(states)],
-          counties: [],
-        });
+        // console.log('======STATES', states);
+        // console.log('\x1b[93m-About to hit the dispatch-\x1b[39m');
+        this.setState(
+          {
+            logs: results.specificDay,
+            filteredLogs: results.specificDay,
+            filteredLogsCopy: results.specificDay,
+            genderSearchMessage: null,
+            yours: results.yours,
+            id: results.id,
+            states: [...new Set(states)],
+            counties: [],
+          },
+          () => this.props.setAllLocations(this.state.logs, this.state.states)
+        );
       })
       .catch((error) => {
         // console.log(
@@ -224,8 +254,8 @@ class ViewLogs extends Component {
       {
         filteredLogs: countyLogs,
         genderSearchMessage: null,
-      },
-      () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
+      }
+      // () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
     );
   };
 
@@ -257,7 +287,7 @@ class ViewLogs extends Component {
 
   renderLogs = ({ item }) => {
     // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
+    // console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
     return (
       <View style={Styles.logs}>
         <Log
@@ -298,7 +328,14 @@ class ViewLogs extends Component {
 const mapStateToProps = (state) => {
   return {
     userSettings: state.userSettings,
+    locations: state.locations,
   };
 };
 
-export default connect(mapStateToProps)(ViewLogs);
+const mapDispatchToProps = {
+  setAllLocations: (logs, states, counties) =>
+    setAllLocations(logs, states, counties),
+  filterByLocations: (state, county) => filterByLocation(state, county),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewLogs);

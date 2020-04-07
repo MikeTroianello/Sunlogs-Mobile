@@ -1,7 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { localSource } from '../assets/localSource';
 
-export const loggedIn = () => dispatch => {
+export const loggedIn = () => (dispatch) => {
   let today = new Date();
   var start = new Date(today.getFullYear(), 0, 0);
   var diff =
@@ -14,38 +14,57 @@ export const loggedIn = () => dispatch => {
   let year = a[3];
 
   fetch(`${localSource}/loggedIn/${day}/${year}`)
-    .then(response => response.json())
-    .then(results => {
+    .then((response) => response.json())
+    .then((results) => {
       // this.props.logIt(results);
       console.log('\x1b[93m-SUCCESS-\x1b[39m');
       console.log(results);
       dispatch(setLoggedIn(results));
     })
-    .catch(error => {
+    .catch((error) => {
       this.setState({
-        message: `Username already exists!`
+        message: `Username already exists!`,
       });
     });
 };
 
-export const setLoggedIn = info => ({
+export const setLoggedIn = (info) => ({
   type: ActionTypes.LOG_IN,
-  payload: info
+  payload: info,
 });
 
 export const setCreatedToday = () => ({
-  type: ActionTypes.CREATED_TODAY
+  type: ActionTypes.CREATED_TODAY,
 });
 
-export const updateSettings = info => ({
+export const updateSettings = (info) => ({
   type: ActionTypes.UPDATE_SETTINGS,
-  payload: info
+  payload: info,
 });
 
 export const logout = () => ({
-  type: ActionTypes.LOG_OUT
+  type: ActionTypes.LOG_OUT,
 });
 
 export const deleteUser = () => ({
-  type: ActionTypes.DELETE_USER
+  type: ActionTypes.DELETE_USER,
 });
+
+//FOR LOCATIONS
+
+export const setAllLocations = (logs, states, counties) => ({
+  type: ActionTypes.SET_ALL_LOCATIONS,
+  payload: { logs, states, counties },
+});
+
+export const chooseState = () => ({
+  type: ActionTypes.CHOOSE_STATE,
+});
+
+export const chooseCounty = () => ({
+  type: ActionTypes.CHOOSE_COUNTY,
+});
+
+export const filterByLocation = () => (dispatch) => {
+  dispatch(setAllLocations());
+};

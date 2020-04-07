@@ -5,6 +5,7 @@ import logger from 'redux-logger';
 // import storage from 'redux-persist/es/storage';
 
 import { userSettings } from './userSettings';
+import { locations } from './locations';
 
 // const config = {
 //   key: 'root',
@@ -23,7 +24,8 @@ import { userSettings } from './userSettings';
 export const ConfigureStore = () => {
   const store = createStore(
     combineReducers({
-      userSettings
+      userSettings,
+      locations,
     }),
     applyMiddleware(thunk, logger)
   );

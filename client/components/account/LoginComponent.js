@@ -16,10 +16,10 @@ class Login extends Component {
     user: '',
     username: 'michael',
     password: 'michael',
-    showModal: false
+    showModal: false,
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     // console.log('THIS IS THE STATE: ', this.state);
     // console.log('THESE ARE THE PROPSss: ', this.props);
@@ -28,11 +28,11 @@ class Login extends Component {
     console.log('USERNAME', username);
     if (!username) {
       this.setState({
-        message: `You must include a username`
+        message: `You must include a username`,
       });
     } else if (!password) {
       this.setState({
-        message: `You must include a password`
+        message: `You must include a password`,
       });
     } else {
       let today = new Date();
@@ -49,23 +49,23 @@ class Login extends Component {
       fetch(`${localSource}/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(state)
+        body: JSON.stringify(state),
       })
-        .then(response => response.json())
-        .then(async results => {
+        .then((response) => response.json())
+        .then(async (results) => {
           if (
             results.message == 'Incorrect username.' ||
             results.message == 'Incorrect password.' ||
             results.message == 'Unauthorized'
           ) {
             this.setState({
-              message: 'Incorrect username or password!'
+              message: 'Incorrect username or password!',
             });
           } else if (results.message == 'This account was deleted') {
             this.setState({
-              message: 'This account was deleted.'
+              message: 'This account was deleted.',
             });
           }
           // this.props.logIt(results);
@@ -75,17 +75,17 @@ class Login extends Component {
             navigate('See Logs');
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({
-            message: `Something went wrong`
+            message: `Something went wrong`,
           });
         });
     }
   };
 
   toggleModal = () => {
-    this.setState(prevState => ({
-      showModal: !prevState.showModal
+    this.setState((prevState) => ({
+      showModal: !prevState.showModal,
     }));
   };
 
@@ -100,12 +100,12 @@ class Login extends Component {
               <Input
                 textContentType='username'
                 placeholder='Your name...'
-                onChangeText={text => this.setState({ username: text })}
+                onChangeText={(text) => this.setState({ username: text })}
                 value={this.state.username}
                 leftIcon={{ type: 'font-awesome', name: 'user' }}
                 leftIconContainerStyle={{
                   marginRight: 10,
-                  marginLeft: 3
+                  marginLeft: 3,
                 }}
               />
 
@@ -115,12 +115,12 @@ class Login extends Component {
                 textContentType='password'
                 secureTextEntry={true}
                 placeholder='******'
-                onChangeText={text => this.setState({ password: text })}
+                onChangeText={(text) => this.setState({ password: text })}
                 value={this.state.password}
                 leftIcon={{ type: 'font-awesome', name: 'key' }}
                 leftIconContainerStyle={{
                   marginRight: 10,
-                  marginLeft: 3
+                  marginLeft: 3,
                 }}
               />
             </View>
@@ -158,7 +158,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = {
-  loggedIn: results => loggedIn(results)
+  loggedIn: (results) => loggedIn(results),
 };
 
 export default connect(null, mapDispatchToProps)(Login);

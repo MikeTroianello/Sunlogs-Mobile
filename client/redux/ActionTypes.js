@@ -3,3 +3,9 @@ export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
 export const CREATED_TODAY = 'CREATED_TODAY';
 export const DELETE_USER = 'DELETE_USER';
+
+//SETTING LOCATIONS
+export const SET_ALL_LOCATIONS = 'SET_ALL_LOCATIONS';
+export const CHOOSE_STATE = 'CHOOSE_STATE';
+export const CHOOSE_COUNTY = 'DELETE_USER';
+export const FILTER_BY_LOCATION = 'DELETE_USER';
