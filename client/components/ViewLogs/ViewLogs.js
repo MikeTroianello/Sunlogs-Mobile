@@ -97,13 +97,11 @@ class ViewLogs extends Component {
               if (state && !county) {
                 console.log('FILTERING BY STATE');
                 this.filterState(state, chosenGender);
-              }
-              if (county) {
+              } else if (county) {
                 this.filterCounty(county, chosenGender);
+              } else if (chosenGender) {
+                this.filterByGender(chosenGender);
               }
-              // if (chosenGender) {
-              //   this.filterByGender(chosenGender);
-              // }
             }
           );
           break;
