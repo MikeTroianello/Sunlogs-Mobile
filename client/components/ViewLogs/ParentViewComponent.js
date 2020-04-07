@@ -8,7 +8,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon, {
   MaterialCommunityIcons,
-  FontAwesomeIcons
+  FontAwesomeIcons,
 } from 'react-native-vector-icons';
 
 import Log from './LogComponent';
@@ -26,7 +26,7 @@ class ParentView extends Component {
       <NavigationContainer independent={true}>
         <Tab.Navigator>
           <Tab.Screen
-            name='View'
+            name='View Logs'
             component={ViewLogs}
             options={{
               tabBarLabel: 'View Logs',
@@ -36,7 +36,7 @@ class ParentView extends Component {
                   color={color}
                   size={size}
                 />
-              )
+              ),
             }}
           />
           <Tab.Screen
@@ -50,7 +50,7 @@ class ParentView extends Component {
                   color={color}
                   size={size}
                 />
-              )
+              ),
             }}
           />
         </Tab.Navigator>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Button, Picker, ScrollView } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Text, View, FlatList, Picker, ScrollView } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
@@ -25,6 +25,7 @@ class FilterLog extends Component {
   state = {
     today: new Date(),
     date: new Date(),
+    isoDate: null,
     logs: null,
     filteredLogs: null,
     filteredLogsCopy: null,
@@ -33,13 +34,14 @@ class FilterLog extends Component {
     id: null,
     day: null,
     year: null,
-    states: ['Washington'],
-    counties: ['Yakima', 'King'],
+    states: [],
+    counties: [],
     state: undefined,
     stateFiltered: false,
     county: undefined,
     setGender: '',
-    chosenGender: null
+    chosenGender: null,
+    instructions: '',
   };
 
   componentDidMount() {
@@ -68,29 +70,37 @@ class FilterLog extends Component {
     this.getLogsByDate(day, year);
   };
 
-  changeDate = date => {
+  changeDate = (date) => {
+    // console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG');
     if (date) {
-      this.setState({
-        date: date
-      });
+      let standardDate = date;
       date = date.split('-');
       let b = date.pop();
       date.unshift(b);
       date = date.join('-');
       var isoDate = new Date(`${date}T12:00:00Z`);
-      this.sanitizeDate(isoDate);
+      // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
+      // this.sanitizeDate(isoDate);
+      this.setState(
+        {
+          date: standardDate,
+          isoDate: isoDate,
+          instructions: 'change day',
+        },
+        () => this.filter()
+      );
     }
   };
 
   getLogsByDate = (day, year) => {
     // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
-      .then(response => response.json())
-      .then(results => {
-        const states = results.specificDay.map(log => {
+      .then((response) => response.json())
+      .then((results) => {
+        const states = results.specificDay.map((log) => {
           return log.state;
         });
-        console.log('WE HAVE THE RESULTS FOR getLogsByDate: ', results);
+
         this.setState({
           logs: results.specificDay,
           filteredLogs: results.specificDay,
@@ -99,10 +109,10 @@ class FilterLog extends Component {
           yours: results.yours,
           id: results.id,
           states: [...new Set(states)],
-          counties: []
+          counties: [],
         });
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(
         //   'There has been a problem with your fetch operation: ' + error.message
         // );
@@ -110,24 +120,24 @@ class FilterLog extends Component {
       });
   };
 
-  filterByGender = gender => {
+  filterByGender = (gender) => {
     // console.log(gender);
-    let genderLogs = this.state.filteredLogsCopy.filter(log => {
+    let genderLogs = this.state.filteredLogsCopy.filter((log) => {
       return log.creatorId.gender === gender;
     });
 
     this.setState({
       filteredLogs: genderLogs,
       genderSearchMessage: `Showing all ${gender} logs`,
-      setGender: gender
+      setGender: gender,
     });
   };
 
-  filterState = value => {
+  filterState = (value) => {
     if (value !== 'Filter by State:') {
       this.setState(
         {
-          state: value
+          state: value,
         },
         () => {
           this.filterByState();
@@ -137,28 +147,28 @@ class FilterLog extends Component {
   };
 
   filterByState = () => {
-    let stateLogs = this.state.logs.filter(log => {
+    let stateLogs = this.state.logs.filter((log) => {
       return log.state === this.state.state;
     });
 
     let counties = new Set();
 
-    stateLogs.map(log => {
+    stateLogs.map((log) => {
       return counties.add(log.county);
     });
 
     this.setState({
       filteredLogs: stateLogs,
       counties: [...counties],
-      genderSearchMessage: null
+      genderSearchMessage: null,
     });
   };
 
-  filterCounty = county => {
+  filterCounty = (county) => {
     if (county !== 'Filter by County:') {
       this.setState(
         {
-          county: county
+          county: county,
         },
         () => {
           this.filterByCounty();
@@ -168,28 +178,16 @@ class FilterLog extends Component {
   };
 
   filterByCounty = () => {
-    let countyLogs = this.state.logs.filter(log => {
+    let countyLogs = this.state.logs.filter((log) => {
       return log.county === this.state.county;
     });
     this.setState(
       {
         filteredLogs: countyLogs,
-        genderSearchMessage: null
+        genderSearchMessage: null,
       },
       () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
     );
-  };
-
-  defaultLogs = () => {
-    this.setState({
-      states: [],
-      counties: [],
-      state: undefined,
-      stateFiltered: false,
-      county: undefined,
-      date: new Date()
-    });
-    this.sanitizeDate(this.state.today);
   };
 
   weatherAudit = () => {
@@ -201,7 +199,7 @@ class FilterLog extends Component {
       <FlatList
         data={this.state.filteredLogs}
         renderItem={this.renderLogs}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={(item) => item._id.toString()}
       />
     );
   };
@@ -221,15 +219,29 @@ class FilterLog extends Component {
     );
   };
 
-  seeProfile = (username, id) => {
-    const { navigate } = this.props.navigation;
+  defaultLogs = () => {
+    this.setState(
+      {
+        states: [],
+        counties: [],
+        state: undefined,
+        stateFiltered: false,
+        county: undefined,
+        date: new Date(),
+        instructions: 'default',
+      },
+      () => this.filter()
+    );
+  };
 
-    navigate('View Other Profiles', { profileName: username, id: id });
+  filter = () => {
+    const { navigate } = this.props.navigation;
+    navigate('View Logs', { info: this.state });
   };
 
   render() {
     return (
-      <View style={{ backgroundColor: '#e0e7ef' }}>
+      <View style={{ backgroundColor: '#e0e7ef', height: '100%' }}>
         <Text
           style={{
             textAlign: 'center',
@@ -238,22 +250,29 @@ class FilterLog extends Component {
             width: '33%',
             marginLeft: '33%',
             marginRight: '33%',
-            marginBottom: '5%'
+            marginBottom: '5%',
           }}
         >
           Filter Logs
         </Text>
+
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-evenly',
-            alignItems: 'center'
+            alignItems: 'center',
+            borderWidth: 1,
+            padding: 5,
+            marginTop: 3,
+            marginBottom: 3,
+            marginLeft: '9%',
+            marginRight: '9%',
           }}
         >
           <Text
             style={{
               textAlign: 'center',
-              fontSize: 20
+              fontSize: 20,
             }}
           >
             Sort by Date:{'   '}
@@ -266,7 +285,7 @@ class FilterLog extends Component {
             placeholder='Select Date'
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
-            onDateChange={date => {
+            onDateChange={(date) => {
               this.changeDate(date);
             }}
             customStyles={{
@@ -274,11 +293,11 @@ class FilterLog extends Component {
                 position: 'absolute',
                 left: 0,
                 top: 4,
-                marginLeft: 0
+                marginLeft: 0,
               },
               dateInput: {
-                marginLeft: 36
-              }
+                marginLeft: 36,
+              },
             }}
           />
         </View>
@@ -290,7 +309,7 @@ class FilterLog extends Component {
           <View
             style={[
               FilterStyle.genderIconBoxLeft,
-              this.state.chosenGender == 'male' && FilterStyle.genderIconChosen
+              this.state.chosenGender == 'male' && FilterStyle.genderIconChosen,
             ]}
           >
             <Icon
@@ -304,7 +323,7 @@ class FilterLog extends Component {
             style={[
               FilterStyle.genderIconBoxMiddle,
               this.state.chosenGender == 'female' &&
-                FilterStyle.genderIconChosen
+                FilterStyle.genderIconChosen,
             ]}
           >
             <Icon
@@ -319,7 +338,7 @@ class FilterLog extends Component {
             style={[
               FilterStyle.genderIconBoxRight,
               this.state.chosenGender == 'non-binary' &&
-                FilterStyle.genderIconChosen
+                FilterStyle.genderIconChosen,
             ]}
           >
             <Icon
@@ -332,25 +351,64 @@ class FilterLog extends Component {
           </View>
         </View>
 
-        <Text style={{ textAlign: 'center', fontSize: 20 }}>
-          Filter By State:
-        </Text>
+        <View style={FilterStyle.stateAndCountyBox}>
+          <View>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>
+              Filter By State:
+            </Text>
 
-        <StateFilter
-          states={this.state.states}
-          filter={this.filterState}
-          state={this.state.state}
-        />
-
-        <Text style={{ textAlign: 'center', fontSize: 20 }}>
-          Filter By County:
-        </Text>
-        <CountyFilter
-          counties={this.state.counties}
-          filter={county => this.filterCounty(county)}
-          county={this.state.county}
-        />
-        <Button title='Back to default' onPress={this.defaultLogs} />
+            <StateFilter
+              states={this.state.states}
+              filter={this.filterState}
+              state={this.state.state}
+            />
+          </View>
+          {/* <View style={{ borderWidth: 1 }}></View> */}
+          <View>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>
+              Filter By County:
+            </Text>
+            <CountyFilter
+              counties={this.state.counties}
+              filter={(county) => this.filterCounty(county)}
+              county={this.state.county}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            marginTop: '15%',
+            marginBottom: '4%',
+            marginHorizontal: '2%',
+            position: 'absolute',
+            bottom: '23%',
+            width: '96%',
+          }}
+        >
+          <Button
+            title='Filter!'
+            onPress={this.defaultLogs}
+            buttonStyle={{
+              backgroundColor: '#4DA1DD',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            marginHorizontal: '2%',
+            position: 'absolute',
+            bottom: '15%',
+            width: '96%',
+          }}
+        >
+          <Button
+            title='Back to default'
+            onPress={this.defaultLogs}
+            buttonStyle={{
+              backgroundColor: '#45A7C2',
+            }}
+          />
+        </View>
       </View>
     );
   }
@@ -358,9 +416,9 @@ class FilterLog extends Component {
 
 //USE MAP STATE FOR CREATED TODAY ALERT
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 

@@ -5,22 +5,22 @@ export const Styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e0e7ef',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   createLogContainer: {
     flex: 1,
     backgroundColor: '#fff',
     // alignItems: 'center',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
   },
   log: {
     margin: 10,
     padding: 5,
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: '#000'
-  }
+    borderColor: '#000',
+  },
 });
 
 export const LoginCss = StyleSheet.create({
@@ -29,22 +29,22 @@ export const LoginCss = StyleSheet.create({
     height: '100%',
     borderWidth: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   loginHeader: {
     textAlign: 'center',
-    fontSize: 35
+    fontSize: 35,
   },
   loginComponent: {
     borderWidth: 1,
     margin: 30,
     padding: 10,
-    backgroundColor: '#f4f9ff'
+    backgroundColor: '#f4f9ff',
   },
   submitButton: {
     marginLeft: 25,
     marginRight: 25,
-    borderRadius: 50
+    borderRadius: 50,
   },
   // signUpButton: {
   //   color: 'pink',
@@ -56,81 +56,81 @@ export const LoginCss = StyleSheet.create({
   signUpButton: {
     position: 'absolute',
     bottom: 0,
-    width: '100%'
+    width: '100%',
   },
   backToLoginButton: {
     // justifyContent: 'flex-end',
     // marginLeft: 20,
     // marginRight: 20,
     // marginTop: 30
-  }
+  },
 });
 
 export const SignUpCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loginHeader: {
     textAlign: 'center',
-    fontSize: 35
+    fontSize: 35,
   },
   loginComponent: {
     borderWidth: 1,
     margin: 30,
-    padding: 10
+    padding: 10,
   },
   submitButton: {
     marginLeft: 25,
     marginRight: 25,
-    borderRadius: 50
+    borderRadius: 50,
   },
   signUpButton: {
     color: 'pink',
-    backgroundColor: 'black'
-  }
+    backgroundColor: 'black',
+  },
 });
 
 export const ProfileCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export const OtherProfileCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export const LogCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export const ViewLogsCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export const CreateLogsCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 export const SettingsCss = StyleSheet.create({
   wholePage: {
     backgroundColor: '#e0e7ef',
     justifyContent: 'center',
-    height: '100%'
+    height: '100%',
   },
   preferences: {
     // marginTop: 6,
@@ -143,18 +143,18 @@ export const SettingsCss = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomColor: 'gray',
-    borderBottomWidth: 2
+    borderBottomWidth: 2,
   },
   settingHeader: {
     fontSize: 15,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
 
     // padding: 0
   },
   settingHeaderTwo: {
     fontSize: 15,
     fontWeight: 'bold',
-    paddingLeft: 6
+    paddingLeft: 6,
   },
   deleteTouchableOpacity: {
     backgroundColor: 'rgba(255,0,0,0.3)',
@@ -165,9 +165,9 @@ export const SettingsCss = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopColor: 'rgba(255,0,0,0.6)',
     borderTopWidth: 1,
-    bottom: 0
+    bottom: 0,
     // position: 'absolute'
-  }
+  },
 });
 
 export const deleteCss = StyleSheet.create({});
@@ -177,25 +177,25 @@ export const weatherboxCss = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     margin: 5,
-    padding: 3
+    padding: 3,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'gray'
+    borderBottomColor: 'gray',
   },
   subHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   subHeaderThird: {
-    width: '44%'
+    width: '44%',
     // justifyContent: 'flex-end',
     // textAlign: 'right'
-  }
+  },
 });
 
 export const FilterStyle = {
@@ -206,30 +206,44 @@ export const FilterStyle = {
     width: '70%',
     marginLeft: '15%',
     marginRight: '15%',
-    marginTop: '5%',
-    marginBottom: '5%'
+    // marginTop: '5%',
+    // marginBottom: '5%',
 
     // borderWidth: 1
   },
   genderIconBoxLeft: {
+    marginTop: '5%',
+    marginBottom: '5%',
     width: '33%',
     borderWidth: 1,
     borderTopLeftRadius: 15,
-    borderBottomLeftRadius: 15
+    borderBottomLeftRadius: 15,
     // backgroundColor: '#8ec2ea'
   },
   genderIconBoxMiddle: {
+    marginTop: '5%',
+    marginBottom: '5%',
     width: '33%',
     borderTopWidth: 1,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   genderIconBoxRight: {
+    marginTop: '5%',
+    marginBottom: '5%',
     width: '33%',
     borderWidth: 1,
     borderTopRightRadius: 15,
-    borderBottomRightRadius: 15
+    borderBottomRightRadius: 15,
   },
   genderIconChosen: {
-    backgroundColor: '#8ec2ea'
-  }
+    backgroundColor: '#8ec2ea',
+  },
+
+  stateAndCountyBox: {
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    borderWidth: 1,
+    marginHorizontal: '2%',
+    textAlign: 'center',
+  },
 };

@@ -37,14 +37,21 @@ class ViewAllLogs extends Component {
     state: undefined,
     stateFiltered: false,
     county: undefined,
-    setGender: ''
+    setGender: '',
   };
 
   componentDidMount() {
     // console.log('COMPONENT HAS NOW MOUNTED');
+    console.log('IS COMPONENT MOUNTING??', this.props);
     let { today } = this.state;
     this.sanitizeDate(today);
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('SHOULD COMPONENT UPDATE??');
+  //   console.log(nextProps, nextState);
+  //   console.log(this.props, this.state);
+  // }
 
   sanitizeDate = (dateToLookFor, message) => {
     // console.log('SANITIZE DATE IS NOW GETTING CALLED???????');
@@ -66,10 +73,10 @@ class ViewAllLogs extends Component {
     this.getLogsByDate(day, year);
   };
 
-  changeDate = date => {
+  changeDate = (date) => {
     if (date) {
       this.setState({
-        date: date
+        date: date,
       });
       date = date.split('-');
       let b = date.pop();
@@ -83,9 +90,9 @@ class ViewAllLogs extends Component {
   getLogsByDate = (day, year) => {
     // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
-      .then(response => response.json())
-      .then(results => {
-        const states = results.specificDay.map(log => {
+      .then((response) => response.json())
+      .then((results) => {
+        const states = results.specificDay.map((log) => {
           return log.state;
         });
         console.log('WE HAVE THE RESULTS FOR getLogsByDate: ', results);
@@ -97,10 +104,10 @@ class ViewAllLogs extends Component {
           yours: results.yours,
           id: results.id,
           states: [...new Set(states)],
-          counties: []
+          counties: [],
         });
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(
         //   'There has been a problem with your fetch operation: ' + error.message
         // );
@@ -108,24 +115,24 @@ class ViewAllLogs extends Component {
       });
   };
 
-  filterByGender = gender => {
+  filterByGender = (gender) => {
     // console.log(gender);
-    let genderLogs = this.state.filteredLogsCopy.filter(log => {
+    let genderLogs = this.state.filteredLogsCopy.filter((log) => {
       return log.creatorId.gender === gender;
     });
 
     this.setState({
       filteredLogs: genderLogs,
       genderSearchMessage: `Showing all ${gender} logs`,
-      setGender: gender
+      setGender: gender,
     });
   };
 
-  filterState = value => {
+  filterState = (value) => {
     if (value !== 'Filter by State:') {
       this.setState(
         {
-          state: value
+          state: value,
         },
         () => {
           this.filterByState();
@@ -135,28 +142,28 @@ class ViewAllLogs extends Component {
   };
 
   filterByState = () => {
-    let stateLogs = this.state.logs.filter(log => {
+    let stateLogs = this.state.logs.filter((log) => {
       return log.state === this.state.state;
     });
 
     let counties = new Set();
 
-    stateLogs.map(log => {
+    stateLogs.map((log) => {
       return counties.add(log.county);
     });
 
     this.setState({
       filteredLogs: stateLogs,
       counties: [...counties],
-      genderSearchMessage: null
+      genderSearchMessage: null,
     });
   };
 
-  filterCounty = county => {
+  filterCounty = (county) => {
     if (county !== 'Filter by County:') {
       this.setState(
         {
-          county: county
+          county: county,
         },
         () => {
           this.filterByCounty();
@@ -166,13 +173,13 @@ class ViewAllLogs extends Component {
   };
 
   filterByCounty = () => {
-    let countyLogs = this.state.logs.filter(log => {
+    let countyLogs = this.state.logs.filter((log) => {
       return log.county === this.state.county;
     });
     this.setState(
       {
         filteredLogs: countyLogs,
-        genderSearchMessage: null
+        genderSearchMessage: null,
       },
       () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
     );
@@ -185,7 +192,7 @@ class ViewAllLogs extends Component {
       state: undefined,
       stateFiltered: false,
       county: undefined,
-      date: new Date()
+      date: new Date(),
     });
     this.sanitizeDate(this.state.today);
   };
@@ -199,7 +206,7 @@ class ViewAllLogs extends Component {
       <FlatList
         data={this.state.filteredLogs}
         renderItem={this.renderLogs}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={(item) => item._id.toString()}
       />
     );
   };
@@ -239,7 +246,7 @@ class ViewAllLogs extends Component {
             placeholder='Select Date'
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
-            onDateChange={date => {
+            onDateChange={(date) => {
               this.changeDate(date);
             }}
             customStyles={{
@@ -247,11 +254,11 @@ class ViewAllLogs extends Component {
                 position: 'absolute',
                 left: 0,
                 top: 4,
-                marginLeft: 0
+                marginLeft: 0,
               },
               dateInput: {
-                marginLeft: 36
-              }
+                marginLeft: 36,
+              },
             }}
           />
         </View>
@@ -259,7 +266,7 @@ class ViewAllLogs extends Component {
         <Text htmlFor='gender'>Filter by gender</Text>
         <Picker
           selectedValue={this.state.setGender}
-          onValueChange={gender => this.filterByGender(gender)}
+          onValueChange={(gender) => this.filterByGender(gender)}
           placeholder='Choose your Gender'
         >
           <Picker.Item label='Choose' disabled={true} enabled={false} />
@@ -279,7 +286,7 @@ class ViewAllLogs extends Component {
         <Text>Filter By County:</Text>
         <CountyFilter
           counties={this.state.counties}
-          filter={county => this.filterCounty(county)}
+          filter={(county) => this.filterCounty(county)}
           county={this.state.county}
         />
 
@@ -292,9 +299,9 @@ class ViewAllLogs extends Component {
 
 //USE MAP STATE FOR CREATED TODAY ALERT
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 

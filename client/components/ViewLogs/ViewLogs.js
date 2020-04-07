@@ -37,17 +37,82 @@ class ViewLogs extends Component {
     state: undefined,
     stateFiltered: false,
     county: undefined,
-    setGender: ''
+    setGender: '',
   };
 
   componentDidMount() {
     console.log('COMPONENT HAS NOW MOUNTED');
-    let { today } = this.state;
+    const { today } = this.state;
     this.sanitizeDate(today);
   }
 
+  componentDidUpdate(prevProps) {
+    console.log(
+      'THESE ARE THE PPROPS TO COMB THROUGH NOW ARENET THEY NOW',
+      this.props
+    );
+    if (prevProps != this.props) {
+      const {
+        instructions,
+        isoDate,
+        gender,
+        state,
+        county,
+      } = this.props.route.params.info;
+      console.log(
+        'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
+        instructions,
+        // date,
+        gender,
+        state,
+        county,
+        isoDate
+      );
+      switch (instructions) {
+        case 'default':
+          this.defaultLogs();
+          // this.defaultDate();
+          break;
+        case 'change day':
+          this.sanitizeDate(isoDate);
+          // this.defaultDate();
+          break;
+        case 'filter':
+          this.defaultDate();
+          break;
+        default:
+          return false;
+          break;
+      }
+      return false;
+    }
+  }
+
+  // defaultDate = () => {
+  //   let d = new Date();
+  //   console.log('THE NEW DATE', d);
+  //   this.sanitizeDate(d);
+  // };
+
+  changeDate = (date) => {
+    console.log('THIS IS THE NEW DATE: ', date);
+    if (date) {
+      this.setState({
+        date: date,
+      });
+      date = date.split('-');
+      let b = date.pop();
+      date.unshift(b);
+      date = date.join('-');
+      var isoDate = new Date(`${date}T12:00:00Z`);
+      var tempIso = `${date}T12:00:00Z`;
+      console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
+      this.sanitizeDate(tempIso);
+    }
+  };
+
   sanitizeDate = (dateToLookFor, message) => {
-    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????');
+    console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
@@ -66,29 +131,15 @@ class ViewLogs extends Component {
     this.getLogsByDate(day, year);
   };
 
-  changeDate = date => {
-    if (date) {
-      this.setState({
-        date: date
-      });
-      date = date.split('-');
-      let b = date.pop();
-      date.unshift(b);
-      date = date.join('-');
-      var isoDate = new Date(`${date}T12:00:00Z`);
-      this.sanitizeDate(isoDate);
-    }
-  };
-
   getLogsByDate = (day, year) => {
-    // console.log('GETTING THE LOGS BY DATE', day, year);
+    console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
-      .then(response => response.json())
-      .then(results => {
-        const states = results.specificDay.map(log => {
+      .then((response) => response.json())
+      .then((results) => {
+        const states = results.specificDay.map((log) => {
           return log.state;
         });
-        console.log('WE HAVE THE RESULTS FOR getLogsByDate: ', results);
+        console.log('======WE HAVE THE RESULTS FOR getLogsByDate: ', results);
         this.setState({
           logs: results.specificDay,
           filteredLogs: results.specificDay,
@@ -97,10 +148,10 @@ class ViewLogs extends Component {
           yours: results.yours,
           id: results.id,
           states: [...new Set(states)],
-          counties: []
+          counties: [],
         });
       })
-      .catch(error => {
+      .catch((error) => {
         // console.log(
         //   'There has been a problem with your fetch operation: ' + error.message
         // );
@@ -108,24 +159,24 @@ class ViewLogs extends Component {
       });
   };
 
-  filterByGender = gender => {
+  filterByGender = (gender) => {
     // console.log(gender);
-    let genderLogs = this.state.filteredLogsCopy.filter(log => {
+    let genderLogs = this.state.filteredLogsCopy.filter((log) => {
       return log.creatorId.gender === gender;
     });
 
     this.setState({
       filteredLogs: genderLogs,
       genderSearchMessage: `Showing all ${gender} logs`,
-      setGender: gender
+      setGender: gender,
     });
   };
 
-  filterState = value => {
+  filterState = (value) => {
     if (value !== 'Filter by State:') {
       this.setState(
         {
-          state: value
+          state: value,
         },
         () => {
           this.filterByState();
@@ -135,28 +186,28 @@ class ViewLogs extends Component {
   };
 
   filterByState = () => {
-    let stateLogs = this.state.logs.filter(log => {
+    let stateLogs = this.state.logs.filter((log) => {
       return log.state === this.state.state;
     });
 
     let counties = new Set();
 
-    stateLogs.map(log => {
+    stateLogs.map((log) => {
       return counties.add(log.county);
     });
 
     this.setState({
       filteredLogs: stateLogs,
       counties: [...counties],
-      genderSearchMessage: null
+      genderSearchMessage: null,
     });
   };
 
-  filterCounty = county => {
+  filterCounty = (county) => {
     if (county !== 'Filter by County:') {
       this.setState(
         {
-          county: county
+          county: county,
         },
         () => {
           this.filterByCounty();
@@ -166,13 +217,13 @@ class ViewLogs extends Component {
   };
 
   filterByCounty = () => {
-    let countyLogs = this.state.logs.filter(log => {
+    let countyLogs = this.state.logs.filter((log) => {
       return log.county === this.state.county;
     });
     this.setState(
       {
         filteredLogs: countyLogs,
-        genderSearchMessage: null
+        genderSearchMessage: null,
       },
       () => console.log('THE FILTERED COUNTY LOGS', this.state.filteredLogs)
     );
@@ -185,7 +236,7 @@ class ViewLogs extends Component {
       state: undefined,
       stateFiltered: false,
       county: undefined,
-      date: new Date()
+      date: new Date(),
     });
     this.sanitizeDate(this.state.today);
   };
@@ -199,7 +250,7 @@ class ViewLogs extends Component {
       <FlatList
         data={this.state.filteredLogs}
         renderItem={this.renderLogs}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={(item) => item._id.toString()}
       />
     );
   };
@@ -226,6 +277,10 @@ class ViewLogs extends Component {
   };
 
   render() {
+    console.log(
+      '\x1b[93m-THESE ARE THE FILTEREDLOGS-\x1b[39m',
+      this.state.filteredLogs
+    );
     return (
       <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         <Text style={{ textAlign: 'center', fontSize: 25 }}>
@@ -240,9 +295,9 @@ class ViewLogs extends Component {
 
 //USE MAP STATE FOR CREATED TODAY ALERT
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 
