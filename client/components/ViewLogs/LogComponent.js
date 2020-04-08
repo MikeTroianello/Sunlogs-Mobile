@@ -30,13 +30,13 @@ const Log = (props) => {
     props.passUpName(name, id);
   };
 
-  let samePerson;
+  let samePerson = props.id === props.log.creatorId._id;
 
-  if (props.id === props.log.creatorId._id) {
-    samePerson = true;
-  } else {
-    samePerson = false;
-  }
+  // if (props.id === props.log.creatorId._id) {
+  //   samePerson = true;
+  // } else {
+  //   samePerson = false;
+  // }
 
   if (props.profile) {
     return (

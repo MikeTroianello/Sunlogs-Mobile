@@ -84,7 +84,13 @@ class ViewLogs extends Component {
           // this.defaultDate();
           break;
         case 'change day':
-          this.sanitizeDate(isoDate);
+          this.setState(
+            {
+              loading: true,
+            },
+            () => this.sanitizeDate(isoDate)
+          );
+
           // this.defaultDate();
           break;
         case 'filter':
@@ -281,13 +287,22 @@ class ViewLogs extends Component {
   };
 
   buildList = () => {
-    return (
-      <FlatList
-        data={this.state.filteredLogs}
-        renderItem={this.renderLogs}
-        keyExtractor={(item) => item._id.toString()}
-      />
-    );
+    // console.log('filteredLogs:', this.state.filteredLogs);
+    if (this.state.filteredLogs.length < 1) {
+      return (
+        <Text style={{ fontSize: 20, textAlign: 'center', marginTop: '9%' }}>
+          No Logs were created on this day...
+        </Text>
+      );
+    } else {
+      return (
+        <FlatList
+          data={this.state.filteredLogs}
+          renderItem={this.renderLogs}
+          keyExtractor={(item) => item._id.toString()}
+        />
+      );
+    }
   };
 
   renderLogs = ({ item }) => {
@@ -312,14 +327,19 @@ class ViewLogs extends Component {
   };
 
   render() {
-    // console.log(
-    //   '\x1b[93m-THESE ARE THE FILTEREDLOGS-\x1b[39m',
-    //   this.state.filteredLogs
-    // );
+    let displayDate = this.state.date.toString().slice(0, 15);
+    // console.log('ONE', this.state.date.toString().slice(0, 15));
+    // console.log('TWO', this.state.today.toString().slice(0, 15));
+    if (
+      this.state.date.toString().slice(0, 15) ==
+      this.state.today.toString().slice(0, 15)
+    ) {
+      displayDate = 'today';
+    }
     return (
       <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         <Text style={{ textAlign: 'center', fontSize: 25 }}>
-          Logs for today:
+          Logs for {displayDate}:
         </Text>
         {this.state.filteredLogs && this.weatherAudit()}
         {this.state.filteredLogs && this.buildList()}

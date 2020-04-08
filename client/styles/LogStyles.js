@@ -5,46 +5,46 @@ export const logCss = {
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#000',
-    backgroundColor: '#baccf1'
+    backgroundColor: '#baccf1',
   },
   profileHead: {
     flexDirection: 'row',
     justifyContent: 'space-between',
 
     borderBottomWidth: 1,
-    borderBottomColor: 'gray'
+    borderBottomColor: 'gray',
   },
   weatherAndType: {
     // translateY: -1,
     marginTop: '-1%',
     borderColor: 'gray',
     // borderBottomWidth: 1
-    borderLeftWidth: 1
+    borderLeftWidth: 1,
   },
   weatherType: {
     textAlign: 'center',
     // marginBottom: -10,
     marginTop: -6,
-    fontSize: 16
+    fontSize: 16,
   },
   dateAndPlace: {
     flexDirection: 'column',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   name: {
     marginTop: 6,
     marginLeft: 4,
     fontSize: 17,
-    color: 'blue'
+    color: 'blue',
   },
   nameHidden: {
     marginTop: 6,
     marginLeft: 4,
-    fontSize: 17
+    fontSize: 17,
   },
   moodBox: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   moodSubBox: {
     width: '27%',
@@ -53,27 +53,27 @@ export const logCss = {
     borderRadius: 7,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#b0c3e8'
+    backgroundColor: '#b0c3e8',
   },
   moodHeader: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   moodNum: {
     color: '#ED3833',
     fontSize: 20,
     fontWeight: 'bold',
-    margin: 5
+    margin: 5,
   },
   log: {
     fontSize: 15,
     marginTop: 12,
-    marginBottom: 5
+    marginBottom: 5,
   },
   place: {
     textAlign: 'center',
     fontSize: 17,
     margin: 10,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 };
