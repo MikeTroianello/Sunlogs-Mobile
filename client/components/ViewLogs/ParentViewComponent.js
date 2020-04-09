@@ -21,11 +21,16 @@ import { localSource } from '../../assets/localSource';
 const Tab = createBottomTabNavigator();
 
 class ParentView extends Component {
+  nav = () => {
+    this.props.navigation.navigate('Create Log');
+  };
+
   render() {
     return (
       <NavigationContainer independent={true}>
         <Tab.Navigator>
           <Tab.Screen
+            nav={this.nav}
             name='View Logs'
             component={ViewLogs}
             options={{

@@ -86,6 +86,7 @@ class ViewLogs extends Component {
         case 'change day':
           this.setState(
             {
+              date: isoDate,
               loading: true,
             },
             () => this.sanitizeDate(isoDate)
@@ -290,9 +291,20 @@ class ViewLogs extends Component {
     // console.log('filteredLogs:', this.state.filteredLogs);
     if (this.state.filteredLogs.length < 1) {
       return (
-        <Text style={{ fontSize: 20, textAlign: 'center', marginTop: '9%' }}>
-          No Logs were created on this day...
-        </Text>
+        <View>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginTop: '9%' }}>
+            No Logs were created on this day...
+          </Text>
+          {this.state.date.toString().slice(0, 15) ==
+            this.state.today.toString().slice(0, 15) && (
+            <Text
+              style={{ textAlign: 'center', fontSize: 18, color: 'blue' }}
+              onPress={() => this.props.nav()}
+            >
+              Click Here to create one!
+            </Text>
+          )}
+        </View>
       );
     } else {
       return (
@@ -327,6 +339,8 @@ class ViewLogs extends Component {
   };
 
   render() {
+    console.log('DATE', this.state.date.toString().slice(0, 15));
+    console.log('TODAY', this.state.today.toString().slice(0, 15));
     let displayDate = this.state.date.toString().slice(0, 15);
     // console.log('ONE', this.state.date.toString().slice(0, 15));
     // console.log('TWO', this.state.today.toString().slice(0, 15));

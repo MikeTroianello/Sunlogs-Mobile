@@ -59,7 +59,7 @@ const SettingStack = () => {
 
 class MainNavigator extends Component {
   state = {
-    x: 5
+    x: 5,
   };
 
   render() {
@@ -72,16 +72,16 @@ class MainNavigator extends Component {
           flex: 1,
           paddingTop:
             Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
-          backgroundColor: '#ADD8E6'
+          backgroundColor: '#ADD8E6',
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='See Logs'>
+          <Drawer.Navigator initialRouteName='Log In'>
             {!username && <Drawer.Screen name='Log In' component={Login} />}
+
             {username && !createdToday && (
               <Drawer.Screen name='Create Log' component={CreateLog} />
             )}
-
             <Drawer.Screen name='See Logs' component={ParentView} />
             {username && (
               <Drawer.Screen name='Profile' component={ProfileStack} />
@@ -100,9 +100,9 @@ class MainNavigator extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 
@@ -113,6 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e0e7ef',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });

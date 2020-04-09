@@ -14,8 +14,8 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: 'michael',
-    password: 'michael',
+    username: '',
+    password: '',
     showModal: false,
   };
 
@@ -83,10 +83,20 @@ class Login extends Component {
     }
   };
 
-  toggleModal = () => {
-    this.setState((prevState) => ({
-      showModal: !prevState.showModal,
-    }));
+  toggleModal = (nav) => {
+    const { navigate } = this.props.navigation;
+    if (nav) {
+      this.setState(
+        (prevState) => ({
+          showModal: !prevState.showModal,
+        }),
+        () => navigate('See Logs')
+      );
+    } else {
+      this.setState((prevState) => ({
+        showModal: !prevState.showModal,
+      }));
+    }
   };
 
   render() {
@@ -95,6 +105,14 @@ class Login extends Component {
         <View style={LoginCss.wholePage}>
           <View style={{ translateY: 40 }}>
             <Text style={LoginCss.loginHeader}>Welcome!</Text>
+            <View>
+              <Text style={{ textAlign: 'center', fontSize: 21 }}>
+                Log in or{' '}
+                <Text style={{ color: '#1d4f7c' }} onPress={this.toggleModal}>
+                  Click Here to Create an Account!
+                </Text>
+              </Text>
+            </View>
             <View style={LoginCss.loginComponent}>
               <Text>Username:</Text>
               <Input
@@ -130,14 +148,6 @@ class Login extends Component {
             <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 5 }}>
               {this.state.message}
             </Text>
-          </View>
-
-          <View style={LoginCss.signUpButton}>
-            <Button
-              title='New Here? Create an Account!'
-              onPress={this.toggleModal}
-              color='#1d4f7c'
-            />
           </View>
         </View>
         <Modal

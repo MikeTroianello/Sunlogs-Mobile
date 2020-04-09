@@ -9,10 +9,11 @@ export const Styles = StyleSheet.create({
   },
   createLogContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     // alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    textAlign: 'center',
   },
   log: {
     margin: 10,
@@ -20,6 +21,30 @@ export const Styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#000',
+  },
+  logProdictivityNumbers: {
+    borderWidth: 2,
+    marginVertical: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    paddingLeft: 15,
+    borderRadius: 50,
+    fontSize: 21,
+    fontWeight: 'bold',
+  },
+  logSwitchOne: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '1%',
+    marginLeft: '2%',
+    marginRight: '3%',
+  },
+  logSwitchTwo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '3%',
+    marginLeft: '2%',
+    marginRight: '3%',
   },
 });
 
@@ -34,6 +59,7 @@ export const LoginCss = StyleSheet.create({
   loginHeader: {
     textAlign: 'center',
     fontSize: 35,
+    marginVertical: '3%',
   },
   loginComponent: {
     borderWidth: 1,
