@@ -289,7 +289,7 @@ class FilterLog extends Component {
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
             onDateChange={(date) => {
-              this.changeDate(date);
+              this.props.changeDate(date);
             }}
             customStyles={{
               dateIcon: {
@@ -360,22 +360,22 @@ class FilterLog extends Component {
               Filter By State:
             </Text>
 
-            {/* <StateFilter
-              sttes={this.props.locations.states}
+            <StateFilter
+              states={this.props.locations.states}
               filter={this.filterState}
               state={this.state.state}
-            /> */}
+            />
           </View>
           {/* <View style={{ borderWidth: 1 }}></View> */}
           <View>
             <Text style={{ textAlign: 'center', fontSize: 20 }}>
               Filter By County:
             </Text>
-            {/* <CountyFilter
+            <CountyFilter
               counties={this.state.counties}
               filter={(county) => this.filterCounty(county)}
               county={this.state.county}
-            /> */}
+            />
           </View>
         </View>
         <View

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -33,27 +33,86 @@ import ReduxInfo from './ReduxInfo';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-const LogStack = () => {
+const LogStack = ({ navigation }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='See All Logs' component={ViewAllLogs} />
+      <Stack.Screen
+        name='See All Logs'
+        component={ViewLogsComponent}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              color='#1776bf'
+              type='font-awesome'
+              name='bars'
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+          headerLeftContainerStyle: {
+            marginHorizontal: '5%',
+          },
+          headerTitle: 'See All Logs',
+        })}
+      />
       <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} />
     </Stack.Navigator>
   );
 };
+// const LogStack = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name='See All Logs' component={ViewAllLogs} />
+//       <Stack.Screen name='View Other Profiles' component={ViewOtherProfiles} />
+//     </Stack.Navigator>
+//   );
+// };
 
-const ProfileStack = () => {
+const ProfileStack = ({ navigation }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Your Profile' component={Profile} />
+      <Stack.Screen
+        name='Your Profile'
+        component={Profile}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              color='#1776bf'
+              type='font-awesome'
+              name='bars'
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+          headerLeftContainerStyle: {
+            marginHorizontal: '5%',
+          },
+          headerTitle: 'Your Profile',
+        })}
+      />
     </Stack.Navigator>
   );
 };
 
-const SettingStack = () => {
+const SettingStack = ({ navigation }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Settings' component={Settings} />
+      <Stack.Screen
+        name='Settings'
+        component={Settings}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              color='#1776bf'
+              type='font-awesome'
+              name='bars'
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+          headerLeftContainerStyle: {
+            marginHorizontal: '5%',
+          },
+          headerTitle: 'Settings',
+        })}
+      />
       <Stack.Screen name='Delete Profile' component={Delete} />
     </Stack.Navigator>
   );
@@ -81,8 +140,11 @@ class MainNavigator extends Component {
           <Drawer.Navigator initialRouteName='Log In'>
             {!username && <Drawer.Screen name='Log In' component={Login} />}
 
-            <Drawer.Screen name='Create Log' component={CreateLog} />
-            <Drawer.Screen name='See Logs' component={ViewLogsComponent} />
+            {username && !createdToday && (
+              <Drawer.Screen name='Create Log' component={CreateLog} />
+            )}
+
+            <Drawer.Screen name='See Logs' component={LogStack} />
             {username && (
               <Drawer.Screen name='Profile' component={ProfileStack} />
             )}
@@ -116,7 +178,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-// {username && !createdToday && (
-//   <Drawer.Screen name='Create Log' component={CreateLog} />
-// )}

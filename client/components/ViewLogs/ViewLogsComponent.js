@@ -172,6 +172,7 @@ class ViewLogsComponent extends Component {
   // };
 
   filter = (info) => {
+    console.log('FILTER IS HERE', info);
     const { state, county, chosenGender } = info;
     if (state && !county) {
       this.filterState(state, chosenGender);
@@ -255,7 +256,7 @@ class ViewLogsComponent extends Component {
   filterByGender = (gender) => {
     if (gender) {
       console.log('\x1b[93m-GENDER HAS BEEN CALLED-\x1b[39m', gender);
-      let genderLogs = this.state.filteredLogs.filter((log) => {
+      let genderLogs = this.state.logs.filter((log) => {
         return log.creatorId.gender === gender;
       });
 
