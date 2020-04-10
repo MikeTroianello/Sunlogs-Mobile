@@ -69,25 +69,26 @@ class FilterLog extends Component {
   };
 
   changeDate = (date) => {
-    // console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG');
-    if (date) {
-      let standardDate = date;
-      date = date.split('-');
-      let b = date.pop();
-      date.unshift(b);
-      date = date.join('-');
-      var isoDate = new Date(`${date}T12:00:00Z`);
-      // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
-      // this.sanitizeDate(isoDate);
-      this.setState(
-        {
-          date: standardDate,
-          isoDate: isoDate,
-          instructions: 'change day',
-        },
-        () => this.filter()
-      );
-    }
+    // // console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG');
+    // if (date) {
+    //   let standardDate = date;
+    //   date = date.split('-');
+    //   let b = date.pop();
+    //   date.unshift(b);
+    //   date = date.join('-');
+    //   var isoDate = new Date(`${date}T12:00:00Z`);
+    //   // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
+    //   // this.sanitizeDate(isoDate);
+    //   this.setState(
+    //     {
+    //       date: standardDate,
+    //       isoDate: isoDate,
+    //       instructions: 'change day',
+    //     },
+    // this.props.toggleModal();
+    this.props.changeDate(date);
+    // );
+    // }
   };
 
   getLogsByDate = (day, year) => {
@@ -281,7 +282,7 @@ class FilterLog extends Component {
           </Text>
 
           <DatePicker
-            date={this.state.date}
+            date={this.props.date}
             format='MM-DD-YYYY'
             mode='date'
             placeholder='Select Date'
@@ -389,7 +390,10 @@ class FilterLog extends Component {
         >
           <Button
             title='Filter!'
-            onPress={() => this.filter('filter')}
+            onPress={() => {
+              this.props.filter(this.state);
+              this.props.toggleModal();
+            }}
             buttonStyle={{
               backgroundColor: '#4DA1DD',
             }}
@@ -405,7 +409,10 @@ class FilterLog extends Component {
         >
           <Button
             title='Back to default'
-            onPress={this.defaultLogs}
+            onPress={() => {
+              this.props.defaultLogs();
+              this.props.toggleModal();
+            }}
             buttonStyle={{
               backgroundColor: '#45A7C2',
             }}

@@ -171,7 +171,19 @@ class ViewLogsComponent extends Component {
   //   this.sanitizeDate(d);
   // };
 
+  filter = (info) => {
+    const { state, county, chosenGender } = info;
+    if (state && !county) {
+      this.filterState(state, chosenGender);
+    } else if (county) {
+      this.filterCounty(county, chosenGender);
+    } else if (chosenGender) {
+      this.filterByGender(chosenGender);
+    }
+  };
+
   changeDate = (date) => {
+    this.toggleModal();
     // console.log('THIS IS THE NEW DATE: ', date);
     if (date) {
       this.setState({
@@ -184,7 +196,7 @@ class ViewLogsComponent extends Component {
       var isoDate = new Date(`${date}T12:00:00Z`);
       var tempIso = `${date}T12:00:00Z`;
       // console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
-      this.sanitizeDate(tempIso);
+      this.sanitizeDate(isoDate);
     }
   };
 
@@ -406,8 +418,8 @@ class ViewLogsComponent extends Component {
         <Text style={{ textAlign: 'center', fontSize: 25 }}>
           Logs for {displayDate}:
         </Text>
-        {this.state.filteredLogs && this.weatherAudit()}
         <Button title='Filter Logs' onPress={this.toggleModal} />
+        {this.state.filteredLogs && this.weatherAudit()}
         {this.state.filteredLogs && this.buildList()}
         <Modal
           style={{ color: '#e0e7ef' }}
@@ -415,7 +427,13 @@ class ViewLogsComponent extends Component {
           visible={this.state.showModal}
         >
           <View style={{ color: '#e0e7ef' }}>
-            <FilterLog toggleModal={this.toggleModal} />
+            <FilterLog
+              toggleModal={this.toggleModal}
+              defaultLogs={this.defaultLogs}
+              filter={this.filter}
+              changeDate={this.changeDate}
+              date={this.state.date}
+            />
           </View>
         </Modal>
       </ScrollView>
