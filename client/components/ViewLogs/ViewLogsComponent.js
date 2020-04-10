@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Button, Picker, ScrollView } from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Button,
+  Picker,
+  ScrollView,
+  Modal,
+} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
@@ -13,6 +21,7 @@ import Log from './LogComponent';
 import WeatherAudit from '../weather/WeatherAudit';
 import StateFilter from '../filterByLocation/StateFilter';
 import CountyFilter from '../filterByLocation/CountyFilter';
+import FilterLog from './FilterLogComponent';
 
 import { Styles } from '../../styles/MainStyles';
 
@@ -24,7 +33,7 @@ import { localSource } from '../../assets/localSource';
 
 import { setAllLocations, filterByLocation } from '../../redux/ActionCreators/';
 
-class ViewLogs extends Component {
+class ViewLogsComponent extends Component {
   state = {
     today: new Date(),
     date: new Date(),
@@ -42,17 +51,18 @@ class ViewLogs extends Component {
     stateFiltered: false,
     county: undefined,
     setGender: '',
+    showModal: false,
   };
 
-  nav = () => {
-    this.props.navigation.navigate(
-      'Create Log',
-      {},
-      NavigationActions.navigate({
-        routeName: 'Create Log',
-      })
-    );
-  };
+  // nav = () => {
+  //   this.props.navigation.navigate(
+  //     'Create Log',
+  //     {},
+  //     NavigationActions.navigate({
+  //       routeName: 'Create Log',
+  //     })
+  //   );
+  // };
 
   componentDidMount() {
     console.log('COMPONENT HAS NOW MOUNTED');
@@ -60,100 +70,100 @@ class ViewLogs extends Component {
     this.sanitizeDate(today);
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(
-      'THESE ARE THE PPROPS TO COMB THROUGH NOW AREN T THEY NOW',
-      this.props
-    );
-    console.log('PREVPROPS', prevProps);
-    // console.log(
-    //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
-    //   JSON.stringify(this.props) == JSON.stringify(prevProps)
-    // );
-    let info;
-    if (!prevProps.route) {
-      return false;
-    }
-    if (!prevProps.route.params) {
-      info = null;
-    } else {
-      info = prevProps.route.params.info;
-    }
-    //  else if (this.props.route.params.info == 'created') {
-    //   this.sanitizeDate(this.state.today);
-    // }
-    if (
-      this.props.route.params &&
-      info != this.props.route.params.info
-      // !JSON.stringify(this.props) == JSON.stringify(prevProps)
-    ) {
-      console.log('THE NEXT THING IS NOW SUPPOSED TO HAPPEN');
-      const {
-        instructions,
-        isoDate,
-        chosenGender,
-        state,
-        county,
-      } = this.props.route.params.info;
-      console.log(
-        'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
-        instructions,
-        // date,
-        chosenGender,
-        state,
-        county,
-        isoDate
-      );
+  // componentDidUpdate(prevProps) {
+  //   console.log(
+  //     'THESE ARE THE PPROPS TO COMB THROUGH NOW AREN T THEY NOW',
+  //     this.props
+  //   );
+  //   console.log('PREVPROPS', prevProps);
+  //   // console.log(
+  //   //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
+  //   //   JSON.stringify(this.props) == JSON.stringify(prevProps)
+  //   // );
+  //   let info;
+  //   if (!prevProps.route) {
+  //     return false;
+  //   }
+  //   if (!prevProps.route.params) {
+  //     info = null;
+  //   } else {
+  //     info = prevProps.route.params.info;
+  //   }
+  //   //  else if (this.props.route.params.info == 'created') {
+  //   //   this.sanitizeDate(this.state.today);
+  //   // }
+  //   if (
+  //     this.props.route.params &&
+  //     info != this.props.route.params.info
+  //     // !JSON.stringify(this.props) == JSON.stringify(prevProps)
+  //   ) {
+  //     console.log('THE NEXT THING IS NOW SUPPOSED TO HAPPEN');
+  //     const {
+  //       instructions,
+  //       isoDate,
+  //       chosenGender,
+  //       state,
+  //       county,
+  //     } = this.props.route.params.info;
+  //     console.log(
+  //       'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
+  //       instructions,
+  //       // date,
+  //       chosenGender,
+  //       state,
+  //       county,
+  //       isoDate
+  //     );
 
-      switch (instructions) {
-        case 'created':
-          console.log('SWITCH STATEMENT CALLED?>>>?>');
-          this.sanitizeDate(this.state.today);
-          break;
-        case 'default':
-          this.defaultLogs();
-          // this.defaultDate();
-          break;
-        case 'change day':
-          this.setState(
-            {
-              date: isoDate,
-              loading: true,
-            },
-            () => this.sanitizeDate(isoDate)
-          );
+  //     switch (instructions) {
+  //       case 'created':
+  //         console.log('SWITCH STATEMENT CALLED?>>>?>');
+  //         this.sanitizeDate(this.state.today);
+  //         break;
+  //       case 'default':
+  //         this.defaultLogs();
+  //         // this.defaultDate();
+  //         break;
+  //       case 'change day':
+  //         this.setState(
+  //           {
+  //             date: isoDate,
+  //             loading: true,
+  //           },
+  //           () => this.sanitizeDate(isoDate)
+  //         );
 
-          // this.defaultDate();
-          break;
-        case 'filter':
-          // console.log('AHHHHHHHHHHHHHHHH', this.props.locations);
-          this.setState(
-            {
-              logs: this.props.locations.logs,
-            },
-            () => {
-              if (state && !county) {
-                console.log('FILTERING BY STATE');
-                this.filterState(state, chosenGender);
-              } else if (county) {
-                this.filterCounty(county, chosenGender);
-              } else if (chosenGender) {
-                this.filterByGender(chosenGender);
-              }
-            }
-          );
-          break;
-        default:
-          return false;
-          break;
-      }
-    }
-  }
+  //         // this.defaultDate();
+  //         break;
+  //       case 'filter':
+  //         // console.log('AHHHHHHHHHHHHHHHH', this.props.locations);
+  //         this.setState(
+  //           {
+  //             logs: this.props.locations.logs,
+  //           },
+  //           () => {
+  //             if (state && !county) {
+  //               console.log('FILTERING BY STATE');
+  //               this.filterState(state, chosenGender);
+  //             } else if (county) {
+  //               this.filterCounty(county, chosenGender);
+  //             } else if (chosenGender) {
+  //               this.filterByGender(chosenGender);
+  //             }
+  //           }
+  //         );
+  //         break;
+  //       default:
+  //         return false;
+  //         break;
+  //     }
+  //   }
+  // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('IS ANYTHING HAPPENEING NOW!!!!!!??!??!??!?', nextProps);
-    return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('IS ANYTHING HAPPENEING NOW!!!!!!??!??!??!?', nextProps);
+  //   return true;
+  // }
 
   // defaultDate = () => {
   //   let d = new Date();
@@ -323,6 +333,13 @@ class ViewLogs extends Component {
     return <WeatherAudit logs={this.state.filteredLogs} />;
   };
 
+  toggleModal = () => {
+    console.log('TOGGLING MODAL', this.state.showModal);
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  };
+
   buildList = () => {
     // console.log('filteredLogs:', this.state.filteredLogs);
     if (this.state.filteredLogs.length < 1) {
@@ -372,12 +389,12 @@ class ViewLogs extends Component {
   };
 
   render() {
-    console.log('DATE', this.state.date.toString().slice(0, 15));
-    console.log('TODAY', this.state.today.toString().slice(0, 15));
-    console.log('THIS DOT PROPS DOT USERSETTINGS: ', this.props.userSettings);
-    let displayDate = this.state.date.toString().slice(0, 15);
+    // console.log('DATE', this.state.date.toString().slice(0, 15));
+    // console.log('TODAY', this.state.today.toString().slice(0, 15));
+    // console.log('THIS DOT PROPS DOT USERSETTINGS: ', this.props.userSettings);
     // console.log('ONE', this.state.date.toString().slice(0, 15));
     // console.log('TWO', this.state.today.toString().slice(0, 15));
+    let displayDate = this.state.date.toString().slice(0, 15);
     if (
       this.state.date.toString().slice(0, 15) ==
       this.state.today.toString().slice(0, 15)
@@ -390,7 +407,17 @@ class ViewLogs extends Component {
           Logs for {displayDate}:
         </Text>
         {this.state.filteredLogs && this.weatherAudit()}
+        <Button title='Filter Logs' onPress={this.toggleModal} />
         {this.state.filteredLogs && this.buildList()}
+        <Modal
+          style={{ color: '#e0e7ef' }}
+          animationType='slide'
+          visible={this.state.showModal}
+        >
+          <View style={{ color: '#e0e7ef' }}>
+            <FilterLog toggleModal={this.toggleModal} />
+          </View>
+        </Modal>
       </ScrollView>
     );
   }
@@ -411,4 +438,4 @@ const mapDispatchToProps = {
   filterByLocations: (state, county) => filterByLocation(state, county),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewLogs);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewLogsComponent);

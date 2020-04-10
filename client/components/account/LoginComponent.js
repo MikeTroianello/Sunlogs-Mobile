@@ -14,8 +14,8 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: '',
-    password: '',
+    username: 'michael',
+    password: 'michael',
     showModal: false,
   };
 
@@ -54,7 +54,7 @@ class Login extends Component {
         body: JSON.stringify(state),
       })
         .then((response) => response.json())
-        .then(async (results) => {
+        .then((results) => {
           if (
             results.message == 'Incorrect username.' ||
             results.message == 'Incorrect password.' ||
@@ -70,8 +70,8 @@ class Login extends Component {
           }
           // this.props.logIt(results);
           else {
-            console.log(results);
-            let results = await this.props.loggedIn(results);
+            // console.log(results);
+            this.props.loggedIn(results);
             navigate('See Logs');
           }
         })

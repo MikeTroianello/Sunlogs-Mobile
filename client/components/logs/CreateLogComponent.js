@@ -68,9 +68,10 @@ class CreateLog extends Component {
     });
   }
 
+  componentWillMount() {}
+
   handleChange = (text) => {
     if (text) {
-      console.log('CAUGHT');
       text = text.replace(/[\r\n\v]+/g, '');
     }
     this.setState({
@@ -95,49 +96,49 @@ class CreateLog extends Component {
         {
           text: 'OK',
           onPress: () => {
-            navigate('See Logs');
+            navigate('See Logs', { info: { instructions: 'default' } });
           },
         },
       ]);
     } else {
       const info = this.state;
-      fetch(`${localSource}/logs/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((response) => response.json())
-        .then((results) => {
-          this.props.setCreatedToday();
-          this.setState({
-            mood: null,
-            moodEmoji: null,
-            productivity: null,
-            journal: '',
-            privateJournal: false,
-            hideCreator: false,
-            err: null,
-            message: null,
-            messageCss: 'red',
-            day: null,
-            year: null,
-            dayOfYear: null,
-            year: null,
-            dayOfWeek: null,
-            dayOfMonth: null,
-            month: null,
-            moodMsg: null,
-            productivityMsg: null,
-          });
-          navigate('See Logs');
+      () => this.props.setCreatedToday(),
+        fetch(`${localSource}/logs/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(info),
         })
-        .catch((error) => {
-          this.setState({
-            message: `Username already exists!`,
+          .then((response) => response.json())
+          .then((results) => {
+            // this.setState({
+            //   mood: null,
+            //   moodEmoji: null,
+            //   productivity: null,
+            //   journal: '',
+            //   privateJournal: false,
+            //   hideCreator: false,
+            //   err: null,
+            //   message: null,
+            //   messageCss: 'red',
+            //   day: null,
+            //   year: null,
+            //   dayOfYear: null,
+            //   year: null,
+            //   dayOfWeek: null,
+            //   dayOfMonth: null,
+            //   month: null,
+            //   moodMsg: null,
+            //   productivityMsg: null,
+            // });
+            navigate('See Logs', { info: { instructions: 'created' } });
+          })
+          .catch((error) => {
+            this.setState({
+              message: `Username already exists!`,
+            });
           });
-        });
     }
   };
 

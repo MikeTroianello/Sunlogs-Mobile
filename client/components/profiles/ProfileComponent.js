@@ -22,7 +22,7 @@ class Profile extends Component {
     block: false,
     oldestFirst: false,
     profileHeader: '',
-    happinessHeader: ''
+    happinessHeader: '',
   };
 
   componentDidMount = () => {
@@ -32,13 +32,13 @@ class Profile extends Component {
 
   setItAllUp = async () => {
     fetch(`${localSource}/logs/all/my-posts`)
-      .then(response => response.json())
-      .then(results => {
+      .then((response) => response.json())
+      .then((results) => {
         const reducer = (accumulator, currentValue) =>
           accumulator + currentValue;
         let moodArr = [];
 
-        results.map(log => {
+        results.map((log) => {
           moodArr.push(log.mood);
         });
 
@@ -47,12 +47,12 @@ class Profile extends Component {
 
         this.setState({
           logs: results,
-          mood: mood
+          mood: mood,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          message: `Username already exists!`
+          message: `Username already exists!`,
         });
       });
   };
@@ -96,9 +96,9 @@ class Profile extends Component {
         a.dayOfYear < b.dayOfYear ? 1 : -1
       );
     }
-    this.setState(prevProps => ({
+    this.setState((prevProps) => ({
       oldestFirst: !prevProps.oldestFirst,
-      logs: sortedLogs
+      logs: sortedLogs,
     }));
   };
 
@@ -121,7 +121,7 @@ class Profile extends Component {
       <FlatList
         data={this.state.logs}
         renderItem={this.renderLogs}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={(item) => item._id.toString()}
       />
     );
   };
@@ -137,8 +137,10 @@ class Profile extends Component {
       <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
         <View className='top-push'>
           {!this.props.userSettings.createdToday && (
-            <Text>
-              You have not created a mood log today.{' '}
+            <Text
+              style={{ fontSize: 18, textAlign: 'center', marginBottom: '5%' }}
+            >
+              You have not created a mood log today.{' \n'}
               <Text onPress={this.create} style={{ color: 'blue' }}>
                 Create one now!
               </Text>
@@ -163,7 +165,7 @@ class Profile extends Component {
                 backgroundColor: '#5694DB',
                 width: '100%',
                 borderWidth: 1,
-                borderColor: '#413F41'
+                borderColor: '#413F41',
               }}
             />
           </View>
@@ -174,9 +176,9 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 

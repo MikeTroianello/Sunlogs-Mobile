@@ -19,6 +19,8 @@ import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 import LogOut from './account/LogOut';
 
+import ViewLogsComponent from '../components/ViewLogs/ViewLogsComponent';
+
 import ViewLogs from './ViewLogs/ViewLogs';
 import FilterLog from './ViewLogs/FilterLogComponent';
 
@@ -79,10 +81,8 @@ class MainNavigator extends Component {
           <Drawer.Navigator initialRouteName='Log In'>
             {!username && <Drawer.Screen name='Log In' component={Login} />}
 
-            {username && !createdToday && (
-              <Drawer.Screen name='Create Log' component={CreateLog} />
-            )}
-            <Drawer.Screen name='See Logs' component={ParentView} />
+            <Drawer.Screen name='Create Log' component={CreateLog} />
+            <Drawer.Screen name='See Logs' component={ViewLogsComponent} />
             {username && (
               <Drawer.Screen name='Profile' component={ProfileStack} />
             )}
@@ -116,3 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// {username && !createdToday && (
+//   <Drawer.Screen name='Create Log' component={CreateLog} />
+// )}

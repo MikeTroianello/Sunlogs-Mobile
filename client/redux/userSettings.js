@@ -8,7 +8,7 @@ export const userSettings = (
     privateJournalDefault: false,
     hideCreatorDefault: false,
     email: null,
-    phone: null
+    phone: null,
   },
   action
 ) => {
@@ -23,11 +23,13 @@ export const userSettings = (
         privateJournalDefault: action.payload.privateJournalDefault,
         hideCreatorDefault: action.payload.hideCreatorDefault,
         email: action.payload.email,
-        phone: action.payload.phone
+        phone: action.payload.phone,
       };
     case ActionTypes.CREATED_TODAY:
+      console.log('YOU HAVE NOW CREATED TODAY!!!!!!!!!!!!!');
       return {
-        createdToday: true
+        createdToday: true,
+        ...state,
       };
     case ActionTypes.UPDATE_SETTINGS:
       console.log('THESE ARE THE SETTINGS IN THE PAYLOAD', action.payload);
@@ -36,15 +38,17 @@ export const userSettings = (
         createdToday: action.payload.createdToday,
         hideProfile: action.payload.hideProfile,
         privateJournalDefault: action.payload.privateJournalDefault,
-        hideCreatorDefault: action.payload.hideCreatorDefault
+        hideCreatorDefault: action.payload.hideCreatorDefault,
+        ...state,
       };
     case ActionTypes.LOG_OUT:
+      console.log('LOGGGING OUT ');
       return {
         username: null,
         createdToday: false,
         hideProfile: false,
         privateJournalDefault: false,
-        hideCreatorDefault: false
+        hideCreatorDefault: false,
       };
     case ActionTypes.DELETE_USER:
       return {
@@ -52,7 +56,7 @@ export const userSettings = (
         createdToday: false,
         hideProfile: false,
         privateJournalDefault: false,
-        hideCreatorDefault: false
+        hideCreatorDefault: false,
       };
 
     default:

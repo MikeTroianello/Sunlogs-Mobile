@@ -21,13 +21,33 @@ import { localSource } from '../../assets/localSource';
 const Tab = createBottomTabNavigator();
 
 class ParentView extends Component {
-  nav = () => {
-    this.props.navigation.navigate('Create Log');
+  state = {
+    blah: '',
   };
+
+  shouldComponentUpdate(nextProps) {
+    console.log('THIS IS THE NEXT PROPS', nextProps);
+    if (nextProps.route.params) {
+      console.log('ONE LEVEL LOWER', nextProps.route.params.info.instructions);
+      if (this.state.blah != nextProps.route.params.info.instructions) {
+        this.setState(
+          {
+            blah: nextProps.route.params.info.instructions,
+          },
+          () => this.forceUpdate()
+        );
+
+        return true;
+      } else return false;
+    } else return false;
+  }
 
   render() {
     return (
-      <NavigationContainer independent={true}>
+      <NavigationContainer
+        independent={true}
+        onStateChange={(state) => this.forceUpdate()}
+      >
         <Tab.Navigator>
           <Tab.Screen
             nav={this.nav}

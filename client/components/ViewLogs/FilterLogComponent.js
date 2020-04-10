@@ -359,22 +359,22 @@ class FilterLog extends Component {
               Filter By State:
             </Text>
 
-            <StateFilter
-              states={this.props.locations.states}
+            {/* <StateFilter
+              sttes={this.props.locations.states}
               filter={this.filterState}
               state={this.state.state}
-            />
+            /> */}
           </View>
           {/* <View style={{ borderWidth: 1 }}></View> */}
           <View>
             <Text style={{ textAlign: 'center', fontSize: 20 }}>
               Filter By County:
             </Text>
-            <CountyFilter
+            {/* <CountyFilter
               counties={this.state.counties}
               filter={(county) => this.filterCounty(county)}
               county={this.state.county}
-            />
+            /> */}
           </View>
         </View>
         <View
@@ -408,6 +408,22 @@ class FilterLog extends Component {
             onPress={this.defaultLogs}
             buttonStyle={{
               backgroundColor: '#45A7C2',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            marginHorizontal: '2%',
+            position: 'absolute',
+            bottom: '5%',
+            width: '96%',
+          }}
+        >
+          <Button
+            title='Close'
+            onPress={this.props.toggleModal}
+            buttonStyle={{
+              backgroundColor: 'gray',
             }}
           />
         </View>

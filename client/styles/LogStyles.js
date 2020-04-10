@@ -47,7 +47,7 @@ export const logCss = {
     justifyContent: 'space-evenly',
   },
   moodSubBox: {
-    width: '27%',
+    width: '33%',
     height: 65,
     borderWidth: 1,
     borderRadius: 7,
