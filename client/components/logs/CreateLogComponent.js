@@ -47,7 +47,7 @@ class CreateLog extends Component {
   };
 
   componentDidMount() {
-    // console.log('REDUX INFO', this.props.userSettings);
+    console.log('REDUX INFO', this.props.userSettings);
     let today = new Date();
     var start = new Date(today.getFullYear(), 0, 0);
     var diff =
@@ -79,7 +79,7 @@ class CreateLog extends Component {
     });
   };
 
-  submit = () => {
+  submit = async () => {
     const { navigate } = this.props.navigation;
 
     if (!this.state.mood || !this.state.productivity) {
@@ -102,46 +102,82 @@ class CreateLog extends Component {
       ]);
     } else {
       const info = this.state;
-      () => this.props.setCreatedToday(),
-        fetch(`${localSource}/logs/create`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(info),
-        })
-          .then((response) => response.json())
-          .then((results) => {
-            // this.setState({
-            //   mood: null,
-            //   moodEmoji: null,
-            //   productivity: null,
-            //   journal: '',
-            //   privateJournal: false,
-            //   hideCreator: false,
-            //   err: null,
-            //   message: null,
-            //   messageCss: 'red',
-            //   day: null,
-            //   year: null,
-            //   dayOfYear: null,
-            //   year: null,
-            //   dayOfWeek: null,
-            //   dayOfMonth: null,
-            //   month: null,
-            //   moodMsg: null,
-            //   productivityMsg: null,
-            // });
-            console.log('THESE ARE THE RESULTS???????', results);
-            navigate('See All Logs', { info: { instructions: 'created' } });
-          })
-          .catch((error) => {
-            this.setState({
-              message: `Username already exists!`,
-            });
-          });
+      const response = await fetch(`${localSource}/logs/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(info),
+      });
+
+      const set = await this.props.setCreatedToday();
+      navigate('See All Logs', { info: { instructions: 'created' } });
     }
   };
+
+  // submit = () => {
+  //   const { navigate } = this.props.navigation;
+
+  //   if (!this.state.mood || !this.state.productivity) {
+  //     let moodMsg = !this.state.mood && `You didn't select your mood`;
+  //     let productivityMsg =
+  //       !this.state.productivity && `You didn't select your productivity`;
+  //     this.setState({
+  //       moodMsg,
+  //       productivityMsg,
+  //     });
+  //   } else if (this.props.userSettings.createdToday) {
+  //     console.log('YOU HAVE ALREADY CREATED A LOG');
+  //     Alert.alert('Error', 'You have already created a log today!', [
+  //       {
+  //         text: 'OK',
+  //         onPress: () => {
+  //           navigate('See Logs', { info: { instructions: 'default' } });
+  //         },
+  //       },
+  //     ]);
+  //   } else {
+  //     const info = this.state;
+  //     fetch(`${localSource}/logs/create`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(info),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((results) => {
+  //         // this.setState({
+  //         //   mood: null,
+  //         //   moodEmoji: null,
+  //         //   productivity: null,
+  //         //   journal: '',
+  //         //   privateJournal: false,
+  //         //   hideCreator: false,
+  //         //   err: null,
+  //         //   message: null,
+  //         //   messageCss: 'red',
+  //         //   day: null,
+  //         //   year: null,
+  //         //   dayOfYear: null,
+  //         //   year: null,
+  //         //   dayOfWeek: null,
+  //         //   dayOfMonth: null,
+  //         //   month: null,
+  //         //   moodMsg: null,
+  //         //   productivityMsg: null,
+  //         // });
+  //         console.log('THESE ARE THE RESULTS???????', results);
+  //         this.props.setCreatedToday();
+  //         navigate('See All Logs', { info: { instructions: 'created' } });
+  //       })
+  //       .catch((error) => {
+  //         this.setState({
+  //           message: `Username already exists!`,
+  //         });
+  //       });
+  //   }
+  // };
 
   render() {
     return (

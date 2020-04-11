@@ -369,7 +369,10 @@ class ViewLogsComponent extends Component {
           </Text>
           {this.state.date.toString().slice(0, 15) ==
             this.state.today.toString().slice(0, 15) && (
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>
+            <Text
+              style={{ textAlign: 'center', fontSize: 18, color: 'blue' }}
+              onPress={() => this.props.navigation.navigate('Create Log')}
+            >
               Why not create one!
             </Text>
           )}

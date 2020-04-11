@@ -28,18 +28,18 @@ export const userSettings = (
     case ActionTypes.CREATED_TODAY:
       console.log('YOU HAVE NOW CREATED TODAY!!!!!!!!!!!!!');
       return {
-        createdToday: true,
         ...state,
+        createdToday: true,
       };
     case ActionTypes.UPDATE_SETTINGS:
       console.log('THESE ARE THE SETTINGS IN THE PAYLOAD', action.payload);
       return {
+        ...state,
         username: action.payload.username,
         createdToday: action.payload.createdToday,
         hideProfile: action.payload.hideProfile,
         privateJournalDefault: action.payload.privateJournalDefault,
         hideCreatorDefault: action.payload.hideCreatorDefault,
-        ...state,
       };
     case ActionTypes.LOG_OUT:
       console.log('LOGGGING OUT ');
