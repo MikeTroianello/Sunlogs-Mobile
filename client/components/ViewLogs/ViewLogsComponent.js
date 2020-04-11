@@ -65,14 +65,14 @@ class ViewLogsComponent extends Component {
   // };
 
   componentDidMount() {
-    console.log('COMPONENT HAS NOW MOUNTED');
+    // console.log('COMPONENT HAS NOW MOUNTED');
     const { today } = this.state;
     this.sanitizeDate(today);
   }
 
   componentDidUpdate(prevProps) {
-    console.log('\x1b[93m-THIS DOT PROPS-\x1b[39m', this.props);
-    console.log('\x1b[93m-PREVPROPS-\x1b[39m', prevProps);
+    // console.log('\x1b[93m-THIS DOT PROPS-\x1b[39m', this.props);
+    // console.log('\x1b[93m-PREVPROPS-\x1b[39m', prevProps);
 
     // console.log(
     //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
@@ -159,17 +159,17 @@ class ViewLogsComponent extends Component {
   //   }
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(
-      '\x1b[93m- IS ANYTHING HAPPENING THIS IS IN SHOULD COMPONENT UPDATE -\x1b[39m',
-      nextProps
-    );
-    return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(
+  //     '\x1b[93m- IS ANYTHING HAPPENING THIS IS IN SHOULD COMPONENT UPDATE -\x1b[39m',
+  //     nextProps
+  //   );
+  //   return true;
+  // }
 
-  componentWillReceiveProps() {
-    console.log('1b[93m- COMPONENT WILL RECEIVE PROPS -\x1b[39m');
-  }
+  // componentWillReceiveProps() {
+  //   console.log('1b[93m- COMPONENT WILL RECEIVE PROPS -\x1b[39m');
+  // }
 
   // defaultDate = () => {
   //   let d = new Date();
@@ -178,7 +178,7 @@ class ViewLogsComponent extends Component {
   // };
 
   filter = (info) => {
-    console.log('FILTER IS HERE', info);
+    // console.log('FILTER IS HERE', info);
     const { state, county, chosenGender } = info;
     if (state && !county) {
       this.filterState(state, chosenGender);
@@ -191,21 +191,33 @@ class ViewLogsComponent extends Component {
 
   changeDate = (date) => {
     this.toggleModal();
-    // console.log('THIS IS THE NEW DATE: ', date);
+    console.log('THIS IS THE NEW DATE: ', date);
     if (date) {
-      this.setState({
-        date: date,
-      });
-      date = date.split('-');
-      let b = date.pop();
-      date.unshift(b);
-      date = date.join('-');
-      var isoDate = new Date(`${date}T12:00:00Z`);
-      var tempIso = `${date}T12:00:00Z`;
-      // console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
-      this.sanitizeDate(isoDate);
+      this.setState(
+        {
+          date: date,
+        },
+        () => this.sanitizeDate(this.state.date)
+      );
     }
   };
+  // changeDate = (date) => {
+  //   this.toggleModal();
+  //   console.log('THIS IS THE NEW DATE: ', date);
+  //   if (date) {
+  //     this.setState({
+  //       date: date,
+  //     });
+  //     date = date.split('-');
+  //     let b = date.pop();
+  //     date.unshift(b);
+  //     date = date.join('-');
+  //     var tempIso = `${date}T12:00:00Z`;
+  //     var isoDate = new Date(tempIso);
+  //     console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate);
+  //     this.sanitizeDate(tempIso);
+  //   }
+  // };
 
   sanitizeDate = (dateToLookFor, message) => {
     console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
@@ -414,8 +426,8 @@ class ViewLogsComponent extends Component {
     // console.log('DATE', this.state.date.toString().slice(0, 15));
     // console.log('TODAY', this.state.today.toString().slice(0, 15));
     // console.log('THIS DOT PROPS DOT USERSETTINGS: ', this.props.userSettings);
-    // console.log('ONE', this.state.date.toString().slice(0, 15));
-    // console.log('TWO', this.state.today.toString().slice(0, 15));
+    console.log('ONE', this.state.date.toString().slice(0, 15));
+    console.log('TWO', Date(this.state.today).toString().slice(0, 15));
     let displayDate = this.state.date.toString().slice(0, 15);
     if (
       this.state.date.toString().slice(0, 15) ==
@@ -443,6 +455,7 @@ class ViewLogsComponent extends Component {
               filter={this.filter}
               changeDate={this.changeDate}
               date={this.state.date}
+              sanitizeDate={this.sanitizeDate}
             />
           </View>
         </Modal>

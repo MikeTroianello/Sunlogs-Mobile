@@ -69,26 +69,26 @@ class FilterLog extends Component {
   };
 
   changeDate = (date) => {
-    // // console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG');
-    // if (date) {
-    //   let standardDate = date;
-    //   date = date.split('-');
-    //   let b = date.pop();
-    //   date.unshift(b);
-    //   date = date.join('-');
-    //   var isoDate = new Date(`${date}T12:00:00Z`);
-    //   // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
-    //   // this.sanitizeDate(isoDate);
-    //   this.setState(
-    //     {
-    //       date: standardDate,
-    //       isoDate: isoDate,
-    //       instructions: 'change day',
-    //     },
-    // this.props.toggleModal();
-    this.props.changeDate(date);
-    // );
-    // }
+    console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG', date);
+    if (date) {
+      let standardDate = date;
+      date = date.split('-');
+      let b = date.pop();
+      date.unshift(b);
+      date = date.join('-');
+      var isoDate = new Date(`${date}T12:00:00Z`);
+      // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
+      // this.sanitizeDate(isoDate);
+      this.setState(
+        {
+          date: standardDate,
+          isoDate: isoDate,
+          instructions: 'change day',
+        },
+        () => this.props.changeDate(this.state.isoDate)
+      );
+      // this.props.toggleModal();
+    }
   };
 
   getLogsByDate = (day, year) => {
@@ -289,7 +289,7 @@ class FilterLog extends Component {
             confirmBtnText='Confirm'
             cancelBtnText='Cancel'
             onDateChange={(date) => {
-              this.props.changeDate(date);
+              this.changeDate(date);
             }}
             customStyles={{
               dateIcon: {
