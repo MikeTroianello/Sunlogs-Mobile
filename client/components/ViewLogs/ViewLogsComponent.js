@@ -70,28 +70,27 @@ class ViewLogsComponent extends Component {
     this.sanitizeDate(today);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log(
-  //     'THESE ARE THE PPROPS TO COMB THROUGH NOW AREN T THEY NOW',
-  //     this.props
-  //   );
-  //   console.log('PREVPROPS', prevProps);
-  //   // console.log(
-  //   //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
-  //   //   JSON.stringify(this.props) == JSON.stringify(prevProps)
-  //   // );
-  //   let info;
-  //   if (!prevProps.route) {
-  //     return false;
-  //   }
-  //   if (!prevProps.route.params) {
-  //     info = null;
-  //   } else {
-  //     info = prevProps.route.params.info;
-  //   }
-  //   //  else if (this.props.route.params.info == 'created') {
-  //   //   this.sanitizeDate(this.state.today);
-  //   // }
+  componentDidUpdate(prevProps) {
+    console.log('\x1b[93m-THIS DOT PROPS-\x1b[39m', this.props);
+    console.log('\x1b[93m-PREVPROPS-\x1b[39m', prevProps);
+
+    // console.log(
+    //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
+    //   JSON.stringify(this.props) == JSON.stringify(prevProps)
+    // );
+    let info;
+    if (!prevProps.route || !this.props.route.params) {
+      return false;
+    }
+    if (!prevProps.route.params) {
+      info = null;
+    } else {
+      info = prevProps.route.params.info;
+    }
+    if (this.props.route.params.info !== info) {
+      this.sanitizeDate(this.state.today);
+    }
+  }
   //   if (
   //     this.props.route.params &&
   //     info != this.props.route.params.info
@@ -160,10 +159,17 @@ class ViewLogsComponent extends Component {
   //   }
   // }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('IS ANYTHING HAPPENEING NOW!!!!!!??!??!??!?', nextProps);
-  //   return true;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(
+      '\x1b[93m- IS ANYTHING HAPPENING THIS IS IN SHOULD COMPONENT UPDATE -\x1b[39m',
+      nextProps
+    );
+    return true;
+  }
+
+  componentWillReceiveProps() {
+    console.log('1b[93m- COMPONENT WILL RECEIVE PROPS -\x1b[39m');
+  }
 
   // defaultDate = () => {
   //   let d = new Date();
@@ -202,7 +208,7 @@ class ViewLogsComponent extends Component {
   };
 
   sanitizeDate = (dateToLookFor, message) => {
-    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
+    console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 

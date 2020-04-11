@@ -132,7 +132,8 @@ class CreateLog extends Component {
             //   moodMsg: null,
             //   productivityMsg: null,
             // });
-            navigate('See Logs', { info: { instructions: 'created' } });
+            console.log('THESE ARE THE RESULTS???????', results);
+            navigate('See All Logs', { info: { instructions: 'created' } });
           })
           .catch((error) => {
             this.setState({
