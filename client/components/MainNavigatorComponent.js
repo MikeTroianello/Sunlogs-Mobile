@@ -18,6 +18,7 @@ import Delete from '../components/account/DeleteComponent';
 import SignUp from './account/SignUpComponent';
 import Login from './account/LoginComponent.js';
 import LogOut from './account/LogOut';
+import LoadingPage from './LoadingPage';
 
 import ViewLogsComponent from '../components/ViewLogs/ViewLogsComponent';
 
@@ -155,6 +156,7 @@ class MainNavigator extends Component {
             {username && (
               <Drawer.Screen name='Redux Info' component={ReduxInfo} />
             )}
+            <Drawer.Screen name='LoadingPage' component={LoadingPage} />
           </Drawer.Navigator>
         </NavigationContainer>
       </View>
