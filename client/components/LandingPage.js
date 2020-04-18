@@ -4,34 +4,49 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Log from './ViewLogs/LogComponent';
 
+import mockLog from '../mockLogs/mockLog.json';
+
 const slides = [
   {
     key: 1,
     title: 'SUNLOGS',
-    text: 'How much does weather affect your life?',
-    backgroundImage: require('../assets/Background-Winter.png'),
-    backgroundColor: '#59b2ab',
+    // text: 'How much does weather affect your life?',
+    text: null,
+    byline: 'How much does weather affect your life?',
+    swipeLeftMessage: true,
     mockLog: false,
   },
   {
     key: 2,
     title: 'Did you know:',
-    text: `Over 3 MILLION Americans suffer from Seasonal Affective Disorder, or SAD, every year \nSAD can affect nearly every aspect of a person's life, from work, to relationships, to personal health. \nIt was this reason that Sunlogs was created`,
+    text: `Over 3 MILLION Americans suffer from Seasonal Affective Disorder, or SAD, every year \n\nSAD can affect nearly every aspect of a person's life, from work, to relationships, to personal health`,
+    byline: null,
     image: null,
-    // image: require('./assets/2.jpg'),
-    backgroundImage: require('../assets/Background-Winter.png'),
+    swipeLeftMessage: false,
     backgroundColor: '#febe29',
     mockLog: false,
   },
   {
     key: 3,
     title: 'What is Sunlogs?',
-    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \nYou can also create a journal for any feelings you might want to jot down.\nThese logs are then tied to the weather in your county, and will compare correlate mood respectively`,
+    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \n \nThese logs are then tied to the weather in your county, and will correlate mood respectively`,
     // image: require('./assets/3.jpg'),
-    backgroundImage: require('../assets/Background-Winter.png'),
+    byline: null,
     image: null,
+    swipeLeftMessage: false,
     backgroundColor: '#22bcb5',
     mockLog: true,
+  },
+  {
+    key: 4,
+    title: 'Sign Up Now',
+    text: null,
+    // image: require('./assets/3.jpg'),
+    byline: `Click the check at the bottom right to get started!`,
+    image: null,
+    swipeLeftMessage: false,
+    backgroundColor: '#22bcb5',
+    mockLog: false,
   },
 ];
 
@@ -43,8 +58,12 @@ class LandingPage extends React.Component {
     return (
       <View style={styles.slide}>
         <Text style={styles.title}>{item.title}</Text>
-
         <Text style={styles.text}>{item.text}</Text>
+        {item.byline && <Text style={styles.byline}>{item.byline}</Text>}
+        {item.swipeLeftMessage && (
+          <Text style={styles.swipeLeft}>(Swipe Left)</Text>
+        )}
+        {item.mockLog && <Log log={mockLog} />}
       </View>
     );
   };
@@ -58,7 +77,7 @@ class LandingPage extends React.Component {
   _renderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>
-        <Icon name='md-checkmark' color='rgba(255, 255, 255, .9)' size={24} />
+        <Icon name='md-checkmark' color='rgba(255, 255, 255, .9)' size={28} />
       </View>
     );
   };
@@ -104,5 +123,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     marginHorizontal: '10%',
+  },
+  byline: {
+    textAlign: 'center',
+    marginTop: '15%',
+    marginHorizontal: '10%',
+    fontSize: 26,
+  },
+  swipeLeft: {
+    textAlign: 'center',
+    marginTop: '10%',
+    fontSize: 22,
   },
 });
