@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const LoadingPage = () => {
@@ -19,12 +19,12 @@ const s = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e0e7ef',
+    backgroundColor: '#8ec2ea',
   },
   text: {
     marginVertical: '8%',
     textAlign: 'center',
-    fontSize: 35,
+    fontSize: 45,
     fontWeight: 'bold',
   },
   icon: {
