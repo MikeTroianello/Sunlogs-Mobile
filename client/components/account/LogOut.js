@@ -12,20 +12,20 @@ class Logout extends Component {
     fetch(`${localSource}/logout`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: null
+      body: null,
     })
-      .then(response => response.json())
-      .then(results => {
+      .then((response) => response.json())
+      .then((results) => {
         // this.props.logIt(results);
 
         console.log(results);
         this.props.logout();
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          message: `FAILURE!`
+          message: `FAILURE!`,
         });
       });
   }
@@ -36,7 +36,7 @@ class Logout extends Component {
 }
 
 const mapDispatchToProps = {
-  logout: () => logout()
+  logout: () => logout(),
 };
 
 export default connect(null, mapDispatchToProps)(Logout);

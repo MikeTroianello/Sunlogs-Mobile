@@ -221,7 +221,7 @@ class SignUp extends Component {
         <View style={LoginCss.backToLoginButton}>
           <Button
             title='Go Back To Login'
-            onPress={this.props.toggleModal}
+            onPress={() => this.props.toggleModal(false)}
             color='#1d4f7c'
           />
         </View>

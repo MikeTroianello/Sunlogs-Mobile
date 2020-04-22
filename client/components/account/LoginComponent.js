@@ -14,8 +14,9 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: 'michael',
-    password: 'michael',
+
+    username: '',
+    password: '',
     showModal: false,
   };
 
@@ -83,9 +84,10 @@ class Login extends Component {
     }
   };
 
-  toggleModal = (nav) => {
+  toggleModal = (bool) => {
     const { navigate } = this.props.navigation;
-    if (nav) {
+    if (bool) {
+      console.log('bool', bool);
       this.setState(
         (prevState) => ({
           showModal: !prevState.showModal,
@@ -108,7 +110,10 @@ class Login extends Component {
             <View>
               <Text style={{ textAlign: 'center', fontSize: 21 }}>
                 Log in or{' '}
-                <Text style={{ color: '#1d4f7c' }} onPress={this.toggleModal}>
+                <Text
+                  style={{ color: '#1d4f7c' }}
+                  onPress={() => this.toggleModal(false)}
+                >
                   Click Here to Create an Account!
                 </Text>
               </Text>

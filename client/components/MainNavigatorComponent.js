@@ -154,20 +154,20 @@ class MainNavigator extends Component {
               <Drawer.Screen name='Settings' component={SettingStack} />
             )}
             {username && <Drawer.Screen name='Logout' component={LogOut} />}
-            {username && (
-              <Drawer.Screen name='Redux Info' component={ReduxInfo} />
-            )}
-            <Drawer.Screen name='LoadingPage' component={LoadingPage} />
-            <Drawer.Screen name='LandingPage' component={LandingPage} />
-            <Drawer.Screen
-              name='LandingPageWEBSITE'
-              component={LandingPageWEBSITE}
-            />
+            <Drawer.Screen name='Redux Info' component={ReduxInfo} />
           </Drawer.Navigator>
         </NavigationContainer>
       </View>
     );
   }
+}
+{
+  /* <Drawer.Screen name='LoadingPage' component={LoadingPage} />
+<Drawer.Screen name='LandingPage' component={LandingPage} />
+<Drawer.Screen
+  name='LandingPageWEBSITE'
+  component={LandingPageWEBSITE}
+/> */
 }
 
 const mapStateToProps = (state) => {
