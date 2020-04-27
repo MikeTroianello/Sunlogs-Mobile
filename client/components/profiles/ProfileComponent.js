@@ -121,7 +121,7 @@ class Profile extends Component {
       <FlatList
         data={this.state.logs}
         renderItem={this.renderLogs}
-        keyExtractor={(item) => item._id.toString()}
+        keyExtractor={(blah) => blah._id.toString()}
       />
     );
   };

@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Log from './ViewLogs/LogComponent';
 
+import * as SecureStore from 'expo-secure-store';
+
 import mockLog from '../mockLogs/mockLog.json';
 
 const slides = [
@@ -72,8 +74,17 @@ class LandingPage extends React.Component {
     // navigation or simply by controlling state
     console.log('DONE');
     // this.setState({ showRealApp: true });
+    SecureStore.setItemAsync('returning', {
+      returning: true,
+    });
+    SecureStore.getItemAsync('returning').then((userdata) => {
+      console.log('RETURNING?????????', userdata);
+      const userinfo = JSON.parse(userdata);
+      console.log('RETURNING?????????', userinfo);
+    });
     this.props.navigation.navigate('Log In');
   };
+
   _renderDoneButton = () => {
     return (
       <View style={styles.buttonCircle}>

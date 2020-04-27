@@ -3,6 +3,8 @@ import { View, Text, Button, Modal } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 
+import * as SecureStore from 'expo-secure-store';
+
 import SignUp from './SignUpComponent';
 
 import { Styles, LoginCss } from '../../styles/MainStyles';
@@ -14,9 +16,8 @@ class Login extends Component {
   state = {
     message: null,
     user: '',
-
-    username: '',
-    password: '',
+    username: 'michael',
+    password: 'michael',
     showModal: false,
   };
 
@@ -73,6 +74,13 @@ class Login extends Component {
           else {
             // console.log(results);
             this.props.loggedIn(results);
+            SecureStore.setItemAsync(
+              'userinfo',
+              JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+              })
+            );
             navigate('See Logs');
           }
         })
