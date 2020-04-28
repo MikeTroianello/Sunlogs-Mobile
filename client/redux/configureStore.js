@@ -8,7 +8,7 @@ import { userSettings } from './userSettings';
 import { locations } from './locations';
 
 // import { persistStore, persistCombineReducers } from 'redux-persist';
-import storage from 'redux-persist/es/storage';
+// import storage from 'redux-persist/es/storage';
 // import { AsyncStorage } from 'react-native';
 
 // const config = {

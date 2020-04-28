@@ -5,6 +5,7 @@ import { Icon, Button, Tile } from 'react-native-elements';
 
 import WeatherAudit from '../weather/WeatherAudit';
 import Log from '../ViewLogs/LogComponent';
+import LoadingLogs from '../LoadingLogs';
 
 import { profileStyle } from '../../styles/ProfileStyles';
 
@@ -18,7 +19,7 @@ class ViewOtherProfiles extends Component {
     moodAvg: [],
     mood: 0,
     name: null,
-    oldestFirst: false
+    oldestFirst: false,
   };
 
   componentDidMount() {
@@ -28,13 +29,13 @@ class ViewOtherProfiles extends Component {
   setItAllUp = async () => {
     const { id } = this.props.route.params;
     fetch(`${localSource}/logs/all/${id}`)
-      .then(response => response.json())
-      .then(results => {
+      .then((response) => response.json())
+      .then((results) => {
         const reducer = (accumulator, currentValue) =>
           accumulator + currentValue;
         let moodArr = [];
 
-        results.map(log => {
+        results.map((log) => {
           moodArr.push(log.mood);
         });
 
@@ -43,10 +44,10 @@ class ViewOtherProfiles extends Component {
 
         this.setState({
           logs: results,
-          mood: mood
+          mood: mood,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(
           'There has been a problem with your fetch operation: ' + error.message
         );
@@ -68,9 +69,9 @@ class ViewOtherProfiles extends Component {
         a.dayOfYear < b.dayOfYear ? 1 : -1
       );
     }
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       oldestFirst: !prevState.oldestFirst,
-      logs: sortedLogs
+      logs: sortedLogs,
     }));
   };
 
@@ -92,7 +93,7 @@ class ViewOtherProfiles extends Component {
       <FlatList
         data={this.state.logs}
         renderItem={this.renderLogs}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={(item) => item._id.toString()}
       />
     );
   };
@@ -100,34 +101,49 @@ class ViewOtherProfiles extends Component {
   render() {
     const { profileName } = this.props.route.params;
 
-    return (
-      <ScrollView className='top-push' style={{ backgroundColor: '#e0e7ef' }}>
-        <Text style={{ textAlign: 'center', fontSize: 18, margin: 9 }}>
-          This is {profileName}'s page
-        </Text>
-        <View className='profile-mood-box'>
-          <Text style={{ textAlign: 'center', fontSize: 18, margin: 0 }}>
-            {profileName}'s Overall Happiness: {this.state.mood}
+    if (!this.state.logs) {
+      return (
+        <View
+          style={{ backgroundColor: '#e0e7ef', width: '100%', height: '100%' }}
+        >
+          <Text style={{ textAlign: 'center', fontSize: 18, margin: 9 }}>
+            This is {profileName}'s page
           </Text>
-          {/* <Icon name={this.state.gender} type={this.state.iconSource} /> */}
-          {this.state.logs && <WeatherAudit logs={this.state.logs} />}
+          <LoadingLogs />
         </View>
-        <View style={profileStyle.sortButton}>
-          <Button
-            title={`Show ${this.state.oldestFirst ? 'oldest' : 'newest'} first`}
-            onPress={this.sortByAge}
-            buttonStyle={{
-              backgroundColor: '#5694DB',
-              width: '100%',
-              borderWidth: 1,
-              borderColor: '#413F41'
-            }}
-          />
-        </View>
+      );
+    } else {
+      return (
+        <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
+          <Text style={{ textAlign: 'center', fontSize: 18, margin: 9 }}>
+            This is {profileName}'s page
+          </Text>
+          <View className='profile-mood-box'>
+            <Text style={{ textAlign: 'center', fontSize: 18, margin: 0 }}>
+              {profileName}'s Overall Happiness: {this.state.mood}
+            </Text>
+            {/* <Icon name={this.state.gender} type={this.state.iconSource} /> */}
+            {this.state.logs && <WeatherAudit logs={this.state.logs} />}
+          </View>
+          <View style={profileStyle.sortButton}>
+            <Button
+              title={`Show ${
+                this.state.oldestFirst ? 'oldest' : 'newest'
+              } first`}
+              onPress={this.sortByAge}
+              buttonStyle={{
+                backgroundColor: '#5694DB',
+                width: '100%',
+                borderWidth: 1,
+                borderColor: '#413F41',
+              }}
+            />
+          </View>
 
-        {this.state.logs && this.buildList()}
-      </ScrollView>
-    );
+          {this.state.logs && this.buildList()}
+        </ScrollView>
+      );
+    }
   }
 }
 

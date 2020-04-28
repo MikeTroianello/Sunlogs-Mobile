@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import WeatherAudit from '../weather/WeatherAudit';
 import Log from '../ViewLogs/LogComponent';
+import LoadingLogs from '../LoadingLogs';
 
 import { Styles } from '../../styles/MainStyles';
 import { profileStyle } from '../../styles/ProfileStyles';
@@ -132,47 +133,68 @@ class Profile extends Component {
   };
 
   render() {
-    // console.log('\x1b[93m-Errything-\x1b[39m', this.state);
-    return (
-      <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
-        <View className='top-push'>
-          {!this.props.userSettings.createdToday && (
-            <Text
-              style={{ fontSize: 18, textAlign: 'center', marginBottom: '5%' }}
-            >
-              You have not created a mood log today.{' \n'}
-              <Text onPress={this.create} style={{ color: 'blue' }}>
-                Create one now!
-              </Text>
-            </Text>
-          )}
-          <View className='profile-mood-box'>
-            <Text style={{ textAlign: 'center', fontSize: 18 }}>
-              Your Overall Happiness: {this.state.mood}
-            </Text>
-          </View>
-          {this.state.logs && !this.state.block && (
-            <WeatherAudit logs={this.state.logs} />
-          )}
-
-          <View style={profileStyle.sortButton}>
-            <Button
-              title={`Show ${
-                this.state.oldestFirst ? 'oldest' : 'newest'
-              } first`}
-              onPress={this.sortByAge}
-              buttonStyle={{
-                backgroundColor: '#5694DB',
-                width: '100%',
-                borderWidth: 1,
-                borderColor: '#413F41',
-              }}
-            />
-          </View>
-          {this.state.logs && this.buildList()}
+    if (!this.state.logs) {
+      return (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#e0e7ef',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <LoadingLogs />
         </View>
-      </ScrollView>
-    );
+      );
+    }
+    // console.log('\x1b[93m-Errything-\x1b[39m', this.state);
+    else {
+      return (
+        <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
+          <View className='top-push'>
+            {!this.props.userSettings.createdToday && (
+              <Text
+                style={{
+                  fontSize: 18,
+                  textAlign: 'center',
+                  marginBottom: '5%',
+                }}
+              >
+                You have not created a mood log today.{' \n'}
+                <Text onPress={this.create} style={{ color: 'blue' }}>
+                  Create one now!
+                </Text>
+              </Text>
+            )}
+            <View className='profile-mood-box'>
+              <Text style={{ textAlign: 'center', fontSize: 18 }}>
+                Your Overall Happiness: {this.state.mood}
+              </Text>
+            </View>
+            {this.state.logs && !this.state.block && (
+              <WeatherAudit logs={this.state.logs} />
+            )}
+
+            <View style={profileStyle.sortButton}>
+              <Button
+                title={`Show ${
+                  this.state.oldestFirst ? 'oldest' : 'newest'
+                } first`}
+                onPress={this.sortByAge}
+                buttonStyle={{
+                  backgroundColor: '#5694DB',
+                  width: '100%',
+                  borderWidth: 1,
+                  borderColor: '#413F41',
+                }}
+              />
+            </View>
+            {this.state.logs && this.buildList()}
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 

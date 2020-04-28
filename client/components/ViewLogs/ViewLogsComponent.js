@@ -8,26 +8,15 @@ import {
   ScrollView,
   Modal,
 } from 'react-native';
-import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
 
-import { useNavigation, NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-import { StackActions, NavigationActions } from 'react-navigation';
-
 import Log from './LogComponent';
+import LoadingLogs from '../LoadingLogs';
 
 import WeatherAudit from '../weather/WeatherAudit';
-import StateFilter from '../filterByLocation/StateFilter';
-import CountyFilter from '../filterByLocation/CountyFilter';
 import FilterLog from './FilterLogComponent';
 
 import { Styles } from '../../styles/MainStyles';
-
-import mockLog from '../../mockLogs/mockLog.json';
-import mockLogs from '../../mockLogs/mockLogs.json';
-import { ThemeProvider } from 'react-native-elements';
 
 import { localSource } from '../../assets/localSource';
 
@@ -196,6 +185,7 @@ class ViewLogsComponent extends Component {
       this.setState(
         {
           date: date,
+          filteredLogs: null,
         },
         () => this.sanitizeDate(this.state.date)
       );
@@ -402,8 +392,6 @@ class ViewLogsComponent extends Component {
   };
 
   renderLogs = ({ item }) => {
-    // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    // console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
     return (
       <View style={Styles.logs}>
         <Log
@@ -423,11 +411,6 @@ class ViewLogsComponent extends Component {
   };
 
   render() {
-    // console.log('DATE', this.state.date.toString().slice(0, 15));
-    // console.log('TODAY', this.state.today.toString().slice(0, 15));
-    // console.log('THIS DOT PROPS DOT USERSETTINGS: ', this.props.userSettings);
-    console.log('ONE', this.state.date.toString().slice(0, 15));
-    console.log('TWO', Date(this.state.today).toString().slice(0, 15));
     let displayDate = this.state.date.toString().slice(0, 15);
     if (
       this.state.date.toString().slice(0, 15) ==
@@ -435,32 +418,46 @@ class ViewLogsComponent extends Component {
     ) {
       displayDate = 'today';
     }
-    return (
-      <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
-        <Text style={{ textAlign: 'center', fontSize: 25 }}>
-          Logs for {displayDate}:
-        </Text>
-        <Button title='Filter Logs' onPress={this.toggleModal} />
-        {this.state.filteredLogs && this.weatherAudit()}
-        {this.state.filteredLogs && this.buildList()}
-        <Modal
-          style={{ color: '#e0e7ef' }}
-          animationType='slide'
-          visible={this.state.showModal}
-        >
-          <View style={{ color: '#e0e7ef' }}>
-            <FilterLog
-              toggleModal={this.toggleModal}
-              defaultLogs={this.defaultLogs}
-              filter={this.filter}
-              changeDate={this.changeDate}
-              date={this.state.date}
-              sanitizeDate={this.sanitizeDate}
-            />
-          </View>
-        </Modal>
-      </ScrollView>
-    );
+
+    if (!this.state.filteredLogs) {
+      return (
+        <View>
+          <Text
+            style={{ textAlign: 'center', fontSize: 25, marginBottom: '10%' }}
+          >
+            Logs for {displayDate}:
+          </Text>
+          <LoadingLogs />
+        </View>
+      );
+    } else {
+      return (
+        <ScrollView style={{ backgroundColor: '#e0e7ef' }}>
+          <Text style={{ textAlign: 'center', fontSize: 25 }}>
+            Logs for {displayDate}:
+          </Text>
+          <Button title='Filter Logs' onPress={this.toggleModal} />
+          {this.state.filteredLogs && this.weatherAudit()}
+          {this.state.filteredLogs && this.buildList()}
+          <Modal
+            style={{ color: '#e0e7ef' }}
+            animationType='slide'
+            visible={this.state.showModal}
+          >
+            <View style={{ color: '#e0e7ef' }}>
+              <FilterLog
+                toggleModal={this.toggleModal}
+                defaultLogs={this.defaultLogs}
+                filter={this.filter}
+                changeDate={this.changeDate}
+                date={this.state.date}
+                sanitizeDate={this.sanitizeDate}
+              />
+            </View>
+          </Modal>
+        </ScrollView>
+      );
+    }
   }
 }
 
