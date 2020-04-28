@@ -4,6 +4,8 @@ import { Input, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../redux/ActionCreators';
 
+import * as SecureStore from 'expo-secure-store';
+
 import {
   Styles,
   SignUpCss,

@@ -6,7 +6,7 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Styles, SettingsCss } from '../../styles/MainStyles';
@@ -15,6 +15,8 @@ import { connect } from 'react-redux';
 import { updateSettings, deleteUser } from '../../redux/ActionCreators';
 
 import { localSource } from '../../assets/localSource';
+
+import * as SecureStore from 'expo-secure-store';
 
 class Settings extends Component {
   state = {
@@ -30,22 +32,22 @@ class Settings extends Component {
     newPass: null,
     confirmation: null,
     deletePassword: null,
-    id: null
+    id: null,
   };
 
   handleChange = (text, statePiece) => {
     this.setState(
       {
-        [statePiece]: text
+        [statePiece]: text,
       },
       () => console.log('THIS IS THE NEW STATE', this.state)
     );
   };
 
-  toggle = statePiece => {
+  toggle = (statePiece) => {
     this.setState(
-      prevState => ({
-        [statePiece]: !prevState[statePiece]
+      (prevState) => ({
+        [statePiece]: !prevState[statePiece],
       }),
       () => console.log('SWITCH', statePiece, this.state)
     );
@@ -58,12 +60,12 @@ class Settings extends Component {
     fetch(`${localSource}/change-info`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(info)
+      body: JSON.stringify(info),
     })
-      .then(response => response.json())
-      .then(results => {
+      .then((response) => response.json())
+      .then((results) => {
         console.log(results);
         this.props.updateSettings(info);
         Alert.alert(
@@ -72,15 +74,15 @@ class Settings extends Component {
           [
             {
               text: 'OK',
-              onPress: () => this.props.navigation.navigate('See Logs')
-            }
+              onPress: () => this.props.navigation.navigate('See Logs'),
+            },
           ],
           { cancelable: false }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          message: `Something went wrong`
+          message: `Something went wrong`,
         });
       });
   };
@@ -160,7 +162,7 @@ class Settings extends Component {
                 pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
                 name='phone'
                 placeholder={this.state.oldPhone || '+3(141)592-6535'}
-                onChangeText={text => this.handleChange(text, 'phone')}
+                onChangeText={(text) => this.handleChange(text, 'phone')}
               />
             </View>
 
@@ -171,7 +173,7 @@ class Settings extends Component {
                 name='email'
                 autoComplete='off'
                 placeholder={this.state.oldEmail || 'name@email.com'}
-                onChangeText={text => this.handleChange(text, 'email')}
+                onChangeText={(text) => this.handleChange(text, 'email')}
               />
             </View>
 
@@ -187,7 +189,9 @@ class Settings extends Component {
                       name='oldPass'
                       autoComplete='off'
                       placeholder='********'
-                      onChangeText={text => this.handleChange(text, 'oldPass')}
+                      onChangeText={(text) =>
+                        this.handleChange(text, 'oldPass')
+                      }
                     />
                   </View>
 
@@ -200,7 +204,9 @@ class Settings extends Component {
                       name='newPass'
                       autoComplete='off'
                       placeholder='********'
-                      onChangeText={text => this.handleChange(text, 'newPass')}
+                      onChangeText={(text) =>
+                        this.handleChange(text, 'newPass')
+                      }
                     />
                   </View>
                 </View>
@@ -227,15 +233,15 @@ class Settings extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userSettings: state.userSettings
+    userSettings: state.userSettings,
   };
 };
 
 const mapDispatchToProps = {
-  updateSettings: info => updateSettings(info),
-  deleteUser: () => deleteUser()
+  updateSettings: (info) => updateSettings(info),
+  deleteUser: () => deleteUser(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
