@@ -244,7 +244,14 @@ class FilterLog extends Component {
 
   render() {
     return (
-      <View style={{ backgroundColor: '#e0e7ef', height: '100%' }}>
+      <View
+        style={{
+          backgroundColor: '#e0e7ef',
+          height: '100%',
+          paddingTop:
+            Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+        }}
+      >
         <Text
           style={{
             textAlign: 'center',

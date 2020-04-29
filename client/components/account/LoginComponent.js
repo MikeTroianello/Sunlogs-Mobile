@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as SecureStore from 'expo-secure-store';
 
 import SignUp from './SignUpComponent';
-
+import LandingPage from '../LandingPage';
 import { Styles, LoginCss } from '../../styles/MainStyles';
 
 import { localSource } from '../../assets/localSource';
@@ -111,7 +111,11 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={{ color: '#e0e7ef' }}>
+      <View
+        style={{
+          color: '#e0e7ef',
+        }}
+      >
         <View style={LoginCss.wholePage}>
           <View style={{ translateY: 40 }}>
             <Text style={LoginCss.loginHeader}>Welcome!</Text>

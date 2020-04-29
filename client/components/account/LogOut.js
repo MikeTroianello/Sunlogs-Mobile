@@ -60,6 +60,7 @@ export default connect(null, mapDispatchToProps)(Logout);
 
 const s = StyleSheet.create({
   logoutPage: {
+    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
     flexDirection: 'column',
     justifyContent: 'center',
     alignContent: 'center',

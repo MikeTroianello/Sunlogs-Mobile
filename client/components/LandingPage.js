@@ -117,7 +117,9 @@ class LandingPage extends React.Component {
 export default LandingPage;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+  },
   slide: {
     width: '100%',
     height: '100%',

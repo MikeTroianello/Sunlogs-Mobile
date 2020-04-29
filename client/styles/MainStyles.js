@@ -8,6 +8,7 @@ export const Styles = StyleSheet.create({
     justifyContent: 'center',
   },
   createLogContainer: {
+    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
     flex: 1,
     // backgroundColor: '#fff',
     // alignItems: 'center',
@@ -55,6 +56,7 @@ export const LoginCss = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
   },
   loginHeader: {
     textAlign: 'center',
