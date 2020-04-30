@@ -139,7 +139,7 @@ class MainNavigator extends Component {
         }}
       >
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName='LandingPage'>
+          <Drawer.Navigator initialRouteName='Log In'>
             <Drawer.Screen name='LandingPage' component={LandingPage} />
             {!username && <Drawer.Screen name='Log In' component={Login} />}
 

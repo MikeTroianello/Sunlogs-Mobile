@@ -72,17 +72,12 @@ class LandingPage extends React.Component {
   _onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
-    console.log('DONE');
     // this.setState({ showRealApp: true });
-    SecureStore.setItemAsync('returning', {
-      returning: true,
-    });
-    SecureStore.getItemAsync('returning').then((userdata) => {
-      console.log('RETURNING?????????', userdata);
-      const userinfo = JSON.parse(userdata);
-      console.log('RETURNING?????????', userinfo);
-    });
-    this.props.navigation.navigate('Log In');
+    // SecureStore.setItemAsync('returning', {
+    //   returning: true,
+    // });
+    // this.props.navigation.navigate('Log In');
+    this.props.setReturn();
   };
 
   _renderDoneButton = () => {
@@ -147,5 +142,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: '10%',
     fontSize: 22,
+  },
+  buttonCircle: {
+    marginRight: '5%',
+    marginTop: '10%',
+    // borderWidth: 1,
+    // borderRadius: 50,
+    // padding: 0,
   },
 });
