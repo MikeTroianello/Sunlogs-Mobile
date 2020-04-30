@@ -64,11 +64,11 @@ const Log = (props) => {
     );
   } else {
     // console.log('SAME PERSON WILL BE PASSED IN', samePerson);
-    // console.log('PROPSPSPSPSPSPSP', props);
+    console.log('PROPSPSPSPSPSPSP', props);
     return (
       <View View style={logCss.box}>
         <BasicLogHead
-          demo={false}
+          demo={props.demo}
           samePerson={samePerson}
           genderIcon={genderIcon}
           iconSource={iconSource}

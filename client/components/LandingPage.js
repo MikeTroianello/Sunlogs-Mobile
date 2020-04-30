@@ -65,7 +65,7 @@ class LandingPage extends React.Component {
         {item.swipeLeftMessage && (
           <Text style={styles.swipeLeft}>(Swipe Left)</Text>
         )}
-        {item.mockLog && <Log log={mockLog} />}
+        {item.mockLog && <Log log={mockLog} demo={true} />}
       </View>
     );
   };

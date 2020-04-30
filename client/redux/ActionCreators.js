@@ -50,6 +50,11 @@ export const deleteUser = () => ({
   type: ActionTypes.DELETE_USER,
 });
 
+//RETURNING
+export const returning = () => ({
+  type: ActionTypes.RETURNING,
+});
+
 //FOR LOCATIONS
 
 export const setAllLocations = (logs, states, counties) => ({

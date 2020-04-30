@@ -11,14 +11,15 @@ import LandingPage from '../LandingPage';
 import { Styles, LoginCss } from '../../styles/MainStyles';
 
 import { localSource } from '../../assets/localSource';
-import { loggedIn } from '../../redux/ActionCreators';
+import { loggedIn, returning } from '../../redux/ActionCreators';
+import { userSettings } from '../../redux/userSettings';
 
 class Login extends Component {
   state = {
     message: null,
     user: '',
-    username: 'michael',
-    password: 'michael',
+    username: '',
+    password: '',
     showModal: false,
   };
 
@@ -112,12 +113,10 @@ class Login extends Component {
 
   setReturn = () => {
     console.log('SET RETUNNNNNRNRNRN');
-    SecureStore.setItemAsync('returning', {
-      returning: 'yes',
-    });
-    SecureStore.getItemAsync('returning').then((userdata) => {
-      console.log('RETURNING???????', userdata);
-    });
+    this.props.returning();
+    // this.setState({
+    //   returning: this.props.userSettings.returning,
+    // });
   };
 
   render() {
@@ -204,15 +203,21 @@ class Login extends Component {
     //   );
     // }
 
-    SecureStore.getItemAsync('returning').then((userdata) => {
-      console.log('RETURNING???????', userdata);
-      const returnInfo = JSON.parse(userdata);
-      returning = returnInfo.returning;
-    });
-    console.log('THE FINAL RETURN INFO', returning);
-    if (!returning) {
+    console.log('THE FINAL INFO', this.props.userSettings);
+    console.log('THE FINAL RETURN', this.props.userSettings.returning);
+    if (!this.props.userSettings.returning) {
       return <LandingPage setReturn={this.setReturn} />;
     } else {
+      SecureStore.getItemAsync('userinfo').then((userdata) => {
+        const userinfo = JSON.parse(userdata);
+        console.log('THE USER INFO', userinfo);
+        if (userinfo) {
+          this.setState(
+            { username: userinfo.username, password: userinfo.password },
+            () => this.handleSubmit()
+          );
+        }
+      });
       return (
         <View
           style={{
@@ -288,8 +293,13 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  userSettings: state.userSettings,
+});
+
 const mapDispatchToProps = {
   loggedIn: (results) => loggedIn(results),
+  returning: () => returning(),
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

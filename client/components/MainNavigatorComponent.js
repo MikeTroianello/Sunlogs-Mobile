@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { connect } from 'react-redux';
 
-import LandingPageWEBSITE from './LandingPageWEBSITE';
 import LandingPage from './LandingPage';
 import Profile from './profiles/ProfileComponent';
 import ViewOtherProfiles from './profiles/ViewOtherProfilesComponent';
@@ -140,7 +139,6 @@ class MainNavigator extends Component {
       >
         <NavigationContainer>
           <Drawer.Navigator initialRouteName='Log In'>
-            <Drawer.Screen name='LandingPage' component={LandingPage} />
             {!username && <Drawer.Screen name='Log In' component={Login} />}
 
             {username && !createdToday && (

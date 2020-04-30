@@ -24,14 +24,6 @@ class ReduxInfo extends Component {
         this.setState({ secureStorePassword: userinfo.password });
       }
     });
-
-    SecureStore.getItemAsync('returning').then((userdata) => {
-      const returnInfo = JSON.parse(userdata);
-      console.log('THE USER DATA', returnInfo);
-      this.setState({
-        returning: returnInfo.returning,
-      });
-    });
   }
 
   render() {

@@ -22,6 +22,8 @@ const BasicLogHead = ({
         ) : theTag == 'This user has decided to keep their name private' ||
           props.privateAccount ? (
           <Text style={logCss.nameHidden}>{'Name is private...'}</Text>
+        ) : props.demo ? (
+          <Text style={logCss.name}>{theTag}</Text>
         ) : (
           <Text
             style={logCss.name}

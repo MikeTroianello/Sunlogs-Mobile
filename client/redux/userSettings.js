@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes';
 
 export const userSettings = (
   state = {
+    returning: false,
     username: null,
     createdToday: false,
     hideProfile: false,
@@ -13,9 +14,14 @@ export const userSettings = (
   action
 ) => {
   switch (action.type) {
-    case ActionTypes.LOG_IN:
-      console.log('ACTIoN DOT PAYLOAD', action.payload);
+    case ActionTypes.RETURNING:
       return {
+        ...state,
+        returning: true,
+      };
+    case ActionTypes.LOG_IN:
+      return {
+        ...state,
         username: action.payload.username,
         id: action.payload._id,
         createdToday: action.payload.createdToday,
@@ -26,13 +32,11 @@ export const userSettings = (
         phone: action.payload.phone,
       };
     case ActionTypes.CREATED_TODAY:
-      console.log('YOU HAVE NOW CREATED TODAY!!!!!!!!!!!!!');
       return {
         ...state,
         createdToday: true,
       };
     case ActionTypes.UPDATE_SETTINGS:
-      console.log('THESE ARE THE SETTINGS IN THE PAYLOAD', action.payload);
       return {
         ...state,
         username: action.payload.username,
@@ -42,21 +46,26 @@ export const userSettings = (
         hideCreatorDefault: action.payload.hideCreatorDefault,
       };
     case ActionTypes.LOG_OUT:
-      console.log('LOGGGING OUT ');
       return {
+        ...state,
         username: null,
         createdToday: false,
         hideProfile: false,
         privateJournalDefault: false,
         hideCreatorDefault: false,
+        email: null,
+        phone: null,
       };
     case ActionTypes.DELETE_USER:
       return {
+        ...state,
         username: null,
         createdToday: false,
         hideProfile: false,
         privateJournalDefault: false,
         hideCreatorDefault: false,
+        email: null,
+        phone: null,
       };
 
     default:
