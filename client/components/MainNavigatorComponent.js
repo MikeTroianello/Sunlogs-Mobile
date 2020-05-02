@@ -143,6 +143,10 @@ class MainNavigator extends Component {
           },
           () => this.handleSubmit()
         );
+      } else {
+        this.setState({
+          ready: true,
+        });
       }
     });
   }
@@ -225,7 +229,7 @@ class MainNavigator extends Component {
       console.log('THE APP IS NOT READY JUST YETTTTTTTTTT');
       return <LoadingPage />;
     } else {
-      console.log('YEEEEEEET');
+      console.log('YEEEEEEET', username);
       return (
         <View
           style={{
@@ -237,7 +241,7 @@ class MainNavigator extends Component {
         >
           <NavigationContainer>
             <Drawer.Navigator
-              initialRouteName={username ? 'Log In' : 'See Logs'}
+              initialRouteName={username ? 'See Logs' : 'Log In'}
             >
               {!username && <Drawer.Screen name='Log In' component={Login} />}
 

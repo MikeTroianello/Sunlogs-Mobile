@@ -31,7 +31,7 @@ const slides = [
   {
     key: 3,
     title: 'What is Sunlogs?',
-    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \n \nThese logs are then tied to the weather in your county, and will correlate mood respectively`,
+    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \n \nThese logs are then tied to the weather in your county, and will correlate mood respectively\n\n EXAMPLE:`,
     // image: require('./assets/3.jpg'),
     byline: null,
     image: null,
@@ -113,7 +113,7 @@ export default LandingPage;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+    paddingTop: Platform.OS === 'ios' ? 10 : Expo.Constants.statusBarHeight,
   },
   slide: {
     width: '100%',
@@ -121,11 +121,13 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   title: {
+    paddingTop: 10,
     fontSize: 35,
     textAlign: 'center',
   },
   image: {
     height: '100%',
+    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
   },
   text: {
     textAlign: 'center',
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   },
   byline: {
     textAlign: 'center',
-    marginTop: '15%',
+    marginTop: '8%',
     marginHorizontal: '10%',
     fontSize: 26,
   },
