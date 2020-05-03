@@ -98,6 +98,13 @@ class Login extends Component {
     const { navigate } = this.props.navigation;
     if (bool) {
       console.log('bool', bool);
+      SecureStore.setItemAsync(
+        'userinfo',
+        JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+        })
+      );
       this.setState(
         (prevState) => ({
           showModal: !prevState.showModal,

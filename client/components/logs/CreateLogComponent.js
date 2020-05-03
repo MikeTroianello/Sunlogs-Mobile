@@ -329,7 +329,7 @@ class CreateLog extends Component {
               }
             />
           </View>
-          <View style={{ marginVertical: '4%' }}>
+          <View>
             <Button title='Submit' onPress={this.submit} />
           </View>
           <Text style={{ textAlign: 'center', fontSize: 18 }}>
