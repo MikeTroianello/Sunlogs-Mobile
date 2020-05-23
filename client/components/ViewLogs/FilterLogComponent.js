@@ -3,6 +3,7 @@ import { Text, View, FlatList, Picker, ScrollView } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import { connect } from 'react-redux';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -249,7 +250,9 @@ class FilterLog extends Component {
           backgroundColor: '#e0e7ef',
           height: '100%',
           paddingTop:
-            Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+            Platform.OS === 'ios'
+              ? getStatusBarHeight()
+              : Expo.Constants.statusBarHeight,
         }}
       >
         <Text

@@ -24,6 +24,7 @@ class Profile extends Component {
     oldestFirst: false,
     profileHeader: '',
     happinessHeader: '',
+    elipses: '',
   };
 
   componentDidMount = () => {
@@ -145,6 +146,9 @@ class Profile extends Component {
           }}
         >
           <LoadingLogs />
+          <Text style={{ textAlign: 'center', fontSize: 26 }}>
+            Loading your profile
+          </Text>
         </View>
       );
     }

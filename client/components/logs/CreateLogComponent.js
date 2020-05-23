@@ -18,6 +18,8 @@ import {
   registerCustomIconType,
   Slider,
 } from 'react-native-elements';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 import { connect } from 'react-redux';
 import { setCreatedToday } from '../../redux/ActionCreators';
 
@@ -36,6 +38,7 @@ class CreateLog extends Component {
     mood: null,
     moodEmoji: null,
     productivity: 3,
+    productivityMsg: '',
     journal: '',
     privateJournal: this.props.userSettings.privateJournalDefault,
     hideCreator: this.props.userSettings.hideCreatorDefault,
@@ -44,6 +47,7 @@ class CreateLog extends Component {
     messageCss: 'red',
     day: null,
     year: null,
+    submitted: false,
   };
 
   componentDidMount() {
@@ -68,7 +72,21 @@ class CreateLog extends Component {
     });
   }
 
-  componentWillMount() {}
+  async getLocationAsync() {
+    // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
+    const { status, permissions } = await Permissions.askAsync(
+      Permissions.LOCATION
+    );
+
+    // const locationPermission = await
+    console.log('THE STATUS:', status);
+    console.log('THE permissions:', permissions);
+    if (status === 'granted') {
+      return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    } else {
+      throw new Error('Location permission not granted');
+    }
+  }
 
   handleChange = (text) => {
     if (text) {
@@ -101,7 +119,13 @@ class CreateLog extends Component {
         },
       ]);
     } else {
+      this.setState({
+        productivityMsg: 'Your log is being submitted',
+        submitted: true,
+      });
       const info = this.state;
+      info.location = await this.getLocationAsync();
+      console.log('ALL INFOOOOOOOO');
       const response = await fetch(`${localSource}/logs/create`, {
         method: 'POST',
         headers: {
@@ -330,12 +354,17 @@ class CreateLog extends Component {
             />
           </View>
           <View>
-            <Button title='Submit' onPress={this.submit} />
+            <Button
+              title='Submit'
+              onPress={!this.state.submitted && this.submit}
+            />
           </View>
           <Text style={{ textAlign: 'center', fontSize: 18 }}>
             {this.state.moodMsg}
           </Text>
-          <Text>{this.state.productivityMsg}</Text>
+          <Text style={{ textAlign: 'center', fontSize: 18 }}>
+            {this.state.productivityMsg}
+          </Text>
         </View>
       </KeyboardAwareScrollView>
     );

@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Log from './ViewLogs/LogComponent';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -31,7 +32,7 @@ const slides = [
   {
     key: 3,
     title: 'What is Sunlogs?',
-    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \n \nThese logs are then tied to the weather in your county, and will correlate mood respectively\n\n EXAMPLE:`,
+    text: `Sunlogs is a way to record your daily mood and how Productive you thought you were. \nThese logs are then tied to the weather in your county, and will correlate mood respectively`,
     // image: require('./assets/3.jpg'),
     byline: null,
     image: null,
@@ -113,7 +114,10 @@ export default LandingPage;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'ios' ? 10 : Expo.Constants.statusBarHeight,
+    paddingTop:
+      Platform.OS === 'ios'
+        ? getStatusBarHeight()
+        : Expo.Constants.statusBarHeight,
   },
   slide: {
     width: '100%',
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '100%',
-    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+    paddingTop: Platform.OS === 'ios' ? 10 : 0,
   },
   text: {
     textAlign: 'center',
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: '8%',
     marginHorizontal: '10%',
-    fontSize: 26,
+    fontSize: 27,
   },
   swipeLeft: {
     textAlign: 'center',

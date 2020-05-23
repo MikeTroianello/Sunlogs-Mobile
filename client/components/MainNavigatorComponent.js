@@ -235,20 +235,18 @@ class MainNavigator extends Component {
           style={{
             flex: 1,
             paddingTop:
-              Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+              Platform.OS === 'ios' ? 10 : Expo.Constants.statusBarHeight,
             backgroundColor: '#ADD8E6',
           }}
         >
           <NavigationContainer>
-            <Drawer.Navigator
-              initialRouteName={username ? 'See Logs' : 'Log In'}
-            >
+            <Drawer.Navigator>
               {!username && <Drawer.Screen name='Log In' component={Login} />}
 
+              <Drawer.Screen name='See Logs' component={LogStack} />
               {username && !createdToday && (
                 <Drawer.Screen name='Create Log' component={CreateLog} />
               )}
-              <Drawer.Screen name='See Logs' component={LogStack} />
 
               {username && (
                 <Drawer.Screen name='Profile' component={ProfileStack} />
@@ -257,7 +255,7 @@ class MainNavigator extends Component {
                 <Drawer.Screen name='Settings' component={SettingStack} />
               )}
               {username && <Drawer.Screen name='Logout' component={LogOut} />}
-              <Drawer.Screen name='Redux Info' component={ReduxInfo} />
+              {/* <Drawer.Screen name='Landing Page' component={LandingPage} /> */}
             </Drawer.Navigator>
           </NavigationContainer>
         </View>

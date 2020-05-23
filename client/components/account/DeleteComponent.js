@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { View, Text, Button, Alert } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { localSource } from '../../assets/localSource';
 
@@ -56,7 +57,9 @@ class Delete extends Component {
       <View
         style={{
           paddingTop:
-            Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+            Platform.OS === 'ios'
+              ? getStatusBarHeight()
+              : Expo.Constants.statusBarHeight,
         }}
       >
         <Text>Delete Profile</Text>

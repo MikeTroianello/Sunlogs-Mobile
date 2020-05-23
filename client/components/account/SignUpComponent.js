@@ -3,6 +3,7 @@ import { Text, TextInput, View, Button, Picker, Alert } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../redux/ActionCreators';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -47,6 +48,9 @@ class SignUp extends Component {
         message: `You must include a gender`,
       });
     } else {
+      this.setState({
+        message: 'Creating your Account...',
+      });
       const state = this.state;
       fetch(`${localSource}/signup`, {
         method: 'POST',

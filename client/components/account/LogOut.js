@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/ActionCreators';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { localSource } from '../../assets/localSource';
 
@@ -37,15 +38,17 @@ class Logout extends Component {
   render() {
     return (
       <View style={s.logoutPage}>
-        <Text style={s.textHeader}>Do you want to logout?</Text>
-        <View style={s.buttons}>
-          <Button onPress={this.loggingOut} title='Log Out' />
-        </View>
-        <View style={s.buttons}>
-          <Button
-            onPress={() => this.props.navigation.navigate('See Logs')}
-            title='Never Mind'
-          />
+        <View style={s.buttonBox}>
+          <Text style={s.textHeader}>Do you want to logout?</Text>
+          <View style={s.buttons}>
+            <Button onPress={this.loggingOut} title='Log Out' />
+          </View>
+          <View style={s.buttons}>
+            <Button
+              onPress={() => this.props.navigation.navigate('See Logs')}
+              title='Never Mind'
+            />
+          </View>
         </View>
       </View>
     );
@@ -60,23 +63,38 @@ export default connect(null, mapDispatchToProps)(Logout);
 
 const s = StyleSheet.create({
   logoutPage: {
-    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
+    paddingTop:
+      Platform.OS === 'ios'
+        ? getStatusBarHeight()
+        : Expo.Constants.statusBarHeight,
     flexDirection: 'column',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
     height: '100%',
     width: '100%',
+    backgroundColor: '#baccf1',
+    // backgroundColor: 'linear-gradient(to bottom, #baccf1 0%, #8ec2ea 100%)',
+
+    // 8ec2ea
   },
   textHeader: {
     translateY: -50,
     textAlign: 'center',
     fontSize: 32,
   },
+  buttonBox: {
+    height: '40%',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+
+    alignContent: 'center',
+    alignItems: 'center',
+  },
   buttons: {
     textAlign: 'center',
     width: '80%',
     // marginHorizontal: '10%',
-    marginVertical: '7%',
+    // paddingVertical: '7%',
   },
 });

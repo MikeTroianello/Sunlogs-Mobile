@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, Modal } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -74,16 +75,23 @@ class Login extends Component {
           }
           // this.props.logIt(results);
           else {
-            // console.log(results);
-            this.props.loggedIn(results);
-            SecureStore.setItemAsync(
-              'userinfo',
-              JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-              })
+            //CHANGE THIS IF IT BREAKS
+            this.setState(
+              {
+                message: 'Logging in...',
+              },
+              () => {
+                this.props.loggedIn(results);
+                SecureStore.setItemAsync(
+                  'userinfo',
+                  JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password,
+                  })
+                );
+                navigate('See Logs');
+              }
             );
-            navigate('See Logs');
           }
         })
         .catch((error) => {
@@ -128,87 +136,6 @@ class Login extends Component {
 
   render() {
     let returning;
-    // SecureStore.getItemAsync('returning').then((userdata) => {
-    //   console.log('RETURNING???????', userdata);
-    //   const returnInfo = JSON.parse(userdata);
-    //   returning = returnInfo.returning;
-    // });
-    // console.log('THE FINAL RETURN INFO', returning);
-    // if (!returning) {
-    //   return <LandingPage setReturn={this.setReturn} />;
-    // } else {
-    //   return (
-    //     <View
-    //       style={{
-    //         color: '#e0e7ef',
-    //       }}
-    //     >
-    //       <View style={LoginCss.wholePage}>
-    //         <View style={{ translateY: 40 }}>
-    //           <Text style={LoginCss.loginHeader}>Welcome!</Text>
-    //           <View>
-    //             <Text style={{ textAlign: 'center', fontSize: 21 }}>
-    //               Log in or{' '}
-    //               <Text
-    //                 style={{ color: '#1d4f7c' }}
-    //                 onPress={() => this.toggleModal(false)}
-    //               >
-    //                 Click Here to Create an Account!
-    //               </Text>
-    //             </Text>
-    //           </View>
-    //           <View style={LoginCss.loginComponent}>
-    //             <Text>Username:</Text>
-    //             <Input
-    //               textContentType='username'
-    //               placeholder='Your name...'
-    //               onChangeText={(text) => this.setState({ username: text })}
-    //               value={this.state.username}
-    //               leftIcon={{ type: 'font-awesome', name: 'user' }}
-    //               leftIconContainerStyle={{
-    //                 marginRight: 10,
-    //                 marginLeft: 3,
-    //               }}
-    //             />
-
-    //             <Text>Password:</Text>
-    //             <Input
-    //               autoCompleteType='password'
-    //               textContentType='password'
-    //               secureTextEntry={true}
-    //               placeholder='******'
-    //               onChangeText={(text) => this.setState({ password: text })}
-    //               value={this.state.password}
-    //               leftIcon={{ type: 'font-awesome', name: 'key' }}
-    //               leftIconContainerStyle={{
-    //                 marginRight: 10,
-    //                 marginLeft: 3,
-    //               }}
-    //             />
-    //           </View>
-    //           <View style={LoginCss.submitButton}>
-    //             <Button title='Submit' onPress={this.handleSubmit} />
-    //           </View>
-    //           <Text style={{ textAlign: 'center', fontSize: 22, marginTop: 5 }}>
-    //             {this.state.message}
-    //           </Text>
-    //         </View>
-    //       </View>
-    //       <Modal
-    //         style={{ color: '#e0e7ef' }}
-    //         animationType='slide'
-    //         visible={this.state.showModal}
-    //       >
-    //         <View style={{ color: '#e0e7ef' }}>
-    //           <SignUp
-    //             toggleModal={this.toggleModal}
-    //             navigation={this.props.navigation}
-    //           />
-    //         </View>
-    //       </Modal>
-    //     </View>
-    //   );
-    // }
 
     console.log('THE FINAL INFO', this.props.userSettings);
     console.log('THE FINAL RETURN', this.props.userSettings.returning);
