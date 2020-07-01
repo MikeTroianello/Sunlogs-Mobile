@@ -20,3 +20,5 @@ history
 assets
 .assets
 assets/*
+
+.env
