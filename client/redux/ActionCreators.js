@@ -26,15 +26,15 @@ export const loggedIn = () => (dispatch) => {
     });
 };
 
-export const setLoggedIn = (info) => ({
-  type: ActionTypes.LOG_IN,
-  payload: info,
-});
-
 // export const setLoggedIn = (info) => ({
 //   type: ActionTypes.LOG_IN,
-//   payload: {user:info.user, token:info.token},
+//   payload: info,
 // });
+
+export const setLoggedIn = (info) => ({
+  type: ActionTypes.LOG_IN,
+  payload: {user:info.user, token:info.token},
+});
 
 
 export const setCreatedToday = () => ({

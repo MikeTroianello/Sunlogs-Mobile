@@ -4,7 +4,7 @@
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,11 +19,11 @@
     "ios": {
       "bundleIdentifier": "co.troianello",
       "supportsTablet": true,
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.1.0"
     },
     "android": {
       "package": "co.troianello",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }
