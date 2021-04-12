@@ -18,7 +18,6 @@ class ReduxInfo extends Component {
   componentDidMount() {
     SecureStore.getItemAsync('userinfo').then((userdata) => {
       const userinfo = JSON.parse(userdata);
-      console.log('THE USER INFO', userinfo);
       if (userinfo) {
         this.setState({ secureStoreUsername: userinfo.username });
         this.setState({ secureStorePassword: userinfo.password });
@@ -27,7 +26,6 @@ class ReduxInfo extends Component {
   }
 
   render() {
-    console.log('WHaT WE MAPPED FROM THE STATES', this.props.userSettings);
     const {
       username,
       createdToday,

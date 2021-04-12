@@ -56,7 +56,6 @@ class ViewOtherProfiles extends Component {
   };
 
   sortByAge = () => {
-    console.log('SORTING BY AGE');
     let sortedLogs;
     if (this.state.oldestFirst) {
       sortedLogs = this.state.logs.sort((a, b) => (a.year > b.year ? 1 : -1));

@@ -55,21 +55,11 @@ class ViewLogs extends Component {
   };
 
   componentDidMount() {
-    console.log('COMPONENT HAS NOW MOUNTED');
     const { today } = this.state;
     this.sanitizeDate(today);
   }
 
   componentDidUpdate(prevProps) {
-    console.log(
-      'THESE ARE THE PPROPS TO COMB THROUGH NOW AREN T THEY NOW',
-      this.props
-    );
-    console.log('PREVPROPS', prevProps);
-    // console.log(
-    //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
-    //   JSON.stringify(this.props) == JSON.stringify(prevProps)
-    // );
     let info;
     if (!prevProps.route) {
       return false;
@@ -87,7 +77,7 @@ class ViewLogs extends Component {
       info != this.props.route.params.info
       // !JSON.stringify(this.props) == JSON.stringify(prevProps)
     ) {
-      console.log('THE NEXT THING IS NOW SUPPOSED TO HAPPEN');
+
       const {
         instructions,
         isoDate,
@@ -95,19 +85,9 @@ class ViewLogs extends Component {
         state,
         county,
       } = this.props.route.params.info;
-      console.log(
-        'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
-        instructions,
-        // date,
-        chosenGender,
-        state,
-        county,
-        isoDate
-      );
 
       switch (instructions) {
         case 'created':
-          console.log('SWITCH STATEMENT CALLED?>>>?>');
           this.sanitizeDate(this.state.today);
           break;
         case 'default':
@@ -126,14 +106,13 @@ class ViewLogs extends Component {
           // this.defaultDate();
           break;
         case 'filter':
-          // console.log('AHHHHHHHHHHHHHHHH', this.props.locations);
           this.setState(
             {
               logs: this.props.locations.logs,
             },
             () => {
               if (state && !county) {
-                console.log('FILTERING BY STATE');
+
                 this.filterState(state, chosenGender);
               } else if (county) {
                 this.filterCounty(county, chosenGender);
@@ -151,18 +130,12 @@ class ViewLogs extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('IS ANYTHING HAPPENEING NOW!!!!!!??!??!??!?', nextProps);
     return true;
   }
 
-  // defaultDate = () => {
-  //   let d = new Date();
-  //   console.log('THE NEW DATE', d);
-  //   this.sanitizeDate(d);
-  // };
 
   changeDate = (date) => {
-    // console.log('THIS IS THE NEW DATE: ', date);
+
     if (date) {
       this.setState({
         date: date,
@@ -173,13 +146,11 @@ class ViewLogs extends Component {
       date = date.join('-');
       var isoDate = new Date(`${date}T12:00:00Z`);
       var tempIso = `${date}T12:00:00Z`;
-      // console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate, tempIso);
       this.sanitizeDate(tempIso);
     }
   };
 
   sanitizeDate = (dateToLookFor, message) => {
-    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
@@ -199,15 +170,12 @@ class ViewLogs extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then((response) => response.json())
       .then((results) => {
         const states = results.specificDay.map((log) => {
           return log.state;
         });
-        // console.log('======STATES', states);
-        // console.log('\x1b[93m-About to hit the dispatch-\x1b[39m');
         this.setState(
           {
             logs: results.specificDay,
@@ -223,21 +191,16 @@ class ViewLogs extends Component {
         );
       })
       .catch((error) => {
-        // console.log(
-        //   'There has been a problem with your fetch operation: ' + error.message
-        // );
         throw error;
       });
   };
 
   filterByGender = (gender) => {
     if (gender) {
-      console.log('\x1b[93m-GENDER HAS BEEN CALLED-\x1b[39m', gender);
       let genderLogs = this.state.filteredLogs.filter((log) => {
         return log.creatorId.gender === gender;
       });
 
-      console.log('\x1b[93m-GENDERLOGS-\x1b[39m', genderLogs);
 
       this.setState({
         filteredLogs: genderLogs,
@@ -324,7 +287,6 @@ class ViewLogs extends Component {
   };
 
   buildList = () => {
-    // console.log('filteredLogs:', this.state.filteredLogs);
     if (this.state.filteredLogs.length < 1) {
       return (
         <View>
@@ -351,8 +313,6 @@ class ViewLogs extends Component {
   };
 
   renderLogs = ({ item }) => {
-    // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    // console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
     return (
       <View style={Styles.logs}>
         <Log
@@ -372,12 +332,7 @@ class ViewLogs extends Component {
   };
 
   render() {
-    console.log('DATE', this.state.date.toString().slice(0, 15));
-    console.log('TODAY', this.state.today.toString().slice(0, 15));
-    console.log('THIS DOT PROPS DOT USERSETTINGS: ', this.props.userSettings);
     let displayDate = this.state.date.toString().slice(0, 15);
-    // console.log('ONE', this.state.date.toString().slice(0, 15));
-    // console.log('TWO', this.state.today.toString().slice(0, 15));
     if (
       this.state.date.toString().slice(0, 15) ==
       this.state.today.toString().slice(0, 15)

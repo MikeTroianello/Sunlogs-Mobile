@@ -12,8 +12,6 @@ const BasicLogHead = ({
   iconSource,
   ...props
 }) => {
-  console.log('PROPS', props);
-  console.log(samePerson);
   return (
     <View style={logCss.profileHead}>
       <View>

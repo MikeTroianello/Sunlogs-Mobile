@@ -17,10 +17,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "co.troianello",
       "supportsTablet": true,
       "buildNumber": "1.0.0"
     },
     "android": {
+      "package": "co.troianello",
       "versionCode": 1
     }
   }

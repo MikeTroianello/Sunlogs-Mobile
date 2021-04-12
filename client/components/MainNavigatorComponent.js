@@ -134,7 +134,6 @@ class MainNavigator extends Component {
     this.props.logout();
     SecureStore.getItemAsync('userinfo').then((userdata) => {
       const userinfo = JSON.parse(userdata);
-      console.log('THIS IS THE USER INFO ON THE MAIN PAGE', userinfo);
       if (userinfo) {
         this.setState(
           {
@@ -152,9 +151,7 @@ class MainNavigator extends Component {
   }
 
   handleSubmit = async (e) => {
-    console.log('NOW ATTEMPTING TO LOG IN ON THE MAIN NAVIGATOR');
     const { username, password } = this.state;
-    console.log('USERNAME', username);
     if (!username) {
       this.setState({
         message: `You must include a username`,
@@ -175,7 +172,6 @@ class MainNavigator extends Component {
       var day = Math.floor(diff / oneDay);
       let year = a[3];
       let state = { username, password, day, year };
-      console.log('FETCHING');
       fetch(`${localSource}/login`, {
         method: 'POST',
         headers: {
@@ -185,7 +181,6 @@ class MainNavigator extends Component {
       })
         .then((response) => response.json())
         .then((results) => {
-          console.log('WE INSIDE FETCH!!!!', results);
           if (
             results.message == 'Incorrect username.' ||
             results.message == 'Incorrect password.' ||
@@ -199,18 +194,13 @@ class MainNavigator extends Component {
               message: 'This account was deleted.',
             });
           }
-          // this.props.logIt(results);
           else {
-            console.log('WE ARE NEARLY THERE');
-            // console.log(results);
             this.props.loggedIn(results);
             this.setState(
               {
                 ready: true,
                 success: true,
-              },
-              () => console.log('READY HAS BEEN SET (LOL)', this.state)
-            );
+              });
           }
         })
         .catch((error) => {
@@ -226,10 +216,8 @@ class MainNavigator extends Component {
     this.state.x == 6 ? (drawerName = 'See Logs') : (drawerName = 'Log In');
     const { username, createdToday } = this.props.userSettings;
     if (!this.state.ready) {
-      console.log('THE APP IS NOT READY JUST YETTTTTTTTTT');
       return <LoadingPage />;
     } else {
-      console.log('YEEEEEEET', username);
       return (
         <View
           style={{
@@ -262,14 +250,6 @@ class MainNavigator extends Component {
       );
     }
   }
-}
-{
-  /* <Drawer.Screen name='LoadingPage' component={LoadingPage} />
-<Drawer.Screen name='LandingPage' component={LandingPage} />
-<Drawer.Screen
-  name='LandingPageWEBSITE'
-  component={LandingPageWEBSITE}
-/> */
 }
 
 const mapStateToProps = (state) => {

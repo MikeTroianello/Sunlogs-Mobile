@@ -39,8 +39,7 @@ class Settings extends Component {
     this.setState(
       {
         [statePiece]: text,
-      },
-      () => console.log('THIS IS THE NEW STATE', this.state)
+      }
     );
   };
 
@@ -48,25 +47,22 @@ class Settings extends Component {
     this.setState(
       (prevState) => ({
         [statePiece]: !prevState[statePiece],
-      }),
-      () => console.log('SWITCH', statePiece, this.state)
+      })
     );
   };
 
   changeInfo = () => {
     const info = this.state;
-
-    console.log('SETTINGS CHANGing:', info);
     fetch(`${localSource}/change-info`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-auth-token': this.props.userSettings.token
       },
       body: JSON.stringify(info),
     })
       .then((response) => response.json())
       .then((results) => {
-        console.log(results);
         this.props.updateSettings(info);
         Alert.alert(
           '',
@@ -93,10 +89,6 @@ class Settings extends Component {
   };
 
   render() {
-    console.log(
-      'WHAT COMES BACK FROM THE REDUX STORE: ',
-      this.props.userSettings
-    );
     return (
       <ScrollView alwaysBounceVertical={true}>
         <View className='settings'>

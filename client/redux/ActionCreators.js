@@ -16,9 +16,7 @@ export const loggedIn = () => (dispatch) => {
   fetch(`${localSource}/loggedIn/${day}/${year}`)
     .then((response) => response.json())
     .then((results) => {
-      // this.props.logIt(results);
-      console.log('\x1b[93m-SUCCESS-\x1b[39m');
-      console.log(results);
+
       dispatch(setLoggedIn(results));
     })
     .catch((error) => {
@@ -32,6 +30,12 @@ export const setLoggedIn = (info) => ({
   type: ActionTypes.LOG_IN,
   payload: info,
 });
+
+// export const setLoggedIn = (info) => ({
+//   type: ActionTypes.LOG_IN,
+//   payload: {user:info.user, token:info.token},
+// });
+
 
 export const setCreatedToday = () => ({
   type: ActionTypes.CREATED_TODAY,

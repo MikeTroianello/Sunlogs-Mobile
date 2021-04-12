@@ -41,20 +41,11 @@ class ViewAllLogs extends Component {
   };
 
   componentDidMount() {
-    // console.log('COMPONENT HAS NOW MOUNTED');
-    console.log('IS COMPONENT MOUNTING??', this.props);
     let { today } = this.state;
     this.sanitizeDate(today);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('SHOULD COMPONENT UPDATE??');
-  //   console.log(nextProps, nextState);
-  //   console.log(this.props, this.state);
-  // }
-
   sanitizeDate = (dateToLookFor, message) => {
-    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????');
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
@@ -88,14 +79,12 @@ class ViewAllLogs extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then((response) => response.json())
       .then((results) => {
         const states = results.specificDay.map((log) => {
           return log.state;
         });
-        console.log('WE HAVE THE RESULTS FOR getLogsByDate: ', results);
         this.setState({
           logs: results.specificDay,
           filteredLogs: results.specificDay,
@@ -108,15 +97,11 @@ class ViewAllLogs extends Component {
         });
       })
       .catch((error) => {
-        // console.log(
-        //   'There has been a problem with your fetch operation: ' + error.message
-        // );
         throw error;
       });
   };
 
   filterByGender = (gender) => {
-    // console.log(gender);
     let genderLogs = this.state.filteredLogsCopy.filter((log) => {
       return log.creatorId.gender === gender;
     });
@@ -212,8 +197,6 @@ class ViewAllLogs extends Component {
   };
 
   renderLogs = ({ item }) => {
-    // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    console.log('\x1b[93m-USERSETTINGS-\x1b[39m', this.props.userSettings);
     return (
       <View style={Styles.logs}>
         <Log

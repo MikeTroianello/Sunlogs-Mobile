@@ -10,8 +10,6 @@ import * as SecureStore from 'expo-secure-store';
 
 class Logout extends Component {
   loggingOut = () => {
-    // const { navigate } = this.props.navigation;
-    console.log('ATTEMPTING TO LOG OUT');
     fetch(`${localSource}/logout`, {
       method: 'POST',
       headers: {
@@ -21,11 +19,9 @@ class Logout extends Component {
     })
       .then((response) => response.json())
       .then((results) => {
-        // this.props.logIt(results);
         SecureStore.deleteItemAsync('userinfo').catch((error) =>
           console.log('Could not delete user info', error)
         );
-        console.log(results);
         this.props.logout();
       })
       .catch((error) => {

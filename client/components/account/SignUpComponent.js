@@ -30,7 +30,6 @@ class SignUp extends Component {
     e.preventDefault();
     const { navigate } = this.props.navigation;
     const { username, password, gender } = this.state;
-    console.log('READY TO SUBMIT', this.state);
     if (!username) {
       this.setState({
         message: `You must include a username`,
@@ -62,7 +61,7 @@ class SignUp extends Component {
         .then((response) => response.json())
         .then((results) => {
           if (results.error) {
-            console.log(results.error);
+  
             this.setState({
               message: results.error,
             });
@@ -75,19 +74,13 @@ class SignUp extends Component {
                   text: 'OK',
                   onPress: () => {
                     this.props.loggedIn(results);
-                    // this.props.navigation.navigate('Profile');
                     this.props.toggleModal(true);
                   },
                 },
               ],
               { cancelable: false }
             );
-            // console.log('THIS IS PERCEIVED TO BE A SUCCESS', results);
-            // this.props.loggedIn(results);
-            // this.props.navigate('Profile');
-            // this.props.toggleModal();
           }
-          // this.props.logIt(results);
         })
         .catch((error) => {
           this.setState({

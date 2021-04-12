@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, FlatList, Button, ScrollView } from 'react-native';
 import { Styles } from '../../styles/MainStyles';
 import DatePicker from 'react-native-datepicker';
+import {connect} from 'react-redux';
 
 import WeatherAudit from '../weather/WeatherAudit';
 import Log from '../ViewLogs/LogComponent';
@@ -52,15 +53,12 @@ class OtherProfile extends Component {
   };
 
   setItAllUp = async () => {
-    // let { profileSelf } = this.props;
-
-    // let results;
     profileSelf = true;
-    fetch(`${localSource}/logs/all/my-posts`)
+    fetch(`${localSource}/logs/all/my-posts`,{headers: {
+      'x-auth-token': this.props.userSettings.token
+    }},)
       .then(response => response.json())
       .then(results => {
-        // this.props.logIt(results);
-        console.log(results);
         this.makeTheLogs(results, profileSelf);
       })
       .catch(error => {
@@ -68,12 +66,9 @@ class OtherProfile extends Component {
           message: `Username already exists!`
         });
       });
-
-    // let results = mockLogs;
   };
 
   makeTheLogs = (results, profileSelf) => {
-    console.log('making the logs');
     let today = new Date();
     var start = new Date(today.getFullYear(), 0, 0);
     var diff =
@@ -112,20 +107,6 @@ class OtherProfile extends Component {
       let genderIcon;
 
       let theLogs = results.map((log, key) => {
-        // if (!profileSelf) {
-        //   if (!name) name = log.creatorId.username;
-        //   switch (log.creatorId.gender) {
-        //     case 'male':
-        //       genderIcon = male;
-        //       break;
-        //     case 'female':
-        //       genderIcon = female;
-        //       break;
-        //     default:
-        //       genderIcon = nonbinary;
-        //       break;
-        //   }
-        // }
         moodArr.push(log.mood);
         let weatherString;
         if (log.weatherIcon) {
@@ -240,4 +221,10 @@ class OtherProfile extends Component {
   }
 }
 
-export default OtherProfile;
+const mapStateToProps = (state) => {
+  return {
+    userSettings: state.userSettings,
+  };
+};
+
+export default connect(mapStateToProps)(OtherProfile);

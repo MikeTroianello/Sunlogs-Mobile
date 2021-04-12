@@ -63,8 +63,6 @@ const Log = (props) => {
       </View>
     );
   } else {
-    // console.log('SAME PERSON WILL BE PASSED IN', samePerson);
-    console.log('PROPSPSPSPSPSPSP', props);
     return (
       <View View style={logCss.box}>
         <BasicLogHead

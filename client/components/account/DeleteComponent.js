@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 import { localSource } from '../../assets/localSource';
+import { userSettings } from "../../redux/userSettings";
 
 class Delete extends Component {
   state = {
@@ -23,7 +24,7 @@ class Delete extends Component {
         'Are you absolutely sure you want to delete your account?',
         [
           { text: 'Yes', onPress: () => this.confirmDeleteUser() },
-          { text: 'No', onPress: () => console.log('Not BALEETED') },
+          { text: 'No', onPress: () => console.log('Not Deleted') },
         ],
         { cancelable: false }
       );
@@ -37,6 +38,7 @@ class Delete extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-auth-token': this.props.userSettings.token
       },
       body: JSON.stringify(info),
     })

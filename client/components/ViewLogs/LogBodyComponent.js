@@ -10,7 +10,7 @@ const LogBody = props => {
 
   if (!props.journal) props.journal = '';
   let journal = props.journal || '';
-  // console.log('PROPS DOT JOURNAL', props.journal);
+
   return (
     <View>
       <Text style={logCss.place}>{countyString}</Text>

@@ -21,4 +21,4 @@ assets
 .assets
 assets/*
 
-.env
+# .env

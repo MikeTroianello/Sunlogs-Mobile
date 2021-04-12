@@ -10,6 +10,7 @@ export const userSettings = (
     hideCreatorDefault: false,
     email: null,
     phone: null,
+    token: null
   },
   action
 ) => {
@@ -31,6 +32,19 @@ export const userSettings = (
         email: action.payload.email,
         phone: action.payload.phone,
       };
+    // case ActionTypes.LOG_IN:
+    //   return {
+    //     ...state,
+    //     username: action.payload.user.username,
+    //     id: action.payload.user._id,
+    //     createdToday: action.payload.user.createdToday,
+    //     hideProfile: action.payload.user.hideProfile,
+    //     privateJournalDefault: action.payload.user.privateJournalDefault,
+    //     hideCreatorDefault: action.payload.user.hideCreatorDefault,
+    //     email: action.payload.user.email,
+    //     phone: action.payload.user.phone,
+    //     token: action.payload.token
+    //   };
     case ActionTypes.CREATED_TODAY:
       return {
         ...state,
@@ -55,6 +69,7 @@ export const userSettings = (
         hideCreatorDefault: false,
         email: null,
         phone: null,
+        token: null
       };
     case ActionTypes.DELETE_USER:
       return {
@@ -66,6 +81,7 @@ export const userSettings = (
         hideCreatorDefault: false,
         email: null,
         phone: null,
+        token: null
       };
 
     default:

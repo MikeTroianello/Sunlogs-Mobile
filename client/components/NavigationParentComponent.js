@@ -7,8 +7,6 @@ import Login from './account/LoginComponent';
 
 class NavigationParentComponent extends Component {
   render() {
-    console.log('THERE IS NO CHALK ONLY ZOOL ', this.props.userSettings);
-    console.log('ALL DA PROPS', this.props);
     if (this.props.usernamme) return <MainNavigator />;
     else return <Login />;
   }

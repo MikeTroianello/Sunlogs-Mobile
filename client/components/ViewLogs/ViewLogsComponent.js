@@ -54,19 +54,12 @@ class ViewLogsComponent extends Component {
   // };
 
   componentDidMount() {
-    // console.log('COMPONENT HAS NOW MOUNTED');
     const { today } = this.state;
     this.sanitizeDate(today);
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('\x1b[93m-THIS DOT PROPS-\x1b[39m', this.props);
-    // console.log('\x1b[93m-PREVPROPS-\x1b[39m', prevProps);
 
-    // console.log(
-    //   'DOES THIS DOT PROPS EQUAL PREV PROPS???',
-    //   JSON.stringify(this.props) == JSON.stringify(prevProps)
-    // );
     let info;
     if (!prevProps.route || !this.props.route.params) {
       return false;
@@ -80,94 +73,8 @@ class ViewLogsComponent extends Component {
       this.sanitizeDate(this.state.today);
     }
   }
-  //   if (
-  //     this.props.route.params &&
-  //     info != this.props.route.params.info
-  //     // !JSON.stringify(this.props) == JSON.stringify(prevProps)
-  //   ) {
-  //     console.log('THE NEXT THING IS NOW SUPPOSED TO HAPPEN');
-  //     const {
-  //       instructions,
-  //       isoDate,
-  //       chosenGender,
-  //       state,
-  //       county,
-  //     } = this.props.route.params.info;
-  //     console.log(
-  //       'DO THESE EXISTE_@QWOUYKJR_)KG#QC>?>?>?>?>?>??>??',
-  //       instructions,
-  //       // date,
-  //       chosenGender,
-  //       state,
-  //       county,
-  //       isoDate
-  //     );
-
-  //     switch (instructions) {
-  //       case 'created':
-  //         console.log('SWITCH STATEMENT CALLED?>>>?>');
-  //         this.sanitizeDate(this.state.today);
-  //         break;
-  //       case 'default':
-  //         this.defaultLogs();
-  //         // this.defaultDate();
-  //         break;
-  //       case 'change day':
-  //         this.setState(
-  //           {
-  //             date: isoDate,
-  //             loading: true,
-  //           },
-  //           () => this.sanitizeDate(isoDate)
-  //         );
-
-  //         // this.defaultDate();
-  //         break;
-  //       case 'filter':
-  //         // console.log('AHHHHHHHHHHHHHHHH', this.props.locations);
-  //         this.setState(
-  //           {
-  //             logs: this.props.locations.logs,
-  //           },
-  //           () => {
-  //             if (state && !county) {
-  //               console.log('FILTERING BY STATE');
-  //               this.filterState(state, chosenGender);
-  //             } else if (county) {
-  //               this.filterCounty(county, chosenGender);
-  //             } else if (chosenGender) {
-  //               this.filterByGender(chosenGender);
-  //             }
-  //           }
-  //         );
-  //         break;
-  //       default:
-  //         return false;
-  //         break;
-  //     }
-  //   }
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(
-  //     '\x1b[93m- IS ANYTHING HAPPENING THIS IS IN SHOULD COMPONENT UPDATE -\x1b[39m',
-  //     nextProps
-  //   );
-  //   return true;
-  // }
-
-  // componentWillReceiveProps() {
-  //   console.log('1b[93m- COMPONENT WILL RECEIVE PROPS -\x1b[39m');
-  // }
-
-  // defaultDate = () => {
-  //   let d = new Date();
-  //   console.log('THE NEW DATE', d);
-  //   this.sanitizeDate(d);
-  // };
 
   filter = (info) => {
-    // console.log('FILTER IS HERE', info);
     const { state, county, chosenGender } = info;
     if (state && !county) {
       this.filterState(state, chosenGender);
@@ -180,7 +87,6 @@ class ViewLogsComponent extends Component {
 
   changeDate = (date) => {
     this.toggleModal();
-    console.log('THIS IS THE NEW DATE: ', date);
     if (date) {
       this.setState(
         {
@@ -191,26 +97,10 @@ class ViewLogsComponent extends Component {
       );
     }
   };
-  // changeDate = (date) => {
-  //   this.toggleModal();
-  //   console.log('THIS IS THE NEW DATE: ', date);
-  //   if (date) {
-  //     this.setState({
-  //       date: date,
-  //     });
-  //     date = date.split('-');
-  //     let b = date.pop();
-  //     date.unshift(b);
-  //     date = date.join('-');
-  //     var tempIso = `${date}T12:00:00Z`;
-  //     var isoDate = new Date(tempIso);
-  //     console.log('THIS IS THE ISO DATE -=-=-=-=-=-=-=', isoDate);
-  //     this.sanitizeDate(tempIso);
-  //   }
-  // };
+  
 
   sanitizeDate = (dateToLookFor, message) => {
-    console.log('SANITIZE DATE IS NOW GETTING CALLED???????', dateToLookFor);
+
 
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
@@ -230,15 +120,12 @@ class ViewLogsComponent extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then((response) => response.json())
       .then((results) => {
         const states = results.specificDay.map((log) => {
           return log.state;
         });
-        // console.log('======STATES', states);
-        // console.log('\x1b[93m-About to hit the dispatch-\x1b[39m');
         this.setState(
           {
             logs: results.specificDay,
@@ -254,21 +141,15 @@ class ViewLogsComponent extends Component {
         );
       })
       .catch((error) => {
-        // console.log(
-        //   'There has been a problem with your fetch operation: ' + error.message
-        // );
         throw error;
       });
   };
 
   filterByGender = (gender) => {
     if (gender) {
-      console.log('\x1b[93m-GENDER HAS BEEN CALLED-\x1b[39m', gender);
       let genderLogs = this.state.logs.filter((log) => {
         return log.creatorId.gender === gender;
       });
-
-      console.log('\x1b[93m-GENDERLOGS-\x1b[39m', genderLogs);
 
       this.setState({
         filteredLogs: genderLogs,
@@ -355,14 +236,12 @@ class ViewLogsComponent extends Component {
   };
 
   toggleModal = () => {
-    console.log('TOGGLING MODAL', this.state.showModal);
     this.setState({
       showModal: !this.state.showModal,
     });
   };
 
   buildList = () => {
-    // console.log('filteredLogs:', this.state.filteredLogs);
     if (this.state.filteredLogs.length < 1) {
       return (
         <View>

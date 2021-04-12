@@ -11,7 +11,6 @@ export const locations = (
 ) => {
   switch (action.type) {
     case ActionTypes.SET_ALL_LOCATIONS:
-      console.log('\x1b[36m-SETTING ALL LOCATIONS-\x1b[0m', action.payload);
       return {
         logs: action.payload.logs,
         states: action.payload.states,

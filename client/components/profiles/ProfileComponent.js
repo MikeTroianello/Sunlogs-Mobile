@@ -28,12 +28,14 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
-    console.log('COMPONENT IS NOW MOUNTING');
     this.setItAllUp();
   };
 
   setItAllUp = async () => {
-    fetch(`${localSource}/logs/all/my-posts`)
+    fetch(`${localSource}/logs/all/my-posts`,
+    {headers: {
+      'x-auth-token': this.props.userSettings.token
+    }})
       .then((response) => response.json())
       .then((results) => {
         const reducer = (accumulator, currentValue) =>
@@ -105,7 +107,6 @@ class Profile extends Component {
   };
 
   renderLogs = ({ item }) => {
-    // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
     return (
       <View style={Styles.logs}>
         <Log
@@ -152,7 +153,7 @@ class Profile extends Component {
         </View>
       );
     }
-    // console.log('\x1b[93m-Errything-\x1b[39m', this.state);
+
     else {
       return (
         <ScrollView style={{ backgroundColor: '#e0e7ef' }}>

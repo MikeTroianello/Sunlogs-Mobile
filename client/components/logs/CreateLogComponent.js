@@ -51,7 +51,7 @@ class CreateLog extends Component {
   };
 
   componentDidMount() {
-    console.log('REDUX INFO', this.props.userSettings);
+
     let today = new Date();
     var start = new Date(today.getFullYear(), 0, 0);
     var diff =
@@ -78,9 +78,6 @@ class CreateLog extends Component {
       Permissions.LOCATION
     );
 
-    // const locationPermission = await
-    console.log('THE STATUS:', status);
-    console.log('THE permissions:', permissions);
     if (status === 'granted') {
       return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
     } else {
@@ -109,7 +106,6 @@ class CreateLog extends Component {
         productivityMsg,
       });
     } else if (this.props.userSettings.createdToday) {
-      console.log('YOU HAVE ALREADY CREATED A LOG');
       Alert.alert('Error', 'You have already created a log today!', [
         {
           text: 'OK',
@@ -125,11 +121,11 @@ class CreateLog extends Component {
       });
       const info = this.state;
       info.location = await this.getLocationAsync();
-      console.log('ALL INFOOOOOOOO');
       const response = await fetch(`${localSource}/logs/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-auth-token': this.props.userSettings.token
         },
         body: JSON.stringify(info),
       });
@@ -138,70 +134,6 @@ class CreateLog extends Component {
       navigate('See All Logs', { info: { instructions: 'created' } });
     }
   };
-
-  // submit = () => {
-  //   const { navigate } = this.props.navigation;
-
-  //   if (!this.state.mood || !this.state.productivity) {
-  //     let moodMsg = !this.state.mood && `You didn't select your mood`;
-  //     let productivityMsg =
-  //       !this.state.productivity && `You didn't select your productivity`;
-  //     this.setState({
-  //       moodMsg,
-  //       productivityMsg,
-  //     });
-  //   } else if (this.props.userSettings.createdToday) {
-  //     console.log('YOU HAVE ALREADY CREATED A LOG');
-  //     Alert.alert('Error', 'You have already created a log today!', [
-  //       {
-  //         text: 'OK',
-  //         onPress: () => {
-  //           navigate('See Logs', { info: { instructions: 'default' } });
-  //         },
-  //       },
-  //     ]);
-  //   } else {
-  //     const info = this.state;
-  //     fetch(`${localSource}/logs/create`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(info),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((results) => {
-  //         // this.setState({
-  //         //   mood: null,
-  //         //   moodEmoji: null,
-  //         //   productivity: null,
-  //         //   journal: '',
-  //         //   privateJournal: false,
-  //         //   hideCreator: false,
-  //         //   err: null,
-  //         //   message: null,
-  //         //   messageCss: 'red',
-  //         //   day: null,
-  //         //   year: null,
-  //         //   dayOfYear: null,
-  //         //   year: null,
-  //         //   dayOfWeek: null,
-  //         //   dayOfMonth: null,
-  //         //   month: null,
-  //         //   moodMsg: null,
-  //         //   productivityMsg: null,
-  //         // });
-  //         console.log('THESE ARE THE RESULTS???????', results);
-  //         this.props.setCreatedToday();
-  //         navigate('See All Logs', { info: { instructions: 'created' } });
-  //       })
-  //       .catch((error) => {
-  //         this.setState({
-  //           message: `Username already exists!`,
-  //         });
-  //       });
-  //   }
-  // };
 
   render() {
     return (
@@ -384,31 +316,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateLog);
-
-{
-  /* <Text>What is your mood?</Text>
-          <Rating
-            imageSize={50}
-            onFinishRating={(rating) => this.setState({ mood: rating })}
-            startingValue={this.state.mood}
-            minValue={1}
-          />
-
-          <Text>How productive do you think you were today?</Text>
-          <Rating
-            imageSize={50}
-            onFinishRating={(rating) => this.setState({ productivity: rating })}
-            minValue={1}
-            startingValue={this.state.productivity}
-          /> */
-}
-
-// <View
-//         style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
-//       >
-//         <Text style={Styles.logProdictivityNumbers}>1</Text>
-//         <Text style={Styles.logProdictivityNumbers}>2</Text>
-//         <Text style={Styles.logProdictivityNumbers}>3</Text>
-//         <Text style={Styles.logProdictivityNumbers}>4</Text>
-//         <Text style={Styles.logProdictivityNumbers}>5</Text>
-//       </View>

@@ -26,11 +26,9 @@ class Login extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log('THIS IS THE STATE: ', this.state);
-    // console.log('THESE ARE THE PROPSss: ', this.props);
+
     const { navigate } = this.props.navigation;
     const { username, password } = this.state;
-    console.log('USERNAME', username);
     if (!username) {
       this.setState({
         message: `You must include a username`,
@@ -105,7 +103,6 @@ class Login extends Component {
   toggleModal = (bool) => {
     const { navigate } = this.props.navigation;
     if (bool) {
-      console.log('bool', bool);
       SecureStore.setItemAsync(
         'userinfo',
         JSON.stringify({
@@ -127,24 +124,16 @@ class Login extends Component {
   };
 
   setReturn = () => {
-    console.log('SET RETUNNNNNRNRNRN');
     this.props.returning();
-    // this.setState({
-    //   returning: this.props.userSettings.returning,
-    // });
   };
 
   render() {
     let returning;
-
-    console.log('THE FINAL INFO', this.props.userSettings);
-    console.log('THE FINAL RETURN', this.props.userSettings.returning);
     if (!this.props.userSettings.returning) {
       return <LandingPage setReturn={this.setReturn} />;
     } else {
       SecureStore.getItemAsync('userinfo').then((userdata) => {
         const userinfo = JSON.parse(userdata);
-        console.log('THE USER INFO', userinfo);
         if (userinfo) {
           this.setState(
             { username: userinfo.username, password: userinfo.password },

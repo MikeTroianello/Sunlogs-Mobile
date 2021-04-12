@@ -26,9 +26,7 @@ class ParentView extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    console.log('THIS IS THE NEXT PROPS', nextProps);
     if (nextProps.route.params) {
-      console.log('ONE LEVEL LOWER', nextProps.route.params.info.instructions);
       if (this.state.blah != nextProps.route.params.info.instructions) {
         this.setState(
           {

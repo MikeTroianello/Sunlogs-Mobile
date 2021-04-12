@@ -44,14 +44,11 @@ class FilterLog extends Component {
   };
 
   componentDidMount() {
-    // console.log('COMPONENT HAS NOW MOUNTED');
     let { today } = this.state;
     // this.sanitizeDate(today);
   }
 
   sanitizeDate = (dateToLookFor, message) => {
-    // console.log('SANITIZE DATE IS NOW GETTING CALLED???????');
-
     var start = new Date(dateToLookFor.getFullYear(), 0, 0);
 
     var diff =
@@ -70,7 +67,6 @@ class FilterLog extends Component {
   };
 
   changeDate = (date) => {
-    console.log('NOW CHANGINGGGGGGGGGGGGGGGGGGG', date);
     if (date) {
       let standardDate = date;
       date = date.split('-');
@@ -78,7 +74,6 @@ class FilterLog extends Component {
       date.unshift(b);
       date = date.join('-');
       var isoDate = new Date(`${date}T12:00:00Z`);
-      // console.log('DOES THIS WPPRK HERERERERERRERERER?????', isoDate);
       // this.sanitizeDate(isoDate);
       this.setState(
         {
@@ -93,7 +88,6 @@ class FilterLog extends Component {
   };
 
   getLogsByDate = (day, year) => {
-    // console.log('GETTING THE LOGS BY DATE', day, year);
     fetch(`${localSource}/logs/date/${year}/${day}`)
       .then((response) => response.json())
       .then((results) => {
@@ -113,15 +107,11 @@ class FilterLog extends Component {
         });
       })
       .catch((error) => {
-        // console.log(
-        //   'There has been a problem with your fetch operation: ' + error.message
-        // );
         throw error;
       });
   };
 
   filterByGender = (gender) => {
-    // console.log(gender);
     let genderLogs = this.state.filteredLogsCopy.filter((log) => {
       return log.creatorId.gender === gender;
     });
@@ -147,7 +137,6 @@ class FilterLog extends Component {
   };
 
   filterByState = () => {
-    console.log('\x1b[36m-FROM THE STORE-\x1b[0m', this.props.locations);
     let stateLogs = this.props.locations.logs.filter((log) => {
       return log.state === this.state.state;
     });
@@ -201,8 +190,6 @@ class FilterLog extends Component {
   };
 
   renderLogs = ({ item }) => {
-    // console.log('\x1b[93m-RENDERING THE LOGS-\x1b[39m', item);
-    console.log('\x1b[36m%s\x1b[0m', this.props.locations);
     return (
       <View style={Styles.logs}>
         <Log
@@ -232,7 +219,6 @@ class FilterLog extends Component {
 
   filter = (instructions) => {
     const { navigate } = this.props.navigation;
-    console.log('\x1b[36m-Everything we have:-\x1b[0m', this.state);
     if (instructions) {
       this.setState(
         {
